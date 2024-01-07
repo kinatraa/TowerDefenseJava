@@ -24,15 +24,13 @@ public class GameWindow extends JFrame implements Runnable{
     private Settings settings;
 
     public GameWindow(){
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
         initClasses();
-        render = new Render(this);
-        gameScreen = new GameScreen(this);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(1280, 768);
+        setLocationRelativeTo(null);
+        setResizable(false);
         add(gameScreen);
         pack();
-
         setVisible(true);
     }
 
