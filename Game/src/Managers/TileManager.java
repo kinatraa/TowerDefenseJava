@@ -17,7 +17,7 @@ public class TileManager {
 
     private BufferedImage getSprite(int x, int y) {
         if (atlas != null && x < 23 && y < 13) {
-            return atlas.getSubimage(x*64, y*64, 64, 64);
+            return atlas.getSubimage(x*32, y*32, 32, 32);
         } else {
             return null;
         }

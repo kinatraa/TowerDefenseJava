@@ -9,19 +9,17 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class GameWindow extends JFrame implements Runnable{
-    private GameScreen gameScreen;
+    GameScreen gameScreen;
     private BufferedImage img;
     private final double FPS_SET = 60.0;
     private final double UPS_SET = 60.0;
     private Thread gameThread;
-    private MyMouseListener myMouseListener;
-    private KeyBoardListener keyBoardListener;
-
     //Classes
     private Render render;
     private Menu menu;
     private Playing playing;
     private Settings settings;
+    private Menu2 menu2;
 
     public GameWindow(){
         initClasses();
@@ -40,16 +38,7 @@ public class GameWindow extends JFrame implements Runnable{
         menu = new Menu(this);
         playing = new Playing(this);
         settings = new Settings(this);
-    }
-
-    public void initInputs() {
-        myMouseListener = new MyMouseListener();
-        keyBoardListener = new KeyBoardListener();
-        addMouseListener(myMouseListener);
-        addMouseMotionListener(myMouseListener);
-        addKeyListener(keyBoardListener);
-
-        requestFocus();
+        menu2 = new Menu2(this);
     }
 
     private void start(){
@@ -99,4 +88,5 @@ public class GameWindow extends JFrame implements Runnable{
     public Settings getSettings() {
         return settings;
     }
+    public Menu2 getMenu2(){return menu2;}
 }
