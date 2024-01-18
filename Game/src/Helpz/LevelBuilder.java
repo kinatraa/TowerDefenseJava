@@ -2,6 +2,7 @@ package Helpz;
 
 public class LevelBuilder {
     public static int[][] getLevelData() {
+        //40 * 24
         int[][] lvl = {
                 { 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },

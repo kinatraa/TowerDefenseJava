@@ -1,18 +1,27 @@
 package Scenes;
 
+import UI.MyButton;
 import main.GameWindow;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Settings extends GameScene implements SceneMethods{
+//    private MyButton bMenu2;
     public Settings(GameWindow game) {
         super(game);
+//        initButtons();
+    }
+
+    private void initButtons() {
+//        bMenu2 = new MyButton("Menu2", 10, 10, 64, 64);
     }
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillRect(0, 0, 1280, 768);
+//        ImageIcon imageIcon = new ImageIcon("src/gear.png");
+//        Image image = imageIcon.getImage();
+//        g.drawImage(image, 10, 10, null);
     }
 
     @Override

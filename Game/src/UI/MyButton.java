@@ -1,8 +1,10 @@
 package UI;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 
-public class MyButton {
+public class MyButton extends JButton {
     private int x, y, width, height;
     private String text;
     private Rectangle bounds;
@@ -25,6 +27,9 @@ public class MyButton {
         drawText(g);
     }
 
+    public void setImage(ImageIO image){
+        setImage(image);
+    }
     private void drawBorder(Graphics g) {
         g.setColor(Color.BLACK);
         g.drawRect(x, y, width, height);

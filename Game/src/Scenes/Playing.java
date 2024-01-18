@@ -5,12 +5,17 @@ import Managers.TileManager;
 import UI.MyButton;
 import main.GameStates;
 import main.GameWindow;
+import main.Main;
 import main.MyMouseListener;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
+
 import static main.GameStates.*;
 
-public class Playing extends GameScene implements SceneMethods{
+public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private int[][] lvl;
     private TileManager tileManager;
     private MyButton bMenu2;
@@ -24,11 +29,12 @@ public class Playing extends GameScene implements SceneMethods{
     }
 
     private void initButtons() {
-        int w = 200;
-        int h = w / 3;
+//        int w = 200;
+//        int h = w / 3;
         int x = 10;
         int y = 10;
-        bMenu2 = new MyButton("Menu2", x, y, w, h);
+        bMenu2 = new MyButton("Menu2", x, y, 64, 64);
+
     }
 
     @Override
@@ -39,7 +45,10 @@ public class Playing extends GameScene implements SceneMethods{
                 g.drawImage(tileManager.getSprite(id), x*32, y*32, null);
             }
         }
-        drawButtons(g);
+        ImageIcon imageIcon = new ImageIcon("src/gear.png");
+        Image image = imageIcon.getImage();
+        g.drawImage(image, 10, 10, null);
+//        drawButtons(g);
     }
 
     @Override
@@ -73,5 +82,10 @@ public class Playing extends GameScene implements SceneMethods{
 
     private void drawButtons(Graphics g) {
         bMenu2.draw(g);
+    }
+
+    @Override
+    public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+        return false;
     }
 }
