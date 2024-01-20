@@ -1,4 +1,4 @@
-package Helpz;
+package helpz;
 
 public class LevelBuilder {
     public static int[][] getLevelData() {

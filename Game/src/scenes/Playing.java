@@ -1,14 +1,11 @@
-package Scenes;
+package scenes;
 
-import Helpz.LevelBuilder;
-import Managers.TileManager;
-import UI.MyButton;
-import main.GameStates;
+import helpz.LevelBuilder;
+import managers.TileManager;
+import ui.MyButton;
 import main.GameWindow;
-import main.Main;
-import main.MyMouseListener;
+import ui.ToolBar;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
@@ -18,23 +15,14 @@ import static main.GameStates.*;
 public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private int[][] lvl;
     private TileManager tileManager;
-    private MyButton bMenu2;
+
+    private ToolBar toolBar;
     public Playing(GameWindow game) {
         super(game);
-        initButtons();
         lvl = LevelBuilder.getLevelData();
         tileManager = new TileManager();
 //        MyMouseListener
-
-    }
-
-    private void initButtons() {
-//        int w = 200;
-//        int h = w / 3;
-        int x = 10;
-        int y = 10;
-        bMenu2 = new MyButton("Menu2", x, y, 64, 64);
-
+        toolBar = new ToolBar(1024, 0, 256, 768, this);
     }
 
     @Override
@@ -45,47 +33,41 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
                 g.drawImage(tileManager.getSprite(id), x*32, y*32, null);
             }
         }
-        ImageIcon imageIcon = new ImageIcon("src/gear.png");
-        Image image = imageIcon.getImage();
-        g.drawImage(image, 10, 10, null);
-//        drawButtons(g);
+        toolBar.draw(g);
     }
 
     @Override
     public void mouseClicked(int x, int y) {
-//        System.out.println("CLICKED");
-        if(bMenu2.getBounds().contains(x, y)){
-            SetGameState(MENU2);
+        if(x >= 1211 && y <= 69){
+            toolBar.mouseClicked(x, y);
         }
     }
 
     @Override
     public void mouseMoved(int x, int y) {
-        bMenu2.setMouseOver(false);
-        if(bMenu2.getBounds().contains(x, y)){
-            bMenu2.setMouseOver(true);
+        if(x >= 1211 && y <= 69){
+            toolBar.mouseMoved(x, y);
         }
     }
 
     @Override
     public void mousePressed(int x, int y) {
-        bMenu2.setMousePressed(false);
-        if(bMenu2.getBounds().contains(x, y)){
-            bMenu2.setMousePressed(true);
+        if(x >= 1211 && y <= 69){
+            toolBar.mousePressed(x, y);
         }
     }
 
     @Override
     public void mouseReleased(int x, int y) {
-        bMenu2.resetBooleans();
-    }
-
-    private void drawButtons(Graphics g) {
-        bMenu2.draw(g);
+        toolBar.mouseReleased(x, y);
     }
 
     @Override
     public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
         return false;
+    }
+
+    public TileManager getTileManager() {
+        return tileManager;
     }
 }

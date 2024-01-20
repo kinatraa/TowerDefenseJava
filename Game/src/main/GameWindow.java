@@ -1,12 +1,9 @@
 package main;
 
-import Scenes.*;
+import scenes.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class GameWindow extends JFrame implements Runnable{
     GameScreen gameScreen;

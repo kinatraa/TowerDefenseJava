@@ -1,7 +1,7 @@
-package Managers;
+package managers;
 
-import Helpz.LoadSave;
-import Objects.Tile;
+import helpz.LoadSave;
+import objects.Tile;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -23,10 +23,11 @@ public class TileManager {
         }
     }
     private void createTiles() {
-        tiles.add(GRASS = new Tile(getSprite(19, 6)));
-        tiles.add(DIRT = new Tile(getSprite(20, 6)));
-        tiles.add(ROAD = new Tile(getSprite(21, 6)));
-        tiles.add(SAND = new Tile(getSprite(22, 6)));
+        int id = 0;
+        tiles.add(GRASS = new Tile(getSprite(19, 6), id++, "Grass"));
+        tiles.add(DIRT = new Tile(getSprite(20, 6), id++, "Dirt"));
+        tiles.add(ROAD = new Tile(getSprite(21, 6), id++, "Road"));
+        tiles.add(SAND = new Tile(getSprite(22, 6), id++, "Sand"));
     }
 
     private void loadAtlas() {

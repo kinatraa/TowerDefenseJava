@@ -1,11 +1,11 @@
-package UI;
+package ui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
 public class MyButton extends JButton {
-    private int x, y, width, height;
+    private int x, y, width, height, id;
     private String text;
     private Rectangle bounds;
     private boolean mouseOver, mousePressed;
@@ -15,6 +15,17 @@ public class MyButton extends JButton {
         this.width = width;
         this.height = height;
         this.text = text;
+        this.id = -1;
+        initBounds();
+    }
+
+    public MyButton(String text, int x, int y, int width, int height, int id) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.text = text;
+        this.id = id;
         initBounds();
     }
 
@@ -65,5 +76,20 @@ public class MyButton extends JButton {
 
     public Rectangle getBounds() {
         return bounds;
+    }
+    public int getId(){
+        return id;
+    }
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
+    }
+    public int getW(){
+        return width;
+    }
+    public int getH(){
+        return height;
     }
 }

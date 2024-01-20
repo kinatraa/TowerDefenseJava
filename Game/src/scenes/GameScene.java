@@ -1,4 +1,4 @@
-package Scenes;
+package scenes;
 
 import main.GameWindow;
 

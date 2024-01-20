@@ -1,9 +1,7 @@
-package Scenes;
+package scenes;
 
-import UI.MyButton;
 import main.GameWindow;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class Settings extends GameScene implements SceneMethods{
