@@ -47,6 +47,9 @@ public class ToolBar {
 
         for(MyButton b : tileButtons){
             g.drawImage(getButtonImg(b.getId()), b.getX(), b.getY(), b.getW(), b.getH(), null);
+            if(b.isMouseOver()) g.setColor(Color.WHITE);
+            else g.setColor(Color.BLACK);
+            g.drawRect(b.getX(), b.getY(), b.getW(), b.getH());
         }
     }
 
@@ -63,8 +66,19 @@ public class ToolBar {
 
     public void mouseMoved(int x, int y) {
         bMenu2.setMouseOver(false);
+        for(MyButton b : tileButtons){
+            b.setMouseOver(false);
+        }
         if(bMenu2.getBounds().contains(x, y)){
             bMenu2.setMouseOver(true);
+        }
+        else{
+            for(MyButton b : tileButtons){
+                if(b.getBounds().contains(x, y)){
+                    b.setMouseOver(true);
+                    return;
+                }
+            }
         }
     }
 
@@ -72,6 +86,14 @@ public class ToolBar {
         bMenu2.setMousePressed(false);
         if(bMenu2.getBounds().contains(x, y)){
             bMenu2.setMousePressed(true);
+        }
+        else{
+            for(MyButton b : tileButtons){
+                if(b.getBounds().contains(x, y)){
+                    b.setMousePressed(true);
+                    return;
+                }
+            }
         }
     }
 

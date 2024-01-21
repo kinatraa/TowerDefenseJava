@@ -70,8 +70,14 @@ public class MyButton extends JButton {
     public void setMousePressed(boolean mousePressed){
         this.mousePressed = mousePressed;
     }
+    public boolean isMousePressed(){
+        return mousePressed;
+    }
     public void setMouseOver(boolean mouseOver){
         this.mouseOver = mouseOver;
+    }
+    public boolean isMouseOver(){
+        return mouseOver;
     }
 
     public Rectangle getBounds() {
