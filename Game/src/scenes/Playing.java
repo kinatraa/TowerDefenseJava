@@ -15,7 +15,6 @@ import static main.GameStates.*;
 public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private int[][] lvl;
     private TileManager tileManager;
-
     private ToolBar toolBar;
     public Playing(GameWindow game) {
         super(game);
@@ -38,21 +37,21 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
 
     @Override
     public void mouseClicked(int x, int y) {
-        if(x >= 1211 && y <= 69){
+        if(x <= 1211){
             toolBar.mouseClicked(x, y);
         }
     }
 
     @Override
     public void mouseMoved(int x, int y) {
-        if(x >= 1211 && y <= 69){
+        if(x <= 1211){
             toolBar.mouseMoved(x, y);
         }
     }
 
     @Override
     public void mousePressed(int x, int y) {
-        if(x >= 1211 && y <= 69){
+        if(x <= 1211){
             toolBar.mousePressed(x, y);
         }
     }
