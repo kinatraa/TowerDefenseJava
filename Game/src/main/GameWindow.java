@@ -1,5 +1,7 @@
 package main;
 
+import helpz.LoadSave;
+import managers.TileManager;
 import scenes.*;
 
 import javax.swing.*;
@@ -17,9 +19,12 @@ public class GameWindow extends JFrame implements Runnable{
     private Playing playing;
     private Settings settings;
     private Menu2 menu2;
+    private Editing editing;
+    private TileManager tileManager;
 
     public GameWindow(){
         initClasses();
+        createDefaultLevel();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1280, 768);
         setLocationRelativeTo(null);
@@ -28,14 +33,22 @@ public class GameWindow extends JFrame implements Runnable{
         pack();
         setVisible(true);
     }
-
+    private void createDefaultLevel() {
+        int[] arr = new int[800];
+        for(int i = 0; i < arr.length; i++){
+            arr[i] = 0;
+        }
+        LoadSave.CreateLevel("new_level", arr);
+    }
     private void initClasses() {
+        tileManager = new TileManager();
         render = new Render(this);
         gameScreen = new GameScreen(this);
         menu = new Menu(this);
         playing = new Playing(this);
         settings = new Settings(this);
-        menu2 = new Menu2(this);
+        menu2 = new Menu2(this, playing);
+        editing = new Editing(this);
     }
 
     private void start(){
@@ -86,4 +99,6 @@ public class GameWindow extends JFrame implements Runnable{
         return settings;
     }
     public Menu2 getMenu2(){return menu2;}
+    public Editing getEditor(){return editing;}
+    public TileManager getTileManager(){return tileManager;}
 }

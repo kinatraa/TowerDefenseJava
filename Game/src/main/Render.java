@@ -29,6 +29,9 @@ public class Render {
             case MENU2:
                 game.getMenu2().render(g);
                 break;
+            case EDIT:
+                game.getEditor().render(g);
+                break;
         }
     }
 }
