@@ -4,19 +4,12 @@ import ui.MyButton;
 import main.GameWindow;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Random;
 import static main.GameStates.*;
 
 public class Menu extends GameScene implements SceneMethods{
-    private BufferedImage img;
-    private ArrayList<BufferedImage> sprites = new ArrayList<>();
-    private Random random;
     private MyButton bPlaying, bSettings, bQuit, bEdit;
     public Menu(GameWindow game) {
         super(game);
-        random = new Random();
         initButtons();
     }
 
@@ -119,28 +112,5 @@ public class Menu extends GameScene implements SceneMethods{
         bEdit.draw(g);
         bSettings.draw(g);
         bQuit.draw(g);
-    }
-
-//    private void importImg(){
-//        InputStream is = getClass().getResourceAsStream("/towerDefense_tilesheet.png");
-//        try {
-//            assert is != null;
-//            img = ImageIO.read(is);
-//        }
-//        catch(IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    private void loadSprites(){
-//        for(int x = 0; x < 23; x++){
-//            for(int y = 0; y < 13; y++){
-//                sprites.add(img.getSubimage(x*32, y*32, 32, 32));
-//            }
-//        }
-//    }
-
-    private int getRandomInt(){
-        return random.nextInt(298);
     }
 }

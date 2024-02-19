@@ -3,7 +3,6 @@ package scenes;
 import helpz.LoadSave;
 import main.GameWindow;
 import objects.Tile;
-import ui.MyButton;
 import ui.ToolBar;
 
 import java.awt.*;
@@ -26,14 +25,6 @@ public class Editing extends GameScene implements SceneMethods {
 
     private void loadDefaultLevel() {
         lvl = LoadSave.GetLevelData("new_level");
-//        for(int y = 0; y < lvl.length; y++){
-//            for(int x = 0; x < lvl[y].length; x++){
-//                int id = lvl[y][x];
-//                System.out.print(id + " ");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println();
     }
 
     @Override

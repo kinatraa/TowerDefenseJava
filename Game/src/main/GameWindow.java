@@ -5,11 +5,9 @@ import managers.TileManager;
 import scenes.*;
 
 import javax.swing.*;
-import java.awt.image.BufferedImage;
 
 public class GameWindow extends JFrame implements Runnable{
     GameScreen gameScreen;
-    private BufferedImage img;
     private final double FPS_SET = 60.0;
     private final double UPS_SET = 60.0;
     private Thread gameThread;
