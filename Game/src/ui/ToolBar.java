@@ -27,16 +27,23 @@ public class ToolBar extends Bar{
         bSave = new MyButton("Save", 1028, 5, 120, 50);
         bMenu = new MyButton("Main Menu", 1156, 5, 120, 50);
         int yStart = 100;
-        int yOffset = 74;
-        int i = 0;
+        int yOffset = 40;
+        int xStart = 1032;
+        int xOffset = 40;
+        int index = 0, cnt = 0;
         for(Tile tile: game.getTileManager().tiles){
-            tileButtons.add(new MyButton(tile.getName(), 1032, yStart + yOffset*i, 64, 64, i));
-            ++i;
+            if(cnt == 4){
+                cnt = 0;
+                yStart += yOffset;
+            }
+            tileButtons.add(new MyButton(tile.getName(), xStart + xOffset*cnt, yStart, 32, 32, index));
+            ++index;
+            ++cnt;
         }
     }
 
     public void draw(Graphics g){
-        g.setColor(new Color(220, 123, 15));
+        g.setColor(new Color(181,215,253));
         g.fillRect(x, y, width, height);
         drawButtons(g);
     }
@@ -88,11 +95,18 @@ public class ToolBar extends Bar{
         else{
             for(MyButton b : tileButtons){
                 if(b.getBounds().contains(x, y)){
+                    if(selectedTile == game.getTileManager().getTile(b.getId())){
+                        selectedTile = null;
+                        editing.setSelectedTile(null);
+                        return;
+                    }
                     selectedTile = game.getTileManager().getTile(b.getId());
                     editing.setSelectedTile(selectedTile);
                     return;
                 }
             }
+            selectedTile = null;
+            editing.setSelectedTile(null);
         }
     }
 

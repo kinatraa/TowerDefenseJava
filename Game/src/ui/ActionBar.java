@@ -20,7 +20,7 @@ public class ActionBar extends Bar{
         bMenu2 = new MyButton("Menu2", 1211, 5, 64, 64);
     }
     public void draw(Graphics g){
-        g.setColor(new Color(220, 123, 15));
+        g.setColor(new Color(255,201,215));
         g.fillRect(x, y, width, height);
         drawButtons(g);
     }
