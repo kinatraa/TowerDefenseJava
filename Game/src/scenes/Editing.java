@@ -78,7 +78,10 @@ public class Editing extends GameScene implements SceneMethods {
             changeTile(mouseX, mouseY);
         }
     }
-
+    @Override
+    public void mouseClicked3() {
+        toolBar.mouseClicked3();
+    }
     @Override
     public void mouseMoved(int x, int y) {
         if(x > 1024){

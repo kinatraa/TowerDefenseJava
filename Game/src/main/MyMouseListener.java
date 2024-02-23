@@ -34,6 +34,13 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                     break;
             }
         }
+        else if(e.getButton() == MouseEvent.BUTTON3){
+            switch (GameStates.gameState){
+                case EDIT:
+                    game.getEditor().mouseClicked3();
+                    break;
+            }
+        }
     }
 
     @Override

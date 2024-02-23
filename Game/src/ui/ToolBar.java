@@ -109,7 +109,8 @@ public class ToolBar extends Bar{
             editing.setSelectedTile(null);
         }
     }
-
+    public void mouseClicked3(){
+    }
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
         bSave.setMouseOver(false);

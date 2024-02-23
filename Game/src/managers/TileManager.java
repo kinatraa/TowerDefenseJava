@@ -11,7 +11,8 @@ import static helpz.ImgFix.getRotImg;
 public class TileManager {
     public Tile GRASS, DIRT, ROAD, SAND, DIRT_GRASS,
             DIRT_SAND, ROAD_GRASS, ROAD_SAND,
-            DIRT_CORNER1, DIRT_CORNER2, ROAD_CORNER1, ROAD_CORNER2;
+            DIRT_CORNER1, DIRT_CORNER2, ROAD_CORNER1, ROAD_CORNER2,
+            BUSH1, BUSH2, ROCK1, ROCK2;
     public BufferedImage atlas;
     public ArrayList<Tile> tiles = new ArrayList<>();
     public TileManager() {
@@ -64,7 +65,10 @@ public class TileManager {
         tiles.add(new  Tile(getRotImg(ROAD_CORNER2.getSprite(), 90), id++, "ROAD_CORNER22"));
         tiles.add(new  Tile(getRotImg(ROAD_CORNER2.getSprite(), 180), id++, "ROAD_CORNER23"));
         tiles.add(new  Tile(getRotImg(ROAD_CORNER2.getSprite(), 270), id++, "ROAD_CORNER24"));
-
+        tiles.add(BUSH1 = new Tile(getSprite(15, 5), id++, "Bush1"));
+        tiles.add(BUSH2 = new Tile(getSprite(17, 5), id++, "Bush2"));
+        tiles.add(ROCK1 = new Tile(getSprite(21, 5), id++, "Rock1"));
+        tiles.add(ROCK2 = new Tile(getSprite(20, 5), id++, "Rock2"));
     }
 
     private void loadAtlas() {

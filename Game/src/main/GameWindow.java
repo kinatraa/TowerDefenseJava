@@ -28,6 +28,8 @@ public class GameWindow extends JFrame implements Runnable{
         setLocationRelativeTo(null);
         setResizable(false);
         add(gameScreen);
+        start();
+        updateGame();
         pack();
         setVisible(true);
     }
@@ -54,6 +56,21 @@ public class GameWindow extends JFrame implements Runnable{
         gameThread.start();
     }
 
+    private void updateGame(){
+        switch(GameStates.gameState){
+            case MENU:
+                break;
+            case PLAYING:
+                playing.update();
+                break;
+            case SETTINGS:
+                break;
+            case MENU2:
+                break;
+            case EDIT:
+                break;
+        }
+    }
     public void run(){
         double timePerFrame = 1e9 / FPS_SET;
         double timePerUpdate = 1e9 / UPS_SET;
@@ -71,6 +88,7 @@ public class GameWindow extends JFrame implements Runnable{
             }
             // Update
             if(System.nanoTime() - lastUpdate >= timePerUpdate) {
+                updateGame();
                 lastUpdate = System.nanoTime();
                 updates++;
             }

@@ -135,4 +135,9 @@ public class Menu2 extends GameScene implements SceneMethods{
         bSettings.resetBooleans();
         bMainMenu.resetBooleans();
     }
+
+    @Override
+    public void mouseClicked3() {
+
+    }
 }

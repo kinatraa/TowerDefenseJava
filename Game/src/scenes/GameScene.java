@@ -2,7 +2,7 @@ package scenes;
 
 import main.GameWindow;
 
-public class GameScene {
+public abstract class GameScene {
     private GameWindow game;
     public GameScene(GameWindow game) {
         this.game = game;
@@ -10,4 +10,6 @@ public class GameScene {
     public GameWindow getGame() {
         return game;
     }
+
+    public abstract void mouseClicked3();
 }

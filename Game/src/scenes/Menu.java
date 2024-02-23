@@ -49,6 +49,10 @@ public class Menu extends GameScene implements SceneMethods{
             System.exit(0);
         }
     }
+    @Override
+    public void mouseClicked3() {
+
+    }
 
     @Override
     public void mouseMoved(int x, int y) {

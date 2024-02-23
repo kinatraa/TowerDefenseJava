@@ -1,6 +1,7 @@
 package scenes;
 
 import helpz.LoadSave;
+import managers.EnemyManager;
 import ui.MyButton;
 import main.GameWindow;
 import ui.ActionBar;
@@ -11,12 +12,16 @@ import java.awt.image.ImageObserver;
 public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private int[][] lvl;
     private ActionBar actionBar;
-    private MyButton bMenu2;
     private int mouseX, mouseY;
+    private EnemyManager enemyManager;
     public Playing(GameWindow game) {
         super(game);
         loadDefaultLevel();
         actionBar = new ActionBar(1024, 0, 256, 768, this);
+        enemyManager = new EnemyManager(this);
+    }
+    public void update(){
+        enemyManager.update();
     }
     public void setLevel(int[][] lvl){
         this.lvl = lvl;
@@ -28,6 +33,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     public void render(Graphics g) {
         drawLevel(g);
         actionBar.draw(g);
+        enemyManager.draw(g);
     }
     private void drawLevel(Graphics g){
         for(int y = 0; y < lvl.length; y++){
@@ -45,6 +51,13 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         if(x > 1024){
             actionBar.mouseClicked(x, y);
         }
+        else{
+            enemyManager.addEnemy(x, y);
+        }
+    }
+    @Override
+    public void mouseClicked3() {
+
     }
     @Override
     public void mouseMoved(int x, int y) {
