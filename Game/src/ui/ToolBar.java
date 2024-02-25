@@ -36,7 +36,7 @@ public class ToolBar extends Bar{
                 cnt = 0;
                 yStart += yOffset;
             }
-            tileButtons.add(new MyButton(tile.getName(), xStart + xOffset*cnt, yStart, 32, 32, index));
+            tileButtons.add(new MyButton(tile.getTileType(), xStart + xOffset*cnt, yStart, 32, 32, index));
             ++index;
             ++cnt;
         }

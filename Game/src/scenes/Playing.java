@@ -46,13 +46,22 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private BufferedImage getSprite(int spiteID){
         return getGame().getTileManager().getSprite(spiteID);
     }
+    public int getTileType(int x, int y){
+        int xCord = x / 32;
+        int yCord = y / 32;
+        if(xCord < 0 || xCord > 31) return 5;
+        if(yCord < 0 || yCord > 23) return 5;
+
+        int id = lvl[y / 32][x / 32];
+        return getGame().getTileManager().getTile(id).getTileType();
+    }
     @Override
     public void mouseClicked(int x, int y) {
         if(x > 1024){
             actionBar.mouseClicked(x, y);
         }
         else{
-            enemyManager.addEnemy(x, y);
+//            enemyManager.addEnemy(x, y);
         }
     }
     @Override

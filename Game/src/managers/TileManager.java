@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static helpz.ImgFix.getRotImg;
+import static helpz.Constants.Tiles.*;
 
 public class TileManager {
     public Tile GRASS, DIRT, ROAD, SAND, DIRT_GRASS,
@@ -29,46 +30,55 @@ public class TileManager {
     }
     private void createTiles() {
         int id = 0;
-        tiles.add(GRASS = new Tile(getSprite(19, 6), id++, "Grass"));
-        tiles.add(DIRT = new Tile(getSprite(20, 6), id++, "Dirt"));
-        tiles.add(ROAD = new Tile(getSprite(21, 6), id++, "Road"));
-        tiles.add(SAND = new Tile(getSprite(22, 6), id++, "Sand"));
-        tiles.add(DIRT_GRASS = new  Tile(getSprite(0, 4), id++, "Dirt_Grass1"));
-        tiles.add(new Tile(getRotImg(DIRT_GRASS.getSprite(), 90), id++, "Dirt_Grass2"));
-        tiles.add(new Tile(getRotImg(DIRT_GRASS.getSprite(), 180), id++, "Dirt_Grass3"));
-        tiles.add(new Tile(getRotImg(DIRT_GRASS.getSprite(), 270), id++, "Dirt_Grass4"));
-        tiles.add(DIRT_CORNER1 = new  Tile(getSprite(3, 3), id++, "DIRT_CORNER11"));
-        tiles.add(new  Tile(getRotImg(DIRT_CORNER1.getSprite(), 90), id++, "DIRT_CORNER12"));
-        tiles.add(new  Tile(getRotImg(DIRT_CORNER1.getSprite(), 180), id++, "DIRT_CORNER13"));
-        tiles.add(new  Tile(getRotImg(DIRT_CORNER1.getSprite(), 270), id++, "DIRT_CORNER14"));
-        tiles.add(DIRT_CORNER2 = new  Tile(getSprite(0, 3), id++, "DIRT_CORNER21"));
-        tiles.add(new  Tile(getRotImg(DIRT_CORNER2.getSprite(), 90), id++, "DIRT_CORNER22"));
-        tiles.add(new  Tile(getRotImg(DIRT_CORNER2.getSprite(), 180), id++, "DIRT_CORNER23"));
-        tiles.add(new  Tile(getRotImg(DIRT_CORNER2.getSprite(), 270), id++, "DIRT_CORNER24"));
-        tiles.add(DIRT_SAND = new  Tile(getSprite(5, 7), id++, "Dirt_Sand1"));
-        tiles.add(new  Tile(getRotImg(DIRT_SAND.getSprite(), 90), id++, "Dirt_Sand2"));
-        tiles.add(new  Tile(getRotImg(DIRT_SAND.getSprite(), 180), id++, "Dirt_Sand3"));
-        tiles.add(new  Tile(getRotImg(DIRT_SAND.getSprite(), 270), id++, "Dirt_Sand4"));
-        tiles.add(ROAD_GRASS = new  Tile(getSprite(10, 4), id++, "Road_Grass1"));
-        tiles.add(new  Tile(getRotImg(ROAD_GRASS.getSprite(), 90), id++, "Road_Grass2"));
-        tiles.add(new  Tile(getRotImg(ROAD_GRASS.getSprite(), 180), id++, "Road_Grass3"));
-        tiles.add(new  Tile(getRotImg(ROAD_GRASS.getSprite(), 270), id++, "Road_Grass4"));
-        tiles.add(ROAD_SAND = new  Tile(getSprite(10, 7), id++, "Road_Sand1"));
-        tiles.add(new  Tile(getRotImg(ROAD_SAND.getSprite(), 90), id++, "Road_Sand2"));
-        tiles.add(new  Tile(getRotImg(ROAD_SAND.getSprite(), 180), id++, "Road_Sand3"));
-        tiles.add(new  Tile(getRotImg(ROAD_SAND.getSprite(), 270), id++, "Road_Sand4"));
-        tiles.add(ROAD_CORNER1 = new  Tile(getSprite(13, 6), id++, "ROAD_CORNER11"));
-        tiles.add(new  Tile(getRotImg(ROAD_CORNER1.getSprite(), 90), id++, "ROAD_CORNER12"));
-        tiles.add(new  Tile(getRotImg(ROAD_CORNER1.getSprite(), 180), id++, "ROAD_CORNER13"));
-        tiles.add(new  Tile(getRotImg(ROAD_CORNER1.getSprite(), 270), id++, "ROAD_CORNER14"));
-        tiles.add(ROAD_CORNER2 = new  Tile(getSprite(10, 6), id++, "ROAD_CORNER21"));
-        tiles.add(new  Tile(getRotImg(ROAD_CORNER2.getSprite(), 90), id++, "ROAD_CORNER22"));
-        tiles.add(new  Tile(getRotImg(ROAD_CORNER2.getSprite(), 180), id++, "ROAD_CORNER23"));
-        tiles.add(new  Tile(getRotImg(ROAD_CORNER2.getSprite(), 270), id++, "ROAD_CORNER24"));
-        tiles.add(BUSH1 = new Tile(getSprite(15, 5), id++, "Bush1"));
-        tiles.add(BUSH2 = new Tile(getSprite(17, 5), id++, "Bush2"));
-        tiles.add(ROCK1 = new Tile(getSprite(21, 5), id++, "Rock1"));
-        tiles.add(ROCK2 = new Tile(getSprite(20, 5), id++, "Rock2"));
+        tiles.add(GRASS = new Tile(getSprite(19, 6), id++, GRASS_TILE));
+        tiles.add(DIRT = new Tile(getSprite(20, 6), id++, DIRT_TILE));
+        tiles.add(ROAD = new Tile(getSprite(21, 6), id++, ROAD_TILE));
+        tiles.add(SAND = new Tile(getSprite(22, 6), id++, SAND_TILE));
+
+        tiles.add(DIRT_GRASS = new  Tile(getSprite(0, 4), id++, GRASS_TILE));
+        tiles.add(new Tile(getRotImg(DIRT_GRASS.getSprite(), 90), id++, GRASS_TILE));
+        tiles.add(new Tile(getRotImg(DIRT_GRASS.getSprite(), 180), id++, GRASS_TILE));
+        tiles.add(new Tile(getRotImg(DIRT_GRASS.getSprite(), 270), id++, GRASS_TILE));
+
+        tiles.add(DIRT_CORNER1 = new  Tile(getSprite(3, 3), id++, GRASS_TILE));
+        tiles.add(new  Tile(getRotImg(DIRT_CORNER1.getSprite(), 90), id++, GRASS_TILE));
+        tiles.add(new  Tile(getRotImg(DIRT_CORNER1.getSprite(), 180), id++, GRASS_TILE));
+        tiles.add(new  Tile(getRotImg(DIRT_CORNER1.getSprite(), 270), id++, GRASS_TILE));
+
+        tiles.add(DIRT_CORNER2 = new  Tile(getSprite(0, 3), id++, GRASS_TILE));
+        tiles.add(new  Tile(getRotImg(DIRT_CORNER2.getSprite(), 90), id++, GRASS_TILE));
+        tiles.add(new  Tile(getRotImg(DIRT_CORNER2.getSprite(), 180), id++, GRASS_TILE));
+        tiles.add(new  Tile(getRotImg(DIRT_CORNER2.getSprite(), 270), id++, GRASS_TILE));
+
+        tiles.add(DIRT_SAND = new  Tile(getSprite(5, 7), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(DIRT_SAND.getSprite(), 90), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(DIRT_SAND.getSprite(), 180), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(DIRT_SAND.getSprite(), 270), id++, SAND_TILE));
+
+        tiles.add(ROAD_GRASS = new  Tile(getSprite(10, 4), id++, GRASS_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_GRASS.getSprite(), 90), id++, GRASS_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_GRASS.getSprite(), 180), id++, GRASS_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_GRASS.getSprite(), 270), id++, GRASS_TILE));
+
+        tiles.add(ROAD_SAND = new  Tile(getSprite(10, 7), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_SAND.getSprite(), 90), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_SAND.getSprite(), 180), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_SAND.getSprite(), 270), id++, SAND_TILE));
+
+        tiles.add(ROAD_CORNER1 = new  Tile(getSprite(13, 6), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_CORNER1.getSprite(), 90), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_CORNER1.getSprite(), 180), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_CORNER1.getSprite(), 270), id++, SAND_TILE));
+
+        tiles.add(ROAD_CORNER2 = new  Tile(getSprite(10, 6), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_CORNER2.getSprite(), 90), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_CORNER2.getSprite(), 180), id++, SAND_TILE));
+        tiles.add(new  Tile(getRotImg(ROAD_CORNER2.getSprite(), 270), id++, SAND_TILE));
+
+        tiles.add(BUSH1 = new Tile(getSprite(15, 5), id++, BUSH_TILE));
+        tiles.add(BUSH2 = new Tile(getSprite(17, 5), id++, BUSH_TILE));
+        tiles.add(ROCK1 = new Tile(getSprite(21, 5), id++, ROAD_TILE));
+        tiles.add(ROCK2 = new Tile(getSprite(20, 5), id++, ROAD_TILE));
     }
 
     private void loadAtlas() {

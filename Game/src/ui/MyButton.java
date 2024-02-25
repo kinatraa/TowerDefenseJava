@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MyButton extends JButton {
-    private int x, y, width, height, id;
+    private int x, y, width, height, id, tileType;
     private String text;
     private Rectangle bounds;
     private boolean mouseOver, mousePressed;
@@ -29,6 +29,15 @@ public class MyButton extends JButton {
         initBounds();
     }
 
+    public MyButton(int tileType, int x, int y, int width, int height, int id) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.tileType = tileType;
+        this.id = id;
+        initBounds();
+    }
     private void initBounds(){
         this.bounds = new Rectangle(x, y, width, height);
     }
