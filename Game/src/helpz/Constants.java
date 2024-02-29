@@ -16,4 +16,10 @@ public class Constants {
         public static final int BUSH_TILE = 4;
         public static final int ROCK_TILE = 5;
     }
+    public static class Enemies{
+        public static final int SOLDIER1 = 0;
+        public static final int SOLDIER2 = 1;
+        public static final int SOLDIER3 = 2;
+        public static final int SOLDIER4 = 3;
+    }
 }

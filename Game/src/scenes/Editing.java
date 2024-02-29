@@ -16,11 +16,13 @@ public class Editing extends GameScene implements SceneMethods {
     private int lastTileX, lastTileY, lastTileId;
     private boolean drawSelect;
     private ToolBar toolBar;
+    private Graphics g;
     public Editing(GameWindow game){
         super(game);
         loadDefaultLevel();
         toolBar = new ToolBar(1024, 0, 256, 768, this, game);
         this.game = game;
+        this.g = game.getGraphics();
     }
 
     private void loadDefaultLevel() {
@@ -32,11 +34,13 @@ public class Editing extends GameScene implements SceneMethods {
         drawLevel(g);
         toolBar.draw(g);
         drawSelectedTile(g);
+//        System.out.println("check");
     }
     private void drawLevel(Graphics g){
         for(int y = 0; y < lvl.length; y++){
             for(int x = 0; x < lvl[y].length; x++){
                 int id = lvl[y][x];
+//                if(id == -1) g.drawImage(selectedTile.getSprite(), x*32, y*32, null);
                 g.drawImage(getSprite(id), x*32, y*32, null);
             }
         }
@@ -55,6 +59,10 @@ public class Editing extends GameScene implements SceneMethods {
     }
     private void changeTile(int x, int y) {
         if(selectedTile != null){
+//            if(selectedTile.getId() != -1){
+//                g.drawImage(selectedTile.getSprite(), x, y, null);
+//                return;
+//            }
             int tileX = x / 32;
             int tileY = y / 32;
             if(lastTileX == tileX && lastTileY == tileY && lastTileId == selectedTile.getId())

@@ -4,7 +4,7 @@ import java.awt.*;
 
 import static helpz.Constants.Direction.*;
 
-public class Enemy {
+public abstract class Enemy {
     private float x, y;
     private Rectangle bounds;
     private int health;

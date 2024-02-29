@@ -1,6 +1,6 @@
 package managers;
 
-import enemies.Enemy;
+import enemies.*;
 import helpz.LoadSave;
 import scenes.Playing;
 
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.Tiles.*;
+import static helpz.Constants.Enemies.*;
 
 public class EnemyManager {
     private Playing playing;
@@ -22,20 +23,18 @@ public class EnemyManager {
     public EnemyManager(Playing playing){
         this.playing = playing;
         enemyImgs = new BufferedImage[8];
-        addEnemy(32*0, 32*6);
+        addEnemy(32*0, 32*6, SOLDIER1);
+        addEnemy(32*1, 32*6, SOLDIER2);
+        addEnemy(32*2, 32*6, SOLDIER3);
+        addEnemy(32*3, 32*6, SOLDIER4);
         loadEnemyImgs();
     }
 
     private void loadEnemyImgs() {
         BufferedImage atlas = getSpriteAtlas();
-        enemyImgs[0] = atlas.getSubimage(0, 0, 32, 32);
-        enemyImgs[1] = atlas.getSubimage(32, 0, 32, 32);
-        enemyImgs[2] = atlas.getSubimage(2*32, 0, 32, 32);
-        enemyImgs[3] = atlas.getSubimage(3*32, 0, 32, 32);
-//        enemyImgs[4] = atlas.getSubimage(15*32, 10*32, 32, 32);
-//        enemyImgs[5] = atlas.getSubimage(15*32, 10*32, 32, 32);
-//        enemyImgs[6] = atlas.getSubimage(15*32, 10*32, 32, 32);
-//        enemyImgs[7] = atlas.getSubimage(15*32, 10*32, 32, 32);
+        for(int i = 0; i < 4; i++){
+            enemyImgs[i] = atlas.getSubimage(i*32, 0, 32, 32);
+        }
     }
     private static BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
@@ -50,13 +49,15 @@ public class EnemyManager {
     }
     public void update(){
         for(Enemy e : enemies){
-            if(isNextTileRoad(e)){
-
-            }
+            updateEnemyMove(e);
         }
     }
 
-    private boolean isNextTileRoad(Enemy e) {
+    private void updateEnemyMove(Enemy e) {
+        if(e.getLastDir() == -1){
+            setNewDirectionAndMove(e);
+        }
+
         int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir()));
         int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir()));
 
@@ -71,7 +72,6 @@ public class EnemyManager {
             //find new direction
             setNewDirectionAndMove(e);
         }
-        return false;
     }
 
     private void setNewDirectionAndMove(Enemy e) {
@@ -96,12 +96,6 @@ public class EnemyManager {
 
     private void fixEnemyOffsetTile(Enemy e, int dir, int xCord, int yCord) {
         switch (dir){
-//            case LEFT:
-//                if(xCord > 0) xCord--;
-//                break;
-//            case UP:
-//                if(yCord > 0) yCord--;
-//                break;
             case RIGHT:
                 if(xCord < 31) xCord++;
                 break;
@@ -132,8 +126,21 @@ public class EnemyManager {
         return 0;
     }
 
-    public void addEnemy(int x, int y){
-        enemies.add(new Enemy(x, y, 0, 0));
+    public void addEnemy(int x, int y, int enemyTile){
+        switch (enemyTile){
+            case SOLDIER1:
+                enemies.add(new Soldier1(x, y, 0));
+                break;
+            case SOLDIER2:
+                enemies.add(new Soldier2(x, y, 0));
+                break;
+            case SOLDIER3:
+                enemies.add(new Soldier3(x, y, 0));
+                break;
+            case SOLDIER4:
+                enemies.add(new Soldier4(x, y, 0));
+                break;
+        }
     }
     public void draw(Graphics g){
         for (Enemy e : enemies){
@@ -142,6 +149,6 @@ public class EnemyManager {
     }
 
     private void drawEnemy(Enemy e, Graphics g) {
-        g.drawImage(enemyImgs[0], (int)e.getX(), (int)e.getY(), null);
+        g.drawImage(enemyImgs[e.getEnemyType()], (int)e.getX(), (int)e.getY(), null);
     }
 }
