@@ -2,6 +2,7 @@ package managers;
 
 import enemies.*;
 import helpz.LoadSave;
+import objects.PathPoint;
 import scenes.Playing;
 
 import javax.imageio.ImageIO;
@@ -20,13 +21,16 @@ public class EnemyManager {
     private BufferedImage[] enemyImgs;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private float speed = 2f;
-    public EnemyManager(Playing playing){
+    private PathPoint start, end;
+    public EnemyManager(Playing playing, PathPoint start, PathPoint end){
         this.playing = playing;
+        this.start = start;
+        this.end = end;
         enemyImgs = new BufferedImage[8];
-        addEnemy(32*0, 32*6, SOLDIER1);
-        addEnemy(32*1, 32*6, SOLDIER2);
-        addEnemy(32*2, 32*6, SOLDIER3);
-        addEnemy(32*3, 32*6, SOLDIER4);
+        addEnemy(SOLDIER1);
+        addEnemy(SOLDIER2);
+        addEnemy(SOLDIER3);
+        addEnemy(SOLDIER4);
         loadEnemyImgs();
     }
 
@@ -67,6 +71,7 @@ public class EnemyManager {
         }
         else if(isAtEnd(e)){
             //reached the end
+            System.out.println("Lives lost!");
         }
         else{
             //find new direction
@@ -79,6 +84,8 @@ public class EnemyManager {
         int xCord = (int) (e.getX() / 32);
         int yCord = (int) (e.getY() / 32);
         fixEnemyOffsetTile(e, dir, xCord, yCord);
+
+        if(isAtEnd(e)) return;
 
         if(dir == LEFT || dir == RIGHT){
             int newY = (int) (e.getY() + getSpeedAndHeight(UP));
@@ -107,6 +114,9 @@ public class EnemyManager {
     }
 
     private boolean isAtEnd(Enemy e) {
+        if(e.getX() == end.getxCord() * 32 && e.getY() == end.getyCord() * 32){
+            return true;
+        }
         return false;
     }
 
@@ -126,7 +136,9 @@ public class EnemyManager {
         return 0;
     }
 
-    public void addEnemy(int x, int y, int enemyTile){
+    public void addEnemy(int enemyTile){
+        int x = start.getxCord() * 32;
+        int y = start.getyCord() * 32;
         switch (enemyTile){
             case SOLDIER1:
                 enemies.add(new Soldier1(x, y, 0));

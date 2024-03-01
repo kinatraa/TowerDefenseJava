@@ -126,7 +126,7 @@ public class ToolBar extends Bar{
                 return;
             }
             selectedPath = pathStart;
-            editing.setSelectedTile(new Tile(pathStart, -1, -1));
+            editing.setSelectedTile(new Tile(pathStart, -1, 0));
         }
         else if(bPathEnd.getBounds().contains(x, y)){
             if(selectedPath == pathEnd){
@@ -135,7 +135,7 @@ public class ToolBar extends Bar{
                 return;
             }
             selectedPath = pathEnd;
-            editing.setSelectedTile(new Tile(pathEnd, -1, -1));
+            editing.setSelectedTile(new Tile(pathEnd, -2, 0));
         }
         else{
             for(MyButton b : tileButtons){
@@ -223,5 +223,11 @@ public class ToolBar extends Bar{
         for(MyButton b : tileButtons){
             b.resetBooleans();
         }
+    }
+    public BufferedImage getStartPathImg(){
+        return pathStart;
+    }
+    public BufferedImage getEndPathImg(){
+        return pathEnd;
     }
 }

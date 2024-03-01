@@ -2,23 +2,26 @@ package scenes;
 
 import helpz.LoadSave;
 import managers.EnemyManager;
+import objects.PathPoint;
 import ui.MyButton;
 import main.GameWindow;
 import ui.ActionBar;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.util.ArrayList;
 
 public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private int[][] lvl;
     private ActionBar actionBar;
     private int mouseX, mouseY;
     private EnemyManager enemyManager;
+    private PathPoint start, end;
     public Playing(GameWindow game) {
         super(game);
         loadDefaultLevel();
         actionBar = new ActionBar(1024, 0, 256, 768, this);
-        enemyManager = new EnemyManager(this);
+        enemyManager = new EnemyManager(this, start, end);
     }
     public void update(){
         enemyManager.update();
@@ -28,6 +31,9 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
     private void loadDefaultLevel() {
         lvl = LoadSave.GetLevelData("new_level");
+        ArrayList<PathPoint> points = LoadSave.GetLevelPathPoints("new_level");
+        start = points.get(0);
+        end = points.get(1);
     }
     @Override
     public void render(Graphics g) {
