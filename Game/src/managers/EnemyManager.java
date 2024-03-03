@@ -20,7 +20,7 @@ public class EnemyManager {
     private Playing playing;
     private BufferedImage[] enemyImgs;
     private ArrayList<Enemy> enemies = new ArrayList<>();
-    private float speed = 2f;
+//    private float speed = 2f;
     private PathPoint start, end;
     public EnemyManager(Playing playing, PathPoint start, PathPoint end){
         this.playing = playing;
@@ -40,7 +40,7 @@ public class EnemyManager {
             enemyImgs[i] = atlas.getSubimage(i*32, 0, 32, 32);
         }
     }
-    private static BufferedImage getSpriteAtlas() {
+    private BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
         InputStream is = EnemyManager.class.getClassLoader().getResourceAsStream("elemi.png");
         try {
@@ -62,12 +62,12 @@ public class EnemyManager {
             setNewDirectionAndMove(e);
         }
 
-        int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir()));
-        int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir()));
+        int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir(), e.getEnemyType()));
+        int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir(), e.getEnemyType()));
 
         if(getTileType(newX, newY) == DIRT_TILE){
             //keep moving
-            e.move(speed, e.getLastDir());
+            e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
         }
         else if(isAtEnd(e)){
             //reached the end
@@ -88,16 +88,16 @@ public class EnemyManager {
         if(isAtEnd(e)) return;
 
         if(dir == LEFT || dir == RIGHT){
-            int newY = (int) (e.getY() + getSpeedAndHeight(UP));
+            int newY = (int) (e.getY() + getSpeedAndHeight(UP, e.getEnemyType()));
             if(getTileType((int)e.getX(), newY) == DIRT_TILE){
-                e.move(speed, UP);
+                e.move(GetSpeed(e.getEnemyType()), UP);
             }
-            else e.move(speed, DOWN);
+            else e.move(GetSpeed(e.getEnemyType()), DOWN);
         }
         else{
-            int newX = (int) (e.getX() + getSpeedAndWidth(RIGHT));
-            if(getTileType(newX, (int)e.getY()) == DIRT_TILE) e.move(speed, RIGHT);
-            else e.move(speed, LEFT);
+            int newX = (int) (e.getX() + getSpeedAndWidth(RIGHT, e.getEnemyType()));
+            if(getTileType(newX, (int)e.getY()) == DIRT_TILE) e.move(GetSpeed(e.getEnemyType()), RIGHT);
+            else e.move(GetSpeed(e.getEnemyType()), LEFT);
         }
     }
 
@@ -124,15 +124,15 @@ public class EnemyManager {
         return playing.getTileType(x, y);
     }
 
-    private float getSpeedAndHeight(int dir) {
-        if(dir == UP) return -speed;
-        else if(dir == DOWN) return speed + 32;
+    private float getSpeedAndHeight(int dir, int enemyType) {
+        if(dir == UP) return -GetSpeed(enemyType);
+        else if(dir == DOWN) return GetSpeed(enemyType) + 32;
         return 0;
     }
 
-    private float getSpeedAndWidth(int dir) {
-        if(dir == LEFT) return -speed;
-        else if(dir == RIGHT) return speed + 32;
+    private float getSpeedAndWidth(int dir, int enemyType) {
+        if(dir == LEFT) return -GetSpeed(enemyType);
+        else if(dir == RIGHT) return GetSpeed(enemyType) + 32;
         return 0;
     }
 
