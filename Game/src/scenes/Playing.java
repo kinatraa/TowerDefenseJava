@@ -88,12 +88,20 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         }
         else{
             if(selectedTower != null){
-                if(isTileGrass(mouseX, mouseY)){
+                if(isTileGrass(mouseX, mouseY) && getTowerAt(mouseX, mouseY) == null){
                     towerManager.addTower(selectedTower, mouseX, mouseY);
                     selectedTower = null;
                 }
             }
+            else{
+                Tower t = getTowerAt(mouseX, mouseY);
+                actionBar.displayTower(t);
+            }
         }
+    }
+
+    private Tower getTowerAt(int x, int y) {
+        return towerManager.getTowerAt(x, y);
     }
 
     private boolean isTileGrass(int x, int y) {

@@ -43,5 +43,18 @@ public class Constants {
         public static final int RED_CANON = 1;
         public static final int DOUBLE_ROCKET = 2;
         public static final int BIG_ROCKET = 3;
+        public static String GetName(int towerType){
+            switch (towerType){
+                case GREEN_CANON:
+                    return "Green Canon";
+                case RED_CANON:
+                    return "Red Canon";
+                case DOUBLE_ROCKET:
+                    return "Double Rocket";
+                case BIG_ROCKET:
+                    return "Big Rocket";
+            }
+            return "";
+        }
     }
 }

@@ -1,5 +1,6 @@
 package ui;
 
+import helpz.Constants;
 import objects.Tile;
 import objects.Tower;
 import scenes.Playing;
@@ -9,12 +10,14 @@ import java.awt.*;
 
 import static main.GameStates.MENU2;
 import static main.GameStates.SetGameState;
+import static helpz.Constants.Towers.*;
 
 public class ActionBar extends Bar{
     private MyButton bMenu2;
     private Playing playing;
     private MyButton[] towerButtons;
     private Tower selectedTower;
+    private Tower displayedTower;
     public ActionBar(int x, int y, int width, int height, Playing playing){
         super(x, y, width, height);
         this.playing = playing;
@@ -36,8 +39,26 @@ public class ActionBar extends Bar{
         g.setColor(new Color(255,201,215));
         g.fillRect(x, y, width, height);
         drawButtons(g);
+        drawDisplayedTower(g);
     }
 
+    private void drawDisplayedTower(Graphics g) {
+        if(displayedTower != null){
+            g.setColor(Color.LIGHT_GRAY);
+            g.fillRect(1028, 650, 220, 85);
+            g.setColor(Color.BLACK);
+            g.drawRect(1028, 650, 220, 85);
+            g.drawRect(1035, 660, 50, 50);
+            g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 1035, 660, 50, 50, null);
+            g.setFont(new Font("LucidaSans", Font.BOLD, 15));
+            g.drawString("" + Constants.Towers.GetName(displayedTower.getTowerType()), 1100, 680);
+            g.drawString("ID: " + displayedTower.getId(), 1100, 700);
+        }
+    }
+
+    public void displayTower(Tower t){
+        displayedTower = t;
+    }
     private void drawButtons(Graphics g){
         ImageIcon imageIcon = new ImageIcon("src/gear.png");
         Image image = imageIcon.getImage();
