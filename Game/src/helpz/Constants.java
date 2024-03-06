@@ -37,6 +37,20 @@ public class Constants {
             }
             return 0;
         }
+
+        public static int GetStartHealth(int enemyType){
+            switch (enemyType){
+                case SOLDIER1:
+                    return 50;
+                case SOLDIER2:
+                    return 80;
+                case SOLDIER3:
+                    return 100;
+                case SOLDIER4:
+                    return 200;
+            }
+            return 0;
+        }
     }
     public static class Towers{
         public static final int GREEN_CANON = 0;
@@ -55,6 +69,62 @@ public class Constants {
                     return "Big Rocket";
             }
             return "";
+        }
+        public static float GetDefaultDmg(int towerType){
+            switch (towerType){
+                case GREEN_CANON:
+                    return 5;
+                case RED_CANON:
+                    return 10;
+                case DOUBLE_ROCKET:
+                    return 20;
+                case BIG_ROCKET:
+                    return 40;
+            }
+            return 0;
+        }
+        public static float GetDefaultRange(int towerType){
+            switch (towerType){
+                case GREEN_CANON:
+                    return 100;
+                case RED_CANON:
+                    return 100;
+                case DOUBLE_ROCKET:
+                    return 200;
+                case BIG_ROCKET:
+                    return 200;
+            }
+            return 0;
+        }
+        public static float GetDefaultCooldown(int towerType){
+            switch (towerType){
+                case GREEN_CANON:
+                    return 10;
+                case RED_CANON:
+                    return 10;
+                case DOUBLE_ROCKET:
+                    return 20;
+                case BIG_ROCKET:
+                    return 40;
+            }
+            return 0;
+        }
+    }
+
+    public static class Projectiles{
+        public static final int BULLET = 0;
+        public static final int ROCKET_SMALL = 1;
+        public static final int ROCKET_BIG = 2;
+        public static float GetSpeed(int type){
+            switch (type){
+                case BULLET:
+                    return 3;
+                case ROCKET_SMALL:
+                    return 2;
+                case ROCKET_BIG:
+                    return 1;
+            }
+            return 0;
         }
     }
 }

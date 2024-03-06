@@ -5,6 +5,10 @@ import java.awt.event.KeyListener;
 import static main.GameStates.*;
 
 public class KeyBoardListener implements KeyListener {
+    private GameWindow game;
+    public KeyBoardListener(GameWindow game){
+        this.game = game;
+    }
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -12,14 +16,11 @@ public class KeyBoardListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_A) {
-            SetGameState(MENU);
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_S) {
-            GameStates.gameState = PLAYING;
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_D) {
-            GameStates.gameState = SETTINGS;
+//        if(gameState == EDIT){
+//            game.getEditor().keyPress(e);
+//        }
+        if(gameState == PLAYING){
+            game.getPlaying().keyPressed(e);
         }
     }
 

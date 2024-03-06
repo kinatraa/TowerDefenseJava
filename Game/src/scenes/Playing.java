@@ -9,6 +9,7 @@ import ui.MyButton;
 import main.GameWindow;
 import ui.ActionBar;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.util.ArrayList;
@@ -53,6 +54,12 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         enemyManager.draw(g);
         towerManager.draw(g);
         drawSelectedTower(g);
+        drawHighlight(g);
+    }
+
+    private void drawHighlight(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.drawRect(mouseX, mouseY, 32, 32);
     }
 
     private void drawSelectedTower(Graphics g) {
@@ -109,7 +116,11 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         int tileType = getGame().getTileManager().getTile(id).getTileType();
         return tileType == GRASS_TILE;
     }
-
+    public void keyPressed(KeyEvent e){
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+            selectedTower = null;
+        }
+    }
     @Override
     public void mouseClicked3() {
 
@@ -150,4 +161,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         return towerManager;
     }
 
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
+    }
 }

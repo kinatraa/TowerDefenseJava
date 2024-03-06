@@ -36,7 +36,7 @@ public class ActionBar extends Bar{
         }
     }
     public void draw(Graphics g){
-        g.setColor(new Color(255,201,215));
+        g.setColor(Color.CYAN);
         g.fillRect(x, y, width, height);
         drawButtons(g);
         drawDisplayedTower(g);
@@ -53,7 +53,20 @@ public class ActionBar extends Bar{
             g.setFont(new Font("LucidaSans", Font.BOLD, 15));
             g.drawString("" + Constants.Towers.GetName(displayedTower.getTowerType()), 1100, 680);
             g.drawString("ID: " + displayedTower.getId(), 1100, 700);
+
+            drawDisplayedTowerBorder(g);
+            drawDisplayedTowerRange(g);
         }
+    }
+
+    private void drawDisplayedTowerRange(Graphics g) {
+        g.setColor(Color.CYAN);
+        g.drawOval(displayedTower.getX() + 16 - (int)displayedTower.getRange()*2/2, displayedTower.getY() + 16 - (int)displayedTower.getRange()*2/2, (int)displayedTower.getRange()*2, (int)displayedTower.getRange()*2);
+    }
+
+    private void drawDisplayedTowerBorder(Graphics g) {
+        g.setColor(Color.CYAN);
+        g.drawRect(displayedTower.getX(), displayedTower.getY(), 32, 32);
     }
 
     public void displayTower(Tower t){
