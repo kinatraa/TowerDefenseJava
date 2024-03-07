@@ -19,43 +19,51 @@ public class TowerManager {
     private BufferedImage[] towerImgs;
     private ArrayList<Tower> towers = new ArrayList<>();
     private int towerAmout = 0;
-    public TowerManager(Playing playing){
+
+    public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImgs();
     }
+
     private void loadTowerImgs() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         towerImgs = new BufferedImage[4];
 //        for ()
         towerImgs[0] = atlas.getSubimage(19 * 32, 10 * 32, 32, 32);
     }
+
     public void addTower(Tower selectedTower, int xPos, int yPos) {
         towers.add(new Tower(xPos, yPos, towerAmout++, selectedTower.getTowerType()));
     }
+
     private BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
         InputStream is = EnemyManager.class.getClassLoader().getResourceAsStream("elemi.png");
         try {
-            if(is != null) img = ImageIO.read(is);
-        }
-        catch(IOException e) {
+            if (is != null) img = ImageIO.read(is);
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return img;
     }
-    public void update(){
-        attackEnemyIfClose();
+
+    public void update() {
+        for (Tower t : towers) {
+            t.update();
+            attackEnemyIfClose(t);
+        }
     }
 
-    private void attackEnemyIfClose() {
-        for(Tower t : towers){
-            for(Enemy e : playing.getEnemyManager().getEnemies()){
-                if(e.isAlive()) {
-                    if (isEnemyInRange(t, e)) {
-                        e.hurt(1);
-                    } else {
-
+    private void attackEnemyIfClose(Tower t) {
+        for (Enemy e : playing.getEnemyManager().getEnemies()) {
+            if (e.isAlive()) {
+                if (isEnemyInRange(t, e)) {
+                    if (t.isCooldownOver()) {
+                        playing.shootEnemy(t, e);
+                        t.resetCooldown();
                     }
+                } else {
+
                 }
             }
         }
@@ -66,8 +74,8 @@ public class TowerManager {
         return range < t.getRange();
     }
 
-    public void draw(Graphics g){
-        for (Tower t : towers){
+    public void draw(Graphics g) {
+        for (Tower t : towers) {
             g.drawImage(towerImgs[t.getTowerType()], t.getX(), t.getY(), null);
         }
     }
@@ -75,9 +83,10 @@ public class TowerManager {
     public BufferedImage[] getTowerImgs() {
         return towerImgs;
     }
+
     public Tower getTowerAt(int x, int y) {
-        for (Tower t : towers){
-            if(t.getX() == x && t.getY() == y){
+        for (Tower t : towers) {
+            if (t.getX() == x && t.getY() == y) {
                 return t;
             }
         }

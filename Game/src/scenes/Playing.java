@@ -1,7 +1,9 @@
 package scenes;
 
+import enemies.Enemy;
 import helpz.LoadSave;
 import managers.EnemyManager;
+import managers.ProjectileManager;
 import managers.TowerManager;
 import objects.PathPoint;
 import objects.Tower;
@@ -22,6 +24,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private int mouseX, mouseY;
     private EnemyManager enemyManager;
     private TowerManager towerManager;
+    private ProjectileManager projManager;
     private Tower selectedTower;
     private PathPoint start, end;
     public Playing(GameWindow game) {
@@ -30,10 +33,12 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         actionBar = new ActionBar(1024, 0, 256, 768, this);
         enemyManager = new EnemyManager(this, start, end);
         towerManager = new TowerManager(this);
+        projManager = new ProjectileManager(this);
     }
     public void update(){
         enemyManager.update();
         towerManager.update();
+        projManager.update();
     }
     public void setSelectedTower(Tower selectedTower){
         this.selectedTower = selectedTower;
@@ -53,6 +58,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         actionBar.draw(g);
         enemyManager.draw(g);
         towerManager.draw(g);
+        projManager.draw(g);
         drawSelectedTower(g);
         drawHighlight(g);
     }
@@ -163,5 +169,8 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
 
     public EnemyManager getEnemyManager() {
         return enemyManager;
+    }
+    public void shootEnemy(Tower t, Enemy e){
+        projManager.newProjectile(t, e);
     }
 }

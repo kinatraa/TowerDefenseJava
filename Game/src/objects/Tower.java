@@ -3,9 +3,10 @@ package objects;
 import helpz.Constants;
 
 public class Tower {
-    private int x, y, id, towerType;
-    private float dmg, range, cooldown;
-    public Tower(int x, int y, int id, int towerType){
+    private int x, y, id, towerType, cdTick, dmg;
+    private float range, cooldown;
+
+    public Tower(int x, int y, int id, int towerType) {
         this.x = x;
         this.y = y;
         this.id = id;
@@ -13,6 +14,18 @@ public class Tower {
         setDefaultDmg();
         setDefaultRange();
         setDefaultCooldown();
+    }
+
+    public void update() {
+        cdTick++;
+    }
+
+    public boolean isCooldownOver() {
+        return cdTick >= cooldown;
+    }
+
+    public void resetCooldown() {
+        cdTick = 0;
     }
 
     private void setDefaultCooldown() {
@@ -63,7 +76,7 @@ public class Tower {
         return cooldown;
     }
 
-    public float getDmg() {
+    public int getDmg() {
         return dmg;
     }
 
