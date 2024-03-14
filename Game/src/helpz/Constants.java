@@ -105,14 +105,12 @@ public class Constants {
 
         public static float GetDefaultCooldown(int towerType) {
             switch (towerType) {
-                case GREEN_CANON:
-                    return 10;
-                case RED_CANON:
-                    return 10;
-                case DOUBLE_RR:
-                    return 20;
-                case BIG_ONE:
+                case GREEN_CANON, RED_CANON:
                     return 40;
+                case DOUBLE_RR:
+                    return 100;
+                case BIG_ONE:
+                    return 125;
             }
             return 0;
         }
@@ -126,14 +124,12 @@ public class Constants {
 
         public static float GetSpeed(int type) {
             switch (type) {
-                case BULLET_GREEN:
-                    return 3;
-                case BULLET_RED:
-                    return 3;
+                case BULLET_GREEN, BULLET_RED:
+                    return 8;
                 case ROCKET_SMALL:
-                    return 2;
+                    return 6;
                 case ROCKET_BIG:
-                    return 1;
+                    return 4;
             }
             return 0;
         }

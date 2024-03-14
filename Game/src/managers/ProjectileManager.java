@@ -8,6 +8,7 @@ import objects.Tower;
 import scenes.Playing;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -19,6 +20,8 @@ public class ProjectileManager {
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private BufferedImage[] proj_imgs;
     private int proj_id = 0;
+    private int exploTick, exploIndex;
+    private Point2D.Float exploPos;
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
@@ -36,7 +39,6 @@ public class ProjectileManager {
 
     public void newProjectile(Tower t, Enemy e) {
         int type = getProjectileType(t);
-//        int type = 2;
         int xDist = (int) (t.getX() - e.getX());
         int yDist = (int) (t.getY() - e.getY());
         int totalDist = Math.abs(xDist) + Math.abs(yDist);
@@ -53,10 +55,12 @@ public class ProjectileManager {
         if (t.getY() > e.getY()) {
             ySpeed *= -1;
         }
-
-        float arcValue = (float) Math.atan(yDist / (float) xDist);
-        float rotate = (float) Math.toDegrees(arcValue);
-        if(xDist < 0) rotate += 180;
+        float rotate = 0;
+        if(type == ROCKET_BIG || type == ROCKET_SMALL){
+            float arcValue = (float) Math.atan(yDist / (float) xDist);
+            rotate = (float) Math.toDegrees(arcValue);
+            if(xDist < 0) rotate += 180;
+        }
         projectiles.add(new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
     }
 
@@ -66,6 +70,9 @@ public class ProjectileManager {
                 p.move();
                 if (isProjHittingEnemy(p)) {
                     p.setActive(false);
+                    if(p.getProjectileType() == ROCKET_SMALL || p.getProjectileType() == ROCKET_BIG){
+                        explodeOnEnemies(p);
+                    }
                 } else {
 
                 }
@@ -73,11 +80,25 @@ public class ProjectileManager {
         }
     }
 
+    private void explodeOnEnemies(Projectile p) {
+        for (Enemy e : playing.getEnemyManager().getEnemies()) {
+            if(e.isAlive()){
+                float radius = 40.0f;
+                float xDist = Math.abs(p.getPos().x - e.getX());
+                float yDist = Math.abs(p.getPos().y - e.getY());
+                float realDist = (float) Math.hypot(xDist, yDist);
+                if(realDist <= radius) e.hurt(p.getDmg());
+            }
+        }
+    }
+
     private boolean isProjHittingEnemy(Projectile p) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
-            if (e.getBounds().contains(p.getPos())) {
-                e.hurt(p.getDmg());
-                return true;
+            if(e.isAlive()){
+                if (e.getBounds().contains(p.getPos())) {
+                    e.hurt(p.getDmg());
+                    return true;
+                }
             }
         }
         return false;
@@ -88,11 +109,16 @@ public class ProjectileManager {
 
         for (Projectile p : projectiles) {
             if (p.isActive()){
-                g2d.translate(p.getPos().x, p.getPos().y);
-                g2d.rotate(Math.toRadians(90));
-                g2d.drawImage(proj_imgs[p.getProjectileType()], -16, -16, null);
-                g2d.rotate(-Math.toRadians(90));
-                g2d.translate(-p.getPos().x, -p.getPos().y);
+                if(p.getProjectileType() == ROCKET_BIG || p.getProjectileType() == ROCKET_SMALL){
+                    g2d.translate(p.getPos().x, p.getPos().y);
+                    g2d.rotate(Math.toRadians(p.getRotation() - 90));
+                    g2d.drawImage(proj_imgs[p.getProjectileType()], -16, -16, null);
+                    g2d.rotate(-Math.toRadians(p.getRotation() - 90));
+                    g2d.translate(-p.getPos().x, -p.getPos().y);
+                }
+                else{
+                    g2d.drawImage(proj_imgs[p.getProjectileType()], (int) p.getPos().x - 16, (int) p.getPos().y - 16, null);
+                }
             }
         }
     }
@@ -110,4 +136,18 @@ public class ProjectileManager {
         }
         return -1;
     }
+
+//    public class Explosion{
+//        private Point2D.Float pos;
+//
+//        public Explosion(Point2D.Float pos){
+//            this.pos = pos;
+//        }
+//        public void update(){
+//
+//        }
+//        public Point2D.Float getPos(){
+//            return pos;
+//        }
+//    }
 }

@@ -27,12 +27,12 @@ public class ActionBar extends Bar{
         bMenu2 = new MyButton("Menu2", 1211, 5, 64, 64);
         towerButtons = new MyButton[4];
         int yStart = 100;
-        int yOffset = 40;
+        int yOffset = 80;
         int xStart = 1032;
         int xOffset = 40;
         int index = 0, cnt = 0;
         for(int i = 0; i < towerButtons.length; i++){
-            towerButtons[i] = new MyButton("", xStart, yStart + yOffset * i, 32, 32, i);
+            towerButtons[i] = new MyButton("", xStart, yStart + yOffset * i, 64, 64, i);
         }
     }
     public void draw(Graphics g){

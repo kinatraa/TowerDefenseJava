@@ -70,7 +70,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
 
     private void drawSelectedTower(Graphics g) {
         if(selectedTower != null){
-            g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, null);
+            g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, 32, 32, null);
         }
     }
 
@@ -172,5 +172,6 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
     public void shootEnemy(Tower t, Enemy e){
         projManager.newProjectile(t, e);
+//        towerManager.newTowerDirection(t, e);
     }
 }
