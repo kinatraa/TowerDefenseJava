@@ -172,6 +172,6 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
     public void shootEnemy(Tower t, Enemy e){
         projManager.newProjectile(t, e);
-//        towerManager.newTowerDirection(t, e);
+        towerManager.trackingEnemy(t, e);
     }
 }

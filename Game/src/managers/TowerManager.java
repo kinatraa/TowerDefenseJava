@@ -1,31 +1,23 @@
 package managers;
 
 import enemies.Enemy;
-import helpz.Constants;
-import helpz.LoadSave;
-import objects.Projectile;
 import objects.Tower;
 import scenes.Playing;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-
-import static helpz.Constants.Projectiles.ROCKET_BIG;
-import static helpz.Constants.Projectiles.ROCKET_SMALL;
-import static helpz.Constants.Towers.*;
 
 public class TowerManager {
     private Playing playing;
     private BufferedImage[] towerImgs;
     private ArrayList<Tower> towers = new ArrayList<>();
     private int towerAmout = 0;
-    private float rotate;
-    private Enemy focusEnemy;
+    private float angle, rotate;
+    private Enemy target;
     public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImgs();
@@ -44,12 +36,8 @@ public class TowerManager {
         towers.add(new Tower(xPos, yPos, towerAmout++, selectedTower.getTowerType()));
     }
 
-    public void newTowerDirection(Tower t, Enemy e) {
-        focusEnemy = e;
-        int xDist = (int) (-t.getX() + e.getX());
-        int yDist = (int) (-t.getY() + e.getY());
-        rotate = (float) Math.atan(yDist / (float) xDist);
-        if(xDist < 0) rotate += 180;
+    public void trackingEnemy(Tower t, Enemy e) {
+        target = e;
     }
 
     private BufferedImage getSpriteAtlas() {
@@ -91,23 +79,21 @@ public class TowerManager {
     }
 
     public void draw(Graphics g) {
-        for (Tower t : towers) {
-            g.drawImage(towerImgs[t.getTowerType()], t.getX() - 8, t.getY() - 8, 48, 48, null);
-        }
         //rotate
-//        Graphics2D g2d = (Graphics2D) g;
-//        for(Tower t : towers){
-//            AffineTransform originalTransform = g2d.getTransform();
-//
-//            if(focusEnemy != null && isEnemyInRange(t, focusEnemy)) {
-//                g2d.translate(t.getX() + 16, t.getY() + 16);
-//                g2d.rotate(rotate + 45);
-//                g2d.drawImage(towerImgs[t.getTowerType()], -24, -24, 48, 48, null);
-//                g2d.setTransform(originalTransform);
-//            } else {
-//                g2d.drawImage(towerImgs[t.getTowerType()], t.getX() - 8, t.getY() - 8, 48, 48, null);
-//            }
-//        }
+        Graphics2D g2d = (Graphics2D) g;
+        for(Tower t : towers){
+            if(target != null && isEnemyInRange(t, target) && target.isAlive()) {
+                angle = (float) Math.atan2(target.getY() - t.getY(), target.getX() - t.getX());
+                rotate = (float) Math.toDegrees(angle) + 87;
+                g2d.translate(t.getX() + 16, t.getY() + 16);
+                g2d.rotate(Math.toRadians(rotate));
+                g2d.drawImage(towerImgs[t.getTowerType()], -24, -24, 48, 48, null);
+                g2d.rotate(-Math.toRadians(rotate));
+                g2d.translate(-(t.getX() + 16), -(t.getY() + 16));
+            } else {
+                g2d.drawImage(towerImgs[t.getTowerType()], t.getX() - 8, t.getY() - 8, 48, 48, null);
+            }
+        }
     }
 
     public BufferedImage[] getTowerImgs() {
