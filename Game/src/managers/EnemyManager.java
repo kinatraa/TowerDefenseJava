@@ -27,10 +27,10 @@ public class EnemyManager {
         this.start = start;
         this.end = end;
         enemyImgs = new BufferedImage[8];
-        addEnemy(SOLDIER1);
-        addEnemy(SOLDIER2);
-        addEnemy(SOLDIER3);
-        addEnemy(SOLDIER4);
+//        addEnemy(SOLDIER1);
+//        addEnemy(SOLDIER2);
+//        addEnemy(SOLDIER3);
+//        addEnemy(SOLDIER4);
         loadEnemyImgs();
     }
 
@@ -52,11 +52,17 @@ public class EnemyManager {
         return img;
     }
     public void update(){
+        updateWaveManager();
+
         for(Enemy e : enemies){
             if(e.isAlive()){
                 updateEnemyMove(e);
             }
         }
+    }
+
+    private void updateWaveManager() {
+        playing.getWaveManager().update();
     }
 
     private void updateEnemyMove(Enemy e) {
@@ -73,7 +79,7 @@ public class EnemyManager {
         }
         else if(isAtEnd(e)){
             //reached the end
-            System.out.println("Lives lost!");
+            e.kill();
         }
         else{
             //find new direction
@@ -137,6 +143,9 @@ public class EnemyManager {
         else if(dir == RIGHT) return GetSpeed(enemyType) + 32;
         return 0;
     }
+    public void spawnEnemy(int nextEnemy){
+        addEnemy(nextEnemy);
+    }
 
     public void addEnemy(int enemyTile){
         int x = start.getxCord() * 32;
@@ -177,5 +186,13 @@ public class EnemyManager {
     }
     public ArrayList<Enemy> getEnemies(){
         return enemies;
+    }
+
+    public int getAmountOfAliveEnemies() {
+        int cnt = 0;
+        for(Enemy e : enemies){
+            if(e.isAlive()) ++cnt;
+        }
+        return cnt;
     }
 }

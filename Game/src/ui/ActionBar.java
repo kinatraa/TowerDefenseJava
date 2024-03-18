@@ -7,6 +7,7 @@ import scenes.Playing;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
 
 import static main.GameStates.MENU2;
 import static main.GameStates.SetGameState;
@@ -18,9 +19,11 @@ public class ActionBar extends Bar{
     private MyButton[] towerButtons;
     private Tower selectedTower;
     private Tower displayedTower;
+    private DecimalFormat formatter;
     public ActionBar(int x, int y, int width, int height, Playing playing){
         super(x, y, width, height);
         this.playing = playing;
+        formatter = new DecimalFormat("0.0");
         initButtons();
     }
     private void initButtons() {
@@ -40,19 +43,47 @@ public class ActionBar extends Bar{
         g.fillRect(x, y, width, height);
         drawButtons(g);
         drawDisplayedTower(g);
+        drawWaveInfo(g);
+    }
+
+    private void drawWaveInfo(Graphics g){
+        g.setFont(new Font("LucidaSans", Font.BOLD, 20));
+        drawWaveTimerInfo(g);
+        drawEnemiesLeftInfo(g);
+        drawWavesLeftInfo(g);
+    }
+
+    private void drawWavesLeftInfo(Graphics g) {
+        int current = playing.getWaveManager().getWaveIndex();
+        int size = playing.getWaveManager().getWaves().size();
+        g.drawString("Wave " + (current + 1) + " / " + size, 1100, 700);
+    }
+
+    private void drawEnemiesLeftInfo(Graphics g) {
+        int remaining = playing.getEnemyManager().getAmountOfAliveEnemies();
+        g.drawString("Enemies Left: " + remaining, 1100, 730);
+    }
+
+    private void drawWaveTimerInfo(Graphics g) {
+        if(playing.getWaveManager().isWaveTimerStarted()){
+            g.setColor(Color.BLACK);
+            float timeLeft = playing.getWaveManager().getTimeLeft();
+            String formatedText = formatter.format(timeLeft);
+            g.drawString("Time left: " + formatedText, 1100, 670);
+        }
     }
 
     private void drawDisplayedTower(Graphics g) {
         if(displayedTower != null){
             g.setColor(Color.LIGHT_GRAY);
-            g.fillRect(1028, 650, 220, 85);
+            g.fillRect(1028, 500, 220, 85);
             g.setColor(Color.BLACK);
-            g.drawRect(1028, 650, 220, 85);
-            g.drawRect(1035, 660, 50, 50);
-            g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 1035, 660, 50, 50, null);
+            g.drawRect(1028, 500, 220, 85);
+            g.drawRect(1035, 510, 50, 50);
+            g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 1035, 510, 50, 50, null);
             g.setFont(new Font("LucidaSans", Font.BOLD, 15));
-            g.drawString("" + Constants.Towers.GetName(displayedTower.getTowerType()), 1100, 680);
-            g.drawString("ID: " + displayedTower.getId(), 1100, 700);
+            g.drawString("" + Constants.Towers.GetName(displayedTower.getTowerType()), 1100, 530);
+            g.drawString("ID: " + displayedTower.getId(), 1100, 550);
 
             drawDisplayedTowerBorder(g);
             drawDisplayedTowerRange(g);

@@ -103,4 +103,9 @@ public abstract class Enemy {
     public boolean isAlive() {
         return alive;
     }
+
+    public void kill() {
+        alive = false;
+        health = 0;
+    }
 }

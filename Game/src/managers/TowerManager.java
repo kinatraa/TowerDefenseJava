@@ -87,11 +87,11 @@ public class TowerManager {
                 rotate = (float) Math.toDegrees(angle) + 87;
                 g2d.translate(t.getX() + 16, t.getY() + 16);
                 g2d.rotate(Math.toRadians(rotate));
-                g2d.drawImage(towerImgs[t.getTowerType()], -24, -24, 48, 48, null);
+                g2d.drawImage(towerImgs[t.getTowerType()], -28, -28, 56, 56, null);
                 g2d.rotate(-Math.toRadians(rotate));
                 g2d.translate(-(t.getX() + 16), -(t.getY() + 16));
             } else {
-                g2d.drawImage(towerImgs[t.getTowerType()], t.getX() - 8, t.getY() - 8, 48, 48, null);
+                g2d.drawImage(towerImgs[t.getTowerType()], t.getX() - 12, t.getY() - 12, 56, 56, null);
             }
         }
     }

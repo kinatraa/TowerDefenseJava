@@ -5,6 +5,7 @@ import helpz.LoadSave;
 import managers.EnemyManager;
 import managers.ProjectileManager;
 import managers.TowerManager;
+import managers.WaveManager;
 import objects.PathPoint;
 import objects.Tower;
 import ui.MyButton;
@@ -25,6 +26,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private EnemyManager enemyManager;
     private TowerManager towerManager;
     private ProjectileManager projManager;
+    private WaveManager waveManager;
     private Tower selectedTower;
     private PathPoint start, end;
     public Playing(GameWindow game) {
@@ -34,11 +36,58 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         enemyManager = new EnemyManager(this, start, end);
         towerManager = new TowerManager(this);
         projManager = new ProjectileManager(this);
+        waveManager = new WaveManager(this);
     }
     public void update(){
+        waveManager.update();
+        if(isAllEnemiesDead()){
+            if(isThereMoreWaves()){
+                waveManager.startWaveTimer();
+                if(isWaveTimerOver()){
+                    waveManager.increaseWaveIndex();
+                    enemyManager.getEnemies().clear();
+                    waveManager.resetEnemyIndex();
+                }
+            }
+        }
+        if(isTimeForNewEnemy()){
+            spawnEnemy();
+        }
+
         enemyManager.update();
         towerManager.update();
         projManager.update();
+    }
+
+    private boolean isWaveTimerOver() {
+        return waveManager.isWaveTimerOver();
+    }
+
+    private boolean isThereMoreWaves() {
+        return waveManager.isThereMoreWaves();
+    }
+
+    private boolean isAllEnemiesDead() {
+        if(waveManager.isThereMoreEnemiesInWave()){
+            return false;
+        }
+        for(Enemy e : enemyManager.getEnemies()){
+            if(e.isAlive()) return false;
+        }
+        return true;
+    }
+
+    private void spawnEnemy() {
+        enemyManager.spawnEnemy(waveManager.getNextEnemy());
+    }
+
+    private boolean isTimeForNewEnemy() {
+        if(waveManager.isTimeForNewEnemy()){
+            if(waveManager.isThereMoreEnemiesInWave()){
+                return true;
+            }
+        }
+        return false;
     }
     public void setSelectedTower(Tower selectedTower){
         this.selectedTower = selectedTower;
@@ -61,6 +110,11 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         projManager.draw(g);
         drawSelectedTower(g);
         drawHighlight(g);
+        drawWaveInfo(g);
+    }
+
+    private void drawWaveInfo(Graphics g) {
+
     }
 
     private void drawHighlight(Graphics g) {
@@ -170,6 +224,11 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     public EnemyManager getEnemyManager() {
         return enemyManager;
     }
+
+    public WaveManager getWaveManager() {
+        return waveManager;
+    }
+
     public void shootEnemy(Tower t, Enemy e){
         projManager.newProjectile(t, e);
         towerManager.trackingEnemy(t, e);
