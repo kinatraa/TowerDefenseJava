@@ -77,8 +77,8 @@ public class TileManager {
 
         tiles.add(BUSH1 = new Tile(getSprite(15, 5), id++, BUSH_TILE));
         tiles.add(BUSH2 = new Tile(getSprite(17, 5), id++, BUSH_TILE));
-        tiles.add(ROCK1 = new Tile(getSprite(21, 5), id++, ROAD_TILE));
-        tiles.add(ROCK2 = new Tile(getSprite(20, 5), id++, ROAD_TILE));
+        tiles.add(ROCK1 = new Tile(getSprite(21, 5), id++, ROCK_TILE));
+        tiles.add(ROCK2 = new Tile(getSprite(20, 5), id++, ROCK_TILE));
     }
 
     private void loadAtlas() {

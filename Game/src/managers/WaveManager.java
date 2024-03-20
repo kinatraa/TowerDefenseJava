@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class WaveManager {
     private Playing playing;
     private ArrayList<Wave> waves = new ArrayList<>();
-    private int enemySpawnTickLimit = 60 * 1;
+    private int enemySpawnTickLimit = 60 * 2;
     private int enemySpawnTick = enemySpawnTickLimit;
     private int enemyIndex, waveIndex;
     private int waveTickLimit = 60 * 5;

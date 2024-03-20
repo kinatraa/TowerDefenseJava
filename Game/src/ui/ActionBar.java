@@ -56,12 +56,12 @@ public class ActionBar extends Bar{
     private void drawWavesLeftInfo(Graphics g) {
         int current = playing.getWaveManager().getWaveIndex();
         int size = playing.getWaveManager().getWaves().size();
-        g.drawString("Wave " + (current + 1) + " / " + size, 1100, 700);
+        g.drawString("Wave " + (current + 1) + " / " + size, 1050, 700);
     }
 
     private void drawEnemiesLeftInfo(Graphics g) {
         int remaining = playing.getEnemyManager().getAmountOfAliveEnemies();
-        g.drawString("Enemies Left: " + remaining, 1100, 730);
+        g.drawString("Enemies Left: " + remaining, 1050, 730);
     }
 
     private void drawWaveTimerInfo(Graphics g) {
@@ -69,7 +69,7 @@ public class ActionBar extends Bar{
             g.setColor(Color.BLACK);
             float timeLeft = playing.getWaveManager().getTimeLeft();
             String formatedText = formatter.format(timeLeft);
-            g.drawString("Time left: " + formatedText, 1100, 670);
+            g.drawString("Time left: " + formatedText, 1050, 670);
         }
     }
 

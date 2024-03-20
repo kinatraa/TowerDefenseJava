@@ -14,6 +14,7 @@ public abstract class Enemy {
     protected int enemyType;
     protected int lastDir;
     protected boolean alive = true;
+    protected int rotate = 0;
 
     public Enemy(float x, float y, int ID, int enemyType) {
         this.x = x;
@@ -107,5 +108,15 @@ public abstract class Enemy {
     public void kill() {
         alive = false;
         health = 0;
+    }
+
+    public int getRotate() {
+        return rotate;
+    }
+
+    public void changeRotate(int rotate) {
+        this.rotate += rotate;
+        this.rotate %= 360;
+        if(this.rotate < 0) this.rotate += 360;
     }
 }

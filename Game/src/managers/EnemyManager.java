@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.Tiles.*;
 import static helpz.Constants.Enemies.*;
+import static helpz.ImgFix.getRotImg;
 
 public class EnemyManager {
     private Playing playing;
@@ -27,10 +28,6 @@ public class EnemyManager {
         this.start = start;
         this.end = end;
         enemyImgs = new BufferedImage[8];
-//        addEnemy(SOLDIER1);
-//        addEnemy(SOLDIER2);
-//        addEnemy(SOLDIER3);
-//        addEnemy(SOLDIER4);
         loadEnemyImgs();
     }
 
@@ -98,14 +95,28 @@ public class EnemyManager {
         if(dir == LEFT || dir == RIGHT){
             int newY = (int) (e.getY() + getSpeedAndHeight(UP, e.getEnemyType()));
             if(getTileType((int)e.getX(), newY) == DIRT_TILE){
+                if(dir == LEFT) e.changeRotate(90);
+                else e.changeRotate(-90);
                 e.move(GetSpeed(e.getEnemyType()), UP);
             }
-            else e.move(GetSpeed(e.getEnemyType()), DOWN);
+            else{
+                if(dir == LEFT) e.changeRotate(-90);
+                else e.changeRotate(90);
+                e.move(GetSpeed(e.getEnemyType()), DOWN);
+            }
         }
         else{
-            int newX = (int) (e.getX() + getSpeedAndWidth(RIGHT, e.getEnemyType()));
-            if(getTileType(newX, (int)e.getY()) == DIRT_TILE) e.move(GetSpeed(e.getEnemyType()), RIGHT);
-            else e.move(GetSpeed(e.getEnemyType()), LEFT);
+            int newX = (int) (e.getX() + getSpeedAndWidth(LEFT, e.getEnemyType()));
+            if(getTileType(newX, (int)e.getY()) == DIRT_TILE){
+                if(dir == DOWN) e.changeRotate(90);
+                else e.changeRotate(-90);
+                e.move(GetSpeed(e.getEnemyType()), LEFT);
+            }
+            else{
+                if(dir == DOWN) e.changeRotate(-90);
+                else e.changeRotate(90);
+                e.move(GetSpeed(e.getEnemyType()), RIGHT);
+            }
         }
     }
 
@@ -168,7 +179,8 @@ public class EnemyManager {
     public void draw(Graphics g){
         for (Enemy e : enemies){
             if(e.isAlive()){
-                drawEnemy(e, g);
+//                System.out.println(e.getRotate());
+                drawEnemy(e, g, e.getRotate());
                 drawHealthBar(e, g);
             }
         }
@@ -181,8 +193,8 @@ public class EnemyManager {
     private int getNewBarWidth(Enemy e){
         return (int) (HPBarWidth * e.getHealthBarFloat());
     }
-    private void drawEnemy(Enemy e, Graphics g) {
-        g.drawImage(enemyImgs[e.getEnemyType()], (int)e.getX(), (int)e.getY(), null);
+    private void drawEnemy(Enemy e, Graphics g, int rotate) {
+        g.drawImage(getRotImg(enemyImgs[e.getEnemyType()], rotate), (int)e.getX() + 4, (int)e.getY() + 4, 24, 24, null);
     }
     public ArrayList<Enemy> getEnemies(){
         return enemies;

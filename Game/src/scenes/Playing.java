@@ -110,11 +110,6 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         projManager.draw(g);
         drawSelectedTower(g);
         drawHighlight(g);
-        drawWaveInfo(g);
-    }
-
-    private void drawWaveInfo(Graphics g) {
-
     }
 
     private void drawHighlight(Graphics g) {
