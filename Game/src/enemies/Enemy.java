@@ -1,12 +1,14 @@
 package enemies;
 
 import helpz.Constants;
+import managers.EnemyManager;
 
 import java.awt.*;
 
 import static helpz.Constants.Direction.*;
 
 public abstract class Enemy {
+    protected EnemyManager enemyManager;
     protected float x, y;
     protected Rectangle bounds;
     protected int health, maxHealth;
@@ -16,11 +18,12 @@ public abstract class Enemy {
     protected boolean alive = true;
     protected int rotate = 0;
 
-    public Enemy(float x, float y, int ID, int enemyType) {
+    public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager) {
         this.x = x;
         this.y = y;
         this.ID = ID;
         this.enemyType = enemyType;
+        this.enemyManager = enemyManager;
         bounds = new Rectangle((int) x, (int) y, 32, 32);
         lastDir = RIGHT;
         setStartHealth();
@@ -35,6 +38,7 @@ public abstract class Enemy {
         this.health -= dmg;
         if (health <= 0) {
             alive = false;
+            enemyManager.reward(enemyType);
         }
     }
 

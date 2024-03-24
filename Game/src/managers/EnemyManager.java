@@ -50,7 +50,6 @@ public class EnemyManager {
     }
     public void update(){
         updateWaveManager();
-
         for(Enemy e : enemies){
             if(e.isAlive()){
                 updateEnemyMove(e);
@@ -163,23 +162,22 @@ public class EnemyManager {
         int y = start.getyCord() * 32;
         switch (enemyTile){
             case SOLDIER1:
-                enemies.add(new Soldier1(x, y, 0));
+                enemies.add(new Soldier1(x, y, 0, this));
                 break;
             case SOLDIER2:
-                enemies.add(new Soldier2(x, y, 0));
+                enemies.add(new Soldier2(x, y, 0, this));
                 break;
             case SOLDIER3:
-                enemies.add(new Soldier3(x, y, 0));
+                enemies.add(new Soldier3(x, y, 0, this));
                 break;
             case SOLDIER4:
-                enemies.add(new Soldier4(x, y, 0));
+                enemies.add(new Soldier4(x, y, 0, this));
                 break;
         }
     }
     public void draw(Graphics g){
         for (Enemy e : enemies){
             if(e.isAlive()){
-//                System.out.println(e.getRotate());
                 drawEnemy(e, g, e.getRotate());
                 drawHealthBar(e, g);
             }
@@ -206,5 +204,9 @@ public class EnemyManager {
             if(e.isAlive()) ++cnt;
         }
         return cnt;
+    }
+
+    public void reward(int enemyType) {
+        playing.reward(enemyType);
     }
 }

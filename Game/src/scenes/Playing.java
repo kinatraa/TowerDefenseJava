@@ -1,6 +1,7 @@
 package scenes;
 
 import enemies.Enemy;
+import helpz.Constants;
 import helpz.LoadSave;
 import managers.EnemyManager;
 import managers.ProjectileManager;
@@ -29,6 +30,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private WaveManager waveManager;
     private Tower selectedTower;
     private PathPoint start, end;
+    private int goldTick = 0;
     public Playing(GameWindow game) {
         super(game);
         loadDefaultLevel();
@@ -40,6 +42,9 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
     public void update(){
         waveManager.update();
+
+        goldTick++;
+        if(goldTick % (60 * 3) == 0) actionBar.addGold(1);
         if(isAllEnemiesDead()){
             if(isThereMoreWaves()){
                 waveManager.startWaveTimer();
@@ -152,6 +157,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
             if(selectedTower != null){
                 if(isTileGrass(mouseX, mouseY) && getTowerAt(mouseX, mouseY) == null){
                     towerManager.addTower(selectedTower, mouseX, mouseY);
+                    removeGold(selectedTower.getTowerType());
                     selectedTower = null;
                 }
             }
@@ -160,6 +166,10 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
                 actionBar.displayTower(t);
             }
         }
+    }
+
+    private void removeGold(int towerType) {
+        actionBar.payForTower(towerType);
     }
 
     private Tower getTowerAt(int x, int y) {
@@ -227,5 +237,9 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     public void shootEnemy(Tower t, Enemy e){
         projManager.newProjectile(t, e);
         towerManager.trackingEnemy(t, e);
+    }
+
+    public void reward(int enemyType) {
+        actionBar.addGold(Constants.Enemies.GetReward(enemyType));
     }
 }

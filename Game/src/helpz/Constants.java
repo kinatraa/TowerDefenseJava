@@ -26,6 +26,20 @@ public class Constants {
         public static final int SOLDIER3 = 2;
         public static final int SOLDIER4 = 3;
 
+        public static int GetReward(int enemyType){
+            switch (enemyType) {
+                case SOLDIER1:
+                    return 5;
+                case SOLDIER2:
+                    return 10;
+                case SOLDIER3:
+                    return 15;
+                case SOLDIER4:
+                    return 20;
+            }
+            return 0;
+        }
+
         public static float GetSpeed(int enemyType) {
             switch (enemyType) {
                 case SOLDIER1:
@@ -61,6 +75,19 @@ public class Constants {
         public static final int DOUBLE_RR = 2;
         public static final int BIG_ONE = 3;
 
+        public static int GetCost(int towerType){
+            switch (towerType) {
+                case GREEN_CANON:
+                    return 50;
+                case RED_CANON:
+                    return 70;
+                case DOUBLE_RR:
+                    return 100;
+                case BIG_ONE:
+                    return 150;
+            }
+            return 0;
+        }
         public static String GetName(int towerType) {
             switch (towerType) {
                 case GREEN_CANON:
