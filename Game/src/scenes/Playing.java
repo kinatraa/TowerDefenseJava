@@ -9,7 +9,6 @@ import managers.TowerManager;
 import managers.WaveManager;
 import objects.PathPoint;
 import objects.Tower;
-import ui.MyButton;
 import main.GameWindow;
 import ui.ActionBar;
 import java.awt.*;
@@ -30,6 +29,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private WaveManager waveManager;
     private Tower selectedTower;
     private PathPoint start, end;
+    private boolean inBoard;
     private int goldTick = 0;
     public Playing(GameWindow game) {
         super(game);
@@ -114,7 +114,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         towerManager.draw(g);
         projManager.draw(g);
         drawSelectedTower(g);
-        drawHighlight(g);
+        if(inBoard) drawHighlight(g);
     }
 
     private void drawHighlight(Graphics g) {
@@ -150,7 +150,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
     @Override
     public void mouseClicked(int x, int y) {
-        if(x > 1024){
+        if(x >= 1024){
             actionBar.mouseClicked(x, y);
         }
         else{
@@ -170,6 +170,12 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
 
     private void removeGold(int towerType) {
         actionBar.payForTower(towerType);
+    }
+    public void removeTower(Tower displayedTower) {
+        towerManager.removeTower(displayedTower);
+    }
+    public void upgradeTower(Tower displayedTower) {
+        towerManager.upgradeTower(displayedTower);
     }
 
     private Tower getTowerAt(int x, int y) {
@@ -192,10 +198,13 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
     @Override
     public void mouseMoved(int x, int y) {
-        if(x > 1024){
+        if(x >= 1024){
+            inBoard = false;
             actionBar.mouseMoved(x, y);
         }
         else{
+            inBoard = true;
+            actionBar.setShowTowerCost(false);
             mouseX = (x / 32) * 32;
             mouseY = (y / 32) * 32;
         }
@@ -203,7 +212,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
 
     @Override
     public void mousePressed(int x, int y) {
-        if(x > 1024){
+        if(x >= 1024){
             actionBar.mousePressed(x, y);
         }
     }

@@ -1,9 +1,10 @@
 package objects;
 
 import helpz.Constants;
+import static helpz.Constants.Towers.*;
 
 public class Tower {
-    private int x, y, id, towerType, cdTick, dmg;
+    private int x, y, id, towerType, cdTick, dmg, tier;
     private float range, cooldown;
 
     public Tower(int x, int y, int id, int towerType) {
@@ -11,11 +12,33 @@ public class Tower {
         this.y = y;
         this.id = id;
         this.towerType = towerType;
+        tier = 1;
         setDefaultDmg();
         setDefaultRange();
         setDefaultCooldown();
     }
 
+    public void upgradeTower(){
+        ++this.tier;
+        switch (towerType){
+            case GREEN_CANON:
+                dmg += 5;
+                range += 20;
+                break;
+            case RED_CANON:
+                dmg += 10;
+                range += 20;
+                break;
+            case DOUBLE_RR:
+                dmg += 15;
+                range += 10;
+                break;
+            case BIG_ONE:
+                dmg += 20;
+                range += 10;
+                break;
+        }
+    }
     public void update() {
         cdTick++;
     }
@@ -82,5 +105,9 @@ public class Tower {
 
     public float getRange() {
         return range;
+    }
+
+    public int getTier() {
+        return tier;
     }
 }
