@@ -19,6 +19,7 @@ public class TowerManager {
     private int towerAmout = 0;
     private float angle, rotate;
     private Enemy target;
+
     public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImgs();
@@ -78,17 +79,17 @@ public class TowerManager {
     public void draw(Graphics g) {
         //rotate
         Graphics2D g2d = (Graphics2D) g;
-        for(Tower t : towers){
-            if(target != null && isEnemyInRange(t, target) && target.isAlive()) {
+        for (Tower t : towers) {
+            if (target != null && isEnemyInRange(t, target) && target.isAlive()) {
                 angle = (float) Math.atan2(target.getY() - t.getY(), target.getX() - t.getX());
                 rotate = (float) Math.toDegrees(angle) + 87;
                 g2d.translate(t.getX() + 16, t.getY() + 16);
                 g2d.rotate(Math.toRadians(rotate));
-                g2d.drawImage(towerImgs[t.getTowerType()], -28, -28, 56, 56, null);
+                g2d.drawImage(towerImgs[t.getTowerType()], -32, -32, 64, 64, null);
                 g2d.rotate(-Math.toRadians(rotate));
                 g2d.translate(-(t.getX() + 16), -(t.getY() + 16));
             } else {
-                g2d.drawImage(towerImgs[t.getTowerType()], t.getX() - 12, t.getY() - 12, 56, 56, null);
+                g2d.drawImage(towerImgs[t.getTowerType()], t.getX() - 18, t.getY() - 18, 64, 64, null);
             }
         }
     }
@@ -107,14 +108,14 @@ public class TowerManager {
     }
 
     public void removeTower(Tower displayedTower) {
-        for(int i = 0; i < towers.size(); i++){
-            if(towers.get(i).getId() == displayedTower.getId()) towers.remove(i);
+        for (int i = 0; i < towers.size(); i++) {
+            if (towers.get(i).getId() == displayedTower.getId()) towers.remove(i);
         }
     }
 
     public void upgradeTower(Tower displayedTower) {
-        for(Tower t : towers){
-            if(t.getId() == displayedTower.getId()){
+        for (Tower t : towers) {
+            if (t.getId() == displayedTower.getId()) {
                 t.upgradeTower();
             }
         }

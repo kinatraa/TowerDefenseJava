@@ -121,6 +121,6 @@ public abstract class Enemy {
     public void changeRotate(int rotate) {
         this.rotate += rotate;
         this.rotate %= 360;
-        if(this.rotate < 0) this.rotate += 360;
+        if (this.rotate < 0) this.rotate += 360;
     }
 }

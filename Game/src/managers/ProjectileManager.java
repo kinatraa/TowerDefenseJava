@@ -57,10 +57,10 @@ public class ProjectileManager {
             ySpeed *= -1;
         }
         float rotate = 0;
-        if(type == ROCKET_BIG || type == ROCKET_SMALL){
+        if (type == ROCKET_BIG || type == ROCKET_SMALL) {
             float arcValue = (float) Math.atan(yDist / (float) xDist);
             rotate = (float) Math.toDegrees(arcValue);
-            if(xDist < 0) rotate += 180;
+            if (xDist < 0) rotate += 180;
         }
         projectiles.add(new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
     }
@@ -71,7 +71,7 @@ public class ProjectileManager {
                 p.move();
                 if (isProjHittingEnemy(p)) {
                     p.setActive(false);
-                    if(p.getProjectileType() == ROCKET_SMALL || p.getProjectileType() == ROCKET_BIG){
+                    if (p.getProjectileType() == ROCKET_SMALL || p.getProjectileType() == ROCKET_BIG) {
                         explodeOnEnemies(p);
                     }
                 } else {
@@ -83,19 +83,19 @@ public class ProjectileManager {
 
     private void explodeOnEnemies(Projectile p) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
-            if(e.isAlive()){
+            if (e.isAlive()) {
                 float radius = 40.0f;
                 float xDist = Math.abs(p.getPos().x - e.getX());
                 float yDist = Math.abs(p.getPos().y - e.getY());
                 float realDist = (float) Math.hypot(xDist, yDist);
-                if(realDist <= radius) e.hurt(p.getDmg());
+                if (realDist <= radius) e.hurt(p.getDmg());
             }
         }
     }
 
     private boolean isProjHittingEnemy(Projectile p) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
-            if(e.isAlive()){
+            if (e.isAlive()) {
                 if (e.getBounds().contains(p.getPos())) {
                     e.hurt(p.getDmg());
                     return true;
@@ -109,15 +109,14 @@ public class ProjectileManager {
         Graphics2D g2d = (Graphics2D) g;
 
         for (Projectile p : projectiles) {
-            if (p.isActive()){
-                if(p.getProjectileType() == ROCKET_BIG || p.getProjectileType() == ROCKET_SMALL){
+            if (p.isActive()) {
+                if (p.getProjectileType() == ROCKET_BIG || p.getProjectileType() == ROCKET_SMALL) {
                     g2d.translate(p.getPos().x, p.getPos().y);
                     g2d.rotate(Math.toRadians(p.getRotation() - 90));
                     g2d.drawImage(proj_imgs[p.getProjectileType()], -16, -16, null);
                     g2d.rotate(-Math.toRadians(p.getRotation() - 90));
                     g2d.translate(-p.getPos().x, -p.getPos().y);
-                }
-                else{
+                } else {
                     g2d.drawImage(proj_imgs[p.getProjectileType()], (int) p.getPos().x - 16, (int) p.getPos().y - 16, null);
                 }
             }
