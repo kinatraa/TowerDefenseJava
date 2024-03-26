@@ -10,11 +10,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class TowerManager {
     private Playing playing;
     private BufferedImage[] towerImgs;
-    private ArrayList<Tower> towers = new ArrayList<>();
+    private Vector<Tower> towers = new Vector<>();
     private int towerAmout = 0;
     private float angle, rotate;
     private Enemy target;
@@ -60,14 +61,10 @@ public class TowerManager {
 
     private void attackEnemyIfClose(Tower t) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
-            if (e.isAlive()) {
-                if (isEnemyInRange(t, e)) {
-                    if (t.isCooldownOver()) {
-                        playing.shootEnemy(t, e);
-                        t.resetCooldown();
-                    }
-                } else {
-
+            if (isEnemyInRange(t, e) && e.isAlive()) {
+                if (t.isCooldownOver()) {
+                    playing.shootEnemy(t, e);
+                    t.resetCooldown();
                 }
             }
         }

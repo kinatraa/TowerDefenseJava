@@ -11,13 +11,14 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import static helpz.Constants.Projectiles.*;
 import static helpz.Constants.Towers.*;
 
 public class ProjectileManager {
     private Playing playing;
-    private ArrayList<Projectile> projectiles = new ArrayList<>();
+    private Vector<Projectile> projectiles = new Vector<>();
     private BufferedImage[] proj_imgs;
     private int proj_id = 0;
     private int exploTick, exploIndex;

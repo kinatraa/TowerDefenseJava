@@ -140,7 +140,7 @@ public class ActionBar extends Bar{
     }
 
     private int getSellAmount(Tower displayedTower) {
-        return (int) (Constants.Towers.GetCost(displayedTower.getId()) * 0.8);
+        return (int) ((Constants.Towers.GetCost(displayedTower.getId()) + displayedTower.getTier() * 10) * 0.8);
     }
 
     private void drawDisplayedTowerRange(Graphics g) {
@@ -176,6 +176,7 @@ public class ActionBar extends Bar{
             if(displayedTower != null){
                 if(sellTower.getBounds().contains(x, y)){
                     sellTowerClicked();
+                    return;
                 }
                 if(displayedTower.getTier() < 3){
                     if(upgradeTower.getBounds().contains(x, y)){

@@ -5,6 +5,7 @@ import objects.Tile;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import static helpz.ImgFix.getRotImg;
 import static helpz.Constants.Tiles.*;
@@ -15,7 +16,7 @@ public class TileManager {
             DIRT_CORNER1, DIRT_CORNER2, ROAD_CORNER1, ROAD_CORNER2,
             BUSH1, BUSH2, ROCK1, ROCK2;
     public BufferedImage atlas;
-    public ArrayList<Tile> tiles = new ArrayList<>();
+    public Vector<Tile> tiles = new Vector<>();
     public TileManager() {
         loadAtlas();
         createTiles();

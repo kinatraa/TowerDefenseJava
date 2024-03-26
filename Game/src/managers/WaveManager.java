@@ -5,10 +5,11 @@ import scenes.Playing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Vector;
 
 public class WaveManager {
     private Playing playing;
-    private ArrayList<Wave> waves = new ArrayList<>();
+    private Vector<Wave> waves = new Vector<>();
     private int enemySpawnTickLimit = 60 * 2;
     private int enemySpawnTick = enemySpawnTickLimit;
     private int enemyIndex, waveIndex;
@@ -42,7 +43,7 @@ public class WaveManager {
         waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 2, 0, 0, 1))));
     }
 
-    public ArrayList<Wave> getWaves() {
+    public Vector<Wave> getWaves() {
         return waves;
     }
 

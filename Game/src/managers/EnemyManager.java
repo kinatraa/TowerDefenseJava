@@ -11,16 +11,18 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.Tiles.*;
 import static helpz.Constants.Enemies.*;
 import static helpz.ImgFix.getRotImg;
+import static java.util.Collections.reverse;
 
 public class EnemyManager {
     private Playing playing;
     private BufferedImage[] enemyImgs;
-    private ArrayList<Enemy> enemies = new ArrayList<>();
+    private Vector<Enemy> enemies = new Vector<>();
     private PathPoint start, end;
     private int HPBarWidth = 20;
     public EnemyManager(Playing playing, PathPoint start, PathPoint end){
@@ -94,26 +96,26 @@ public class EnemyManager {
         if(dir == LEFT || dir == RIGHT){
             int newY = (int) (e.getY() + getSpeedAndHeight(UP, e.getEnemyType()));
             if(getTileType((int)e.getX(), newY) == DIRT_TILE){
-                if(dir == LEFT) e.changeRotate(90);
-                else e.changeRotate(-90);
+//                if(dir == LEFT) e.changeRotate(90);
+//                else e.changeRotate(-90);
                 e.move(GetSpeed(e.getEnemyType()), UP);
             }
             else{
-                if(dir == LEFT) e.changeRotate(-90);
-                else e.changeRotate(90);
+//                if(dir == LEFT) e.changeRotate(-90);
+//                else e.changeRotate(90);
                 e.move(GetSpeed(e.getEnemyType()), DOWN);
             }
         }
         else{
             int newX = (int) (e.getX() + getSpeedAndWidth(LEFT, e.getEnemyType()));
             if(getTileType(newX, (int)e.getY()) == DIRT_TILE){
-                if(dir == DOWN) e.changeRotate(90);
-                else e.changeRotate(-90);
+//                if(dir == DOWN) e.changeRotate(90);
+//                else e.changeRotate(-90);
                 e.move(GetSpeed(e.getEnemyType()), LEFT);
             }
             else{
-                if(dir == DOWN) e.changeRotate(-90);
-                else e.changeRotate(90);
+//                if(dir == DOWN) e.changeRotate(-90);
+//                else e.changeRotate(90);
                 e.move(GetSpeed(e.getEnemyType()), RIGHT);
             }
         }
@@ -194,7 +196,7 @@ public class EnemyManager {
     private void drawEnemy(Enemy e, Graphics g, int rotate) {
         g.drawImage(getRotImg(enemyImgs[e.getEnemyType()], rotate), (int)e.getX() + 4, (int)e.getY() + 4, 24, 24, null);
     }
-    public ArrayList<Enemy> getEnemies(){
+    public Vector<Enemy> getEnemies(){
         return enemies;
     }
 
