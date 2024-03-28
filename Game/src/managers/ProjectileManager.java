@@ -7,10 +7,14 @@ import objects.Projectile;
 import objects.Tower;
 import scenes.Playing;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Vector;
 
 import static helpz.Constants.Projectiles.*;
@@ -19,10 +23,9 @@ import static helpz.Constants.Towers.*;
 public class ProjectileManager {
     private Playing playing;
     private Vector<Projectile> projectiles = new Vector<>();
-    private BufferedImage[] proj_imgs;
+    private Vector<Explosion> explosions = new Vector<>();
+    private BufferedImage[] proj_imgs, explo_imgs;
     private int proj_id = 0;
-    private int exploTick, exploIndex;
-    private Point2D.Float exploPos;
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
@@ -36,6 +39,19 @@ public class ProjectileManager {
         proj_imgs[1] = atlas.getSubimage(20 * 32, 11 * 32, 32, 32);
         proj_imgs[2] = atlas.getSubimage(21 * 32, 10 * 32, 32, 32);
         proj_imgs[3] = atlas.getSubimage(22 * 32, 10 * 32, 32, 32);
+
+        importExplosion();
+    }
+
+    private void importExplosion() {
+        explo_imgs = new BufferedImage[10];
+        for (int i = 0; i < explo_imgs.length; i++) {
+            try {
+                explo_imgs[i] = ImageIO.read(Objects.requireNonNull(ProjectileManager.class.getResourceAsStream("/explosion_imgs/Explosion_" + (i + 1) + ".png")));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void newProjectile(Tower t, Enemy e) {
@@ -72,6 +88,7 @@ public class ProjectileManager {
                 if (isProjHittingEnemy(p)) {
                     p.setActive(false);
                     if (p.getProjectileType() == ROCKET_SMALL || p.getProjectileType() == ROCKET_BIG) {
+                        explosions.add(new Explosion(p.getPos()));
                         explodeOnEnemies(p);
                     }
                 } else {
@@ -79,12 +96,16 @@ public class ProjectileManager {
                 }
             }
         }
+
+        for (Explosion e : explosions) {
+            if (e.getIndex() < 10) e.update();
+        }
     }
 
     private void explodeOnEnemies(Projectile p) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
-                float radius = 40.0f;
+                float radius = 64f;
                 float xDist = Math.abs(p.getPos().x - e.getX());
                 float yDist = Math.abs(p.getPos().y - e.getY());
                 float realDist = (float) Math.hypot(xDist, yDist);
@@ -121,6 +142,16 @@ public class ProjectileManager {
                 }
             }
         }
+
+        drawExplosions(g2d);
+    }
+
+    private void drawExplosions(Graphics2D g2d) {
+        for (Explosion e : explosions) {
+            if (e.getIndex() < 10) {
+                g2d.drawImage(explo_imgs[e.getIndex()], (int) e.getPos().x - 48, (int) e.getPos().y - 56, 96, 96, null);
+            }
+        }
     }
 
     private int getProjectileType(Tower t) {
@@ -137,17 +168,28 @@ public class ProjectileManager {
         return -1;
     }
 
-//    public class Explosion{
-//        private Point2D.Float pos;
-//
-//        public Explosion(Point2D.Float pos){
-//            this.pos = pos;
-//        }
-//        public void update(){
-//
-//        }
-//        public Point2D.Float getPos(){
-//            return pos;
-//        }
-//    }
+    public class Explosion {
+        private Point2D.Float pos;
+        private int exploTick = 0, exploIndex = 0;
+
+        public Explosion(Point2D.Float pos) {
+            this.pos = pos;
+        }
+
+        public void update() {
+            exploTick++;
+            if (exploTick >= 3) {
+                exploTick = 0;
+                exploIndex++;
+            }
+        }
+
+        public int getIndex() {
+            return exploIndex;
+        }
+
+        public Point2D.Float getPos() {
+            return pos;
+        }
+    }
 }

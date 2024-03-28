@@ -118,6 +118,7 @@ public class ActionBar extends Bar {
             g.setFont(new Font("LucidaSans", Font.BOLD, 15));
             g.drawString("" + Constants.Towers.GetName(displayedTower.getTowerType()), 1118, 545);
             g.drawString("ID: " + displayedTower.getId(), 1118, 570);
+            g.drawString("Tier: " + displayedTower.getTier(), 1168, 570);
 
             drawDisplayedTowerBorder(g);
             drawDisplayedTowerRange(g);
@@ -183,7 +184,6 @@ public class ActionBar extends Bar {
                 }
                 if (displayedTower.getTier() < 3) {
                     if (upgradeTower.getBounds().contains(x, y) && gold >= 10) {
-                        gold -= 10;
                         upgradeTowerClicked();
                         return;
                     }
@@ -202,6 +202,7 @@ public class ActionBar extends Bar {
     }
 
     private void upgradeTowerClicked() {
+        gold -= getUpgradeAmount(displayedTower);
         playing.upgradeTower(displayedTower);
     }
 

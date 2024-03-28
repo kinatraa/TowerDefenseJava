@@ -105,6 +105,11 @@ public abstract class Enemy {
         return lastDir;
     }
 
+    public void setLastDir(int newDir) {
+        this.lastDir = newDir;
+    }
+
+
     public boolean isAlive() {
         return alive;
     }

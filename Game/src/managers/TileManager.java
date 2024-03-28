@@ -96,4 +96,19 @@ public class TileManager {
         BufferedImage sprite = tiles.get(id).getSprite();
         return sprite;
     }
+
+    public int[][] getTypeArr() {
+        int[][] idArr = LoadSave.GetLevelData("new_level");
+        int[][] typeArr = new int[idArr.length][idArr[0].length];
+
+        for (int j = 0; j < idArr.length; j++) {
+            for (int i = 0; i < idArr[j].length; i++) {
+                int id = idArr[j][i];
+                typeArr[j][i] = tiles.get(id).getTileType();
+            }
+        }
+
+        return typeArr;
+
+    }
 }

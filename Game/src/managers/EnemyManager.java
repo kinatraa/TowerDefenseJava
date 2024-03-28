@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import helpz.Utilz;
+
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.Tiles.*;
 import static helpz.Constants.Enemies.*;
@@ -22,6 +24,7 @@ public class EnemyManager {
     private CopyOnWriteArrayList<Enemy> enemies = new CopyOnWriteArrayList<>();
     private PathPoint start, end;
     private int HPBarWidth = 20;
+    private int[][] roadDirArr;
 
     public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
         this.playing = playing;
@@ -29,6 +32,11 @@ public class EnemyManager {
         this.end = end;
         enemyImgs = new BufferedImage[8];
         loadEnemyImgs();
+        loadRoadDirArr();
+    }
+
+    private void loadRoadDirArr() {
+        roadDirArr = Utilz.GetRoadDirArr(playing.getGame().getTileManager().getTypeArr(), start, end);
     }
 
     private void loadEnemyImgs() {
@@ -58,96 +66,77 @@ public class EnemyManager {
         }
     }
 
+    private void updateEnemyMove(Enemy e) {
+        PathPoint currTile = getEnemyTile(e);
+        int dir = roadDirArr[currTile.getyCord()][currTile.getxCord()];
+
+        e.move(GetSpeed(e.getEnemyType()), dir);
+
+        PathPoint newTile = getEnemyTile(e);
+
+        if (!isTilesTheSame(currTile, newTile)) {
+            if (isTilesTheSame(newTile, end)) {
+                e.kill();
+//                playing.removeOneLife();
+                return;
+            }
+            int newDir = roadDirArr[newTile.getyCord()][newTile.getxCord()];
+            if (newDir != dir) {
+                e.setPos(newTile.getxCord() * 32, newTile.getyCord() * 32);
+                rotateEnemy(dir, newDir, e);
+                e.setLastDir(newDir);
+            }
+        }
+
+    }
+
+    private void rotateEnemy(int dir, int newDir, Enemy e){
+        switch (dir){
+            case LEFT:
+                if(newDir == UP) e.changeRotate(90);
+                else e.changeRotate(-90);
+                break;
+            case RIGHT:
+                if(newDir == UP) e.changeRotate(-90);
+                else e.changeRotate(90);
+                break;
+            case UP:
+                if(newDir == LEFT) e.changeRotate(-90);
+                else e.changeRotate(90);
+                break;
+            case DOWN:
+                if(newDir == LEFT) e.changeRotate(90);
+                else e.changeRotate(-90);
+                break;
+        }
+    }
+
+    private PathPoint getEnemyTile(Enemy e) {
+
+        switch (e.getLastDir()) {
+            case LEFT:
+                return new PathPoint((int) ((e.getX() + 31) / 32), (int) (e.getY() / 32));
+            case UP:
+                return new PathPoint((int) (e.getX() / 32), (int) ((e.getY() + 31) / 32));
+            case RIGHT:
+            case DOWN:
+                return new PathPoint((int) (e.getX() / 32), (int) (e.getY() / 32));
+        }
+        return new PathPoint((int) (e.getX() / 32), (int) (e.getY() / 32));
+    }
+
+    private boolean isTilesTheSame(PathPoint currTile, PathPoint newTile) {
+        if (currTile.getxCord() == newTile.getxCord() && currTile.getyCord() == newTile.getyCord())
+            return true;
+        return false;
+    }
+
     private void updateWaveManager() {
         playing.getWaveManager().update();
     }
 
-    private void updateEnemyMove(Enemy e) {
-        if (e.getLastDir() == -1) {
-            setNewDirectionAndMove(e);
-        }
-
-        int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir(), e.getEnemyType()));
-        int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir(), e.getEnemyType()));
-
-        if (getTileType(newX, newY) == DIRT_TILE) {
-            //keep moving
-            e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
-        } else if (isAtEnd(e)) {
-            //reached the end
-            e.kill();
-        } else {
-            //find new direction
-            setNewDirectionAndMove(e);
-        }
-    }
-
-    private void setNewDirectionAndMove(Enemy e) {
-        int dir = e.getLastDir();
-        int xCord = (int) (e.getX() / 32);
-        int yCord = (int) (e.getY() / 32);
-        fixEnemyOffsetTile(e, dir, xCord, yCord);
-
-        if (isAtEnd(e)) return;
-
-        if (dir == LEFT || dir == RIGHT) {
-            int newY = (int) (e.getY() + getSpeedAndHeight(UP, e.getEnemyType()));
-            if (getTileType((int) e.getX(), newY) == DIRT_TILE) {
-                if (dir == LEFT) e.changeRotate(90);
-                else e.changeRotate(-90);
-                e.move(GetSpeed(e.getEnemyType()), UP);
-            } else {
-                if (dir == LEFT) e.changeRotate(-90);
-                else e.changeRotate(90);
-                e.move(GetSpeed(e.getEnemyType()), DOWN);
-            }
-        } else {
-            int newX = (int) (e.getX() + getSpeedAndWidth(LEFT, e.getEnemyType()));
-            if (getTileType(newX, (int) e.getY()) == DIRT_TILE) {
-                if (dir == DOWN) e.changeRotate(90);
-                else e.changeRotate(-90);
-                e.move(GetSpeed(e.getEnemyType()), LEFT);
-            } else {
-                if (dir == DOWN) e.changeRotate(-90);
-                else e.changeRotate(90);
-                e.move(GetSpeed(e.getEnemyType()), RIGHT);
-            }
-        }
-    }
-
-    private void fixEnemyOffsetTile(Enemy e, int dir, int xCord, int yCord) {
-        switch (dir) {
-            case RIGHT:
-                if (xCord < 31) xCord++;
-                break;
-            case DOWN:
-                if (yCord < 23) yCord++;
-                break;
-        }
-        e.setPos(xCord * 32, yCord * 32);
-    }
-
-    private boolean isAtEnd(Enemy e) {
-        if (e.getX() == end.getxCord() * 32 && e.getY() == end.getyCord() * 32) {
-            return true;
-        }
-        return false;
-    }
-
     private int getTileType(int x, int y) {
         return playing.getTileType(x, y);
-    }
-
-    private float getSpeedAndHeight(int dir, int enemyType) {
-        if (dir == UP) return -GetSpeed(enemyType);
-        else if (dir == DOWN) return GetSpeed(enemyType) + 32;
-        return 0;
-    }
-
-    private float getSpeedAndWidth(int dir, int enemyType) {
-        if (dir == LEFT) return -GetSpeed(enemyType);
-        else if (dir == RIGHT) return GetSpeed(enemyType) + 32;
-        return 0;
     }
 
     public void spawnEnemy(int nextEnemy) {
