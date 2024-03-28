@@ -10,7 +10,7 @@ import java.util.Vector;
 public class WaveManager {
     private Playing playing;
     private Vector<Wave> waves = new Vector<>();
-    private int enemySpawnTickLimit = 60 * 2;
+    private int enemySpawnTickLimit = 60 * 4;
     private int enemySpawnTick = enemySpawnTickLimit;
     private int enemyIndex, waveIndex;
     private int waveTickLimit = 60 * 5;

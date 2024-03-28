@@ -49,7 +49,7 @@ public class ActionBar extends Bar {
     }
 
     public void draw(Graphics g) {
-        g.setColor(Color.CYAN);
+        g.setColor(Color.decode("#48ba00"));
         g.fillRect(x, y, width, height);
         drawButtons(g);
         drawDisplayedTower(g);
@@ -182,7 +182,8 @@ public class ActionBar extends Bar {
                     return;
                 }
                 if (displayedTower.getTier() < 3) {
-                    if (upgradeTower.getBounds().contains(x, y)) {
+                    if (upgradeTower.getBounds().contains(x, y) && gold >= 10) {
+                        gold -= 10;
                         upgradeTowerClicked();
                         return;
                     }
