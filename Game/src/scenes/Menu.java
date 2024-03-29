@@ -3,14 +3,36 @@ package scenes;
 import ui.MyButton;
 import main.GameWindow;
 
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
 import static main.GameStates.*;
 
-public class Menu extends GameScene implements SceneMethods{
+public class Menu extends GameScene implements SceneMethods {
     private MyButton bPlaying, bSettings, bQuit, bEdit;
+    private Clip bgMusic;
+    private boolean isMusicOn = false;
+
     public Menu(GameWindow game) {
         super(game);
         initButtons();
+    }
+
+    public void playMusic() {
+        try {
+            bgMusic = AudioSystem.getClip();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(Menu.class.getResourceAsStream("/sound/sweden.wav"));
+            bgMusic.open(inputStream);
+            bgMusic.start();
+        } catch (Exception e) {
+            System.err.println("fk");
+        }
     }
 
     private void initButtons() {
@@ -20,35 +42,49 @@ public class Menu extends GameScene implements SceneMethods{
         int y = 100;
         int yOffset = 125;
         bPlaying = new MyButton("Play", x, y, w, h);
-        bEdit = new MyButton("Edit", x, y+yOffset, w, h);
-        bSettings = new MyButton("Setting", x, y+2*yOffset, w, h);
-        bQuit = new MyButton("Quit", x, y+3*yOffset, w, h);
+        bEdit = new MyButton("Edit", x, y + yOffset, w, h);
+        bSettings = new MyButton("Setting", x, y + 2 * yOffset, w, h);
+        bQuit = new MyButton("Quit", x, y + 3 * yOffset, w, h);
     }
 
     @Override
     public void render(Graphics g) {
+        drawBackground(g);
         drawButtons(g);
+    }
+
+    private void drawBackground(Graphics g) {
+        BufferedImage bg = null;
+        InputStream is = Menu.class.getClassLoader().getResourceAsStream("canhdongvotree.png");
+        try {
+            if (is != null) bg = ImageIO.read(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        g.drawImage(bg, 0, 0, 1280, 768, null);
     }
 
     @Override
     public void mouseClicked(int x, int y) {
-        if(bPlaying.getBounds().contains(x, y)){
+        if (bPlaying.getBounds().contains(x, y)) {
             bPlaying.resetBooleans();
+            stopMusic();
             SetGameState(PLAYING);
-        }
-        else if(bEdit.getBounds().contains(x, y)){
+        } else if (bEdit.getBounds().contains(x, y)) {
             bEdit.resetBooleans();
+            stopMusic();
             SetGameState(EDIT);
-        }
-        else if(bSettings.getBounds().contains(x, y)){
+        } else if (bSettings.getBounds().contains(x, y)) {
             bSettings.resetBooleans();
+            stopMusic();
             SetGameState(SETTINGS);
-        }
-        else if(bQuit.getBounds().contains(x, y)){
+        } else if (bQuit.getBounds().contains(x, y)) {
             bQuit.resetBooleans();
+            stopMusic();
             System.exit(0);
         }
     }
+
     @Override
     public void mouseClicked3() {
 
@@ -60,16 +96,13 @@ public class Menu extends GameScene implements SceneMethods{
         bEdit.setMouseOver(false);
         bSettings.setMouseOver(false);
         bQuit.setMouseOver(false);
-        if(bPlaying.getBounds().contains(x, y)){
+        if (bPlaying.getBounds().contains(x, y)) {
             bPlaying.setMouseOver(true);
-        }
-        else if(bEdit.getBounds().contains(x, y)){
+        } else if (bEdit.getBounds().contains(x, y)) {
             bEdit.setMouseOver(true);
-        }
-        else if(bSettings.getBounds().contains(x, y)){
+        } else if (bSettings.getBounds().contains(x, y)) {
             bSettings.setMouseOver(true);
-        }
-        else if(bQuit.getBounds().contains(x, y)){
+        } else if (bQuit.getBounds().contains(x, y)) {
             bQuit.setMouseOver(true);
         }
     }
@@ -80,16 +113,13 @@ public class Menu extends GameScene implements SceneMethods{
         bEdit.setMousePressed(false);
         bSettings.setMousePressed(false);
         bQuit.setMousePressed(false);
-        if(bPlaying.getBounds().contains(x, y)){
+        if (bPlaying.getBounds().contains(x, y)) {
             bPlaying.setMousePressed(true);
-        }
-        else if(bEdit.getBounds().contains(x, y)){
+        } else if (bEdit.getBounds().contains(x, y)) {
             bEdit.setMousePressed(true);
-        }
-        else if(bSettings.getBounds().contains(x, y)){
+        } else if (bSettings.getBounds().contains(x, y)) {
             bSettings.setMousePressed(true);
-        }
-        else if(bQuit.getBounds().contains(x, y)){
+        } else if (bQuit.getBounds().contains(x, y)) {
             bQuit.setMousePressed(true);
         }
     }
@@ -116,5 +146,12 @@ public class Menu extends GameScene implements SceneMethods{
         bEdit.draw(g);
         bSettings.draw(g);
         bQuit.draw(g);
+    }
+
+    private void stopMusic() {
+        if (bgMusic != null && bgMusic.isRunning()) {
+            bgMusic.stop();
+            bgMusic.close();
+        }
     }
 }
