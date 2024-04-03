@@ -21,7 +21,7 @@ public class ActionBar extends Bar {
     private Tower selectedTower;
     private Tower displayedTower;
     private DecimalFormat formatter;
-    private int gold = 100;
+    private int gold = 500;
     private boolean showTowerCost;
     private int towerCostType;
 
