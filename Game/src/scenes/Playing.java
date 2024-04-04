@@ -3,10 +3,7 @@ package scenes;
 import enemies.Enemy;
 import helpz.Constants;
 import helpz.LoadSave;
-import managers.EnemyManager;
-import managers.ProjectileManager;
-import managers.TowerManager;
-import managers.WaveManager;
+import managers.*;
 import objects.PathPoint;
 import objects.Tower;
 import main.GameWindow;
@@ -27,6 +24,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private TowerManager towerManager;
     private ProjectileManager projManager;
     private WaveManager waveManager;
+    private SoundManager soundManager;
     private Tower selectedTower;
     private PathPoint start, end;
     private boolean inBoard;
@@ -39,6 +37,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         towerManager = new TowerManager(this);
         projManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
+        soundManager = new SoundManager();
     }
     public void update(){
         waveManager.update();
@@ -244,11 +243,32 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
 
     public void shootEnemy(Tower t, Enemy e){
+        soundManager.shootingSound(t.getTowerType());
         projManager.newProjectile(t, e);
         towerManager.trackingEnemy(t, e);
     }
 
     public void reward(int enemyType) {
+        soundManager.gainCoins();
         actionBar.addGold(Constants.Enemies.GetReward(enemyType));
+    }
+
+    public void removeOneLife() {
+        actionBar.removeOneLife();
+    }
+
+    public void resetEverything() {
+        actionBar.resetEverything();
+
+        enemyManager.reset();
+        towerManager.reset();
+        projManager.reset();
+        waveManager.reset();
+
+        mouseX = 0;
+        mouseY = 0;
+
+        selectedTower = null;
+        goldTick = 0;
     }
 }

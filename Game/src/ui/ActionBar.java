@@ -1,6 +1,7 @@
 package ui;
 
 import helpz.Constants;
+import managers.SoundManager;
 import objects.Tile;
 import objects.Tower;
 import scenes.Playing;
@@ -9,13 +10,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.DecimalFormat;
 
-import static main.GameStates.MENU2;
-import static main.GameStates.SetGameState;
 import static helpz.Constants.Towers.*;
+import static main.GameStates.*;
 
 public class ActionBar extends Bar {
     private MyButton bMenu2;
     private Playing playing;
+    private SoundManager soundManager;
     private MyButton[] towerButtons;
     private MyButton sellTower, upgradeTower;
     private Tower selectedTower;
@@ -24,10 +25,12 @@ public class ActionBar extends Bar {
     private int gold = 500;
     private boolean showTowerCost;
     private int towerCostType;
+    private int lives = 5;
 
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x, y, width, height);
         this.playing = playing;
+        soundManager = new SoundManager();
         formatter = new DecimalFormat("0.0");
         initButtons();
     }
@@ -48,6 +51,13 @@ public class ActionBar extends Bar {
         upgradeTower = new MyButton("Upgrade", 1132, 590, 90, 30);
     }
 
+    public void removeOneLife(){
+        lives--;
+        if(lives <= 0){
+            SetGameState(GAME_OVER);
+        }
+    }
+
     public void draw(Graphics g) {
         g.setColor(Color.decode("#48ba00"));
         g.fillRect(x, y, width, height);
@@ -56,6 +66,12 @@ public class ActionBar extends Bar {
         drawWaveInfo(g);
         drawGoldAmount(g);
         if (showTowerCost) drawTowerCost(g);
+        drawLives(g);
+    }
+
+    private void drawLives(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.drawString("Lives: " + lives, 1032, 80);
     }
 
     private void drawTowerCost(Graphics g) {
@@ -175,15 +191,18 @@ public class ActionBar extends Bar {
     public void mouseClicked(int x, int y) {
         if (bMenu2.getBounds().contains(x, y)) {
             bMenu2.resetBooleans();
+            soundManager.selectionSound();
             SetGameState(MENU2);
         } else {
             if (displayedTower != null) {
                 if (sellTower.getBounds().contains(x, y)) {
+                    soundManager.selectionSound();
                     sellTowerClicked();
                     return;
                 }
                 if (displayedTower.getTier() < 3) {
                     if (upgradeTower.getBounds().contains(x, y) && gold >= 10) {
+                        soundManager.selectionSound();
                         upgradeTowerClicked();
                         return;
                     }
@@ -193,6 +212,7 @@ public class ActionBar extends Bar {
                 b.resetBooleans();
                 if (b.getBounds().contains(x, y)) {
                     if (!isGoldEnough(b.getId())) return;
+                    soundManager.selectionSound();
                     selectedTower = new Tower(0, 0, -1, b.getId());
                     playing.setSelectedTower(selectedTower);
                     return;
@@ -281,5 +301,18 @@ public class ActionBar extends Bar {
 
     public void setShowTowerCost(boolean showTowerCost) {
         this.showTowerCost = showTowerCost;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void resetEverything() {
+        lives = 5;
+        towerCostType = 0;
+        showTowerCost = false;
+        gold = 500;
+        selectedTower = null;
+        displayedTower = null;
     }
 }

@@ -120,4 +120,9 @@ public class TowerManager {
             }
         }
     }
+
+    public void reset(){
+        towers.clear();
+        towerAmout = 0;
+    }
 }

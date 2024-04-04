@@ -16,19 +16,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static helpz.Constants.Projectiles.*;
 import static helpz.Constants.Towers.*;
 
 public class ProjectileManager {
     private Playing playing;
-    private Vector<Projectile> projectiles = new Vector<>();
-    private Vector<Explosion> explosions = new Vector<>();
+    private CopyOnWriteArrayList<Projectile> projectiles = new CopyOnWriteArrayList<>();
+    private CopyOnWriteArrayList<Explosion> explosions = new CopyOnWriteArrayList<>();
     private BufferedImage[] proj_imgs, explo_imgs;
+    private SoundManager soundManager;
     private int proj_id = 0;
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
+        soundManager = new SoundManager();
         importImgs();
     }
 
@@ -78,6 +81,15 @@ public class ProjectileManager {
             rotate = (float) Math.toDegrees(arcValue);
             if (xDist < 0) rotate += 180;
         }
+
+        for(Projectile p : projectiles){
+            if(!p.isActive()){
+                if(p.getProjectileType() == type){
+                    p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, t.getDmg(), rotate);
+                    return;
+                }
+            }
+        }
         projectiles.add(new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
     }
 
@@ -88,11 +100,12 @@ public class ProjectileManager {
                 if (isProjHittingEnemy(p)) {
                     p.setActive(false);
                     if (p.getProjectileType() == ROCKET_SMALL || p.getProjectileType() == ROCKET_BIG) {
+                        soundManager.explodeSounds();
                         explosions.add(new Explosion(p.getPos()));
                         explodeOnEnemies(p);
                     }
-                } else {
-
+                } else if (isProjOutsideBounds(p)) {
+                    p.setActive(false);
                 }
             }
         }
@@ -124,6 +137,13 @@ public class ProjectileManager {
             }
         }
         return false;
+    }
+
+    private boolean isProjOutsideBounds(Projectile p) {
+        if (p.getPos().x >= 0 && p.getPos().x <= 1024 && p.getPos().y >= 0 && p.getPos().y <= 768) {
+            return false;
+        }
+        return true;
     }
 
     public void draw(Graphics g) {
@@ -191,5 +211,11 @@ public class ProjectileManager {
         public Point2D.Float getPos() {
             return pos;
         }
+    }
+
+    public void reset(){
+        projectiles.clear();
+        explosions.clear();
+        proj_id = 0;
     }
 }

@@ -77,7 +77,7 @@ public class EnemyManager {
         if (!isTilesTheSame(currTile, newTile)) {
             if (isTilesTheSame(newTile, end)) {
                 e.kill();
-//                playing.removeOneLife();
+                playing.removeOneLife();
                 return;
             }
             int newDir = roadDirArr[newTile.getyCord()][newTile.getxCord()];
@@ -198,5 +198,9 @@ public class EnemyManager {
 
     public void reward(int enemyType) {
         playing.reward(enemyType);
+    }
+
+    public void reset(){
+        enemies.clear();
     }
 }

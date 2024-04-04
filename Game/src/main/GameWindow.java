@@ -1,6 +1,7 @@
 package main;
 
 import helpz.LoadSave;
+import managers.SoundManager;
 import managers.TileManager;
 import scenes.*;
 
@@ -18,8 +19,10 @@ public class GameWindow extends JFrame implements Runnable {
     private Settings settings;
     private Menu2 menu2;
     private Editing editing;
+    private GameOver gameOver;
     private TileManager tileManager;
-    private int musicMenu = 0;
+    private SoundManager soundManager;
+    private boolean menuMusicActive = false, playingMusicActive = false;
 
     public GameWindow() {
         initClasses();
@@ -28,6 +31,7 @@ public class GameWindow extends JFrame implements Runnable {
         setSize(1280, 768);
         setLocationRelativeTo(null);
         setResizable(false);
+        setTitle("Kien Defense");
         add(gameScreen);
         start();
         updateGame();
@@ -52,6 +56,8 @@ public class GameWindow extends JFrame implements Runnable {
         settings = new Settings(this);
         menu2 = new Menu2(this, playing);
         editing = new Editing(this);
+        gameOver = new GameOver(this);
+        soundManager = new SoundManager();
     }
 
     private void start() {
@@ -63,23 +69,38 @@ public class GameWindow extends JFrame implements Runnable {
     private void updateGame() {
         switch (GameStates.gameState) {
             case MENU:
-                if (musicMenu != 0) return;
-                menu.playMusic();
-                musicMenu++;
-                System.out.println(musicMenu);
+                soundManager.closePlayingMusic();
+                playingMusicActive = false;
+                if(!menuMusicActive){
+                    menuMusicActive = true;
+                    soundManager.playMenuMusic();
+                }
                 break;
             case PLAYING:
-                musicMenu = 0;
+                soundManager.closeMenuMusic();
+                menuMusicActive = false;
+                if(!playingMusicActive){
+                    playingMusicActive = true;
+                    soundManager.playPlayingMusic();
+                }
                 playing.update();
                 break;
             case SETTINGS:
-                musicMenu = 0;
+
                 break;
             case MENU2:
-                musicMenu = 0;
+                soundManager.closeMenuMusic();
+                menuMusicActive = false;
                 break;
             case EDIT:
-                musicMenu = 0;
+                soundManager.closeMenuMusic();
+                menuMusicActive = false;
+                soundManager.closePlayingMusic();
+                playingMusicActive = false;
+                break;
+            case GAME_OVER:
+                soundManager.closePlayingMusic();
+                playingMusicActive = false;
                 break;
         }
     }
@@ -137,6 +158,10 @@ public class GameWindow extends JFrame implements Runnable {
 
     public Editing getEditor() {
         return editing;
+    }
+
+    public GameOver getGameOver() {
+        return gameOver;
     }
 
     public TileManager getTileManager() {

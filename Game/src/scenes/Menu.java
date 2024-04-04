@@ -1,5 +1,6 @@
 package scenes;
 
+import managers.SoundManager;
 import ui.MyButton;
 import main.GameWindow;
 
@@ -16,23 +17,12 @@ import static main.GameStates.*;
 
 public class Menu extends GameScene implements SceneMethods {
     private MyButton bPlaying, bSettings, bQuit, bEdit;
-    private Clip bgMusic;
-    private boolean isMusicOn = false;
+    private SoundManager soundManager;
 
     public Menu(GameWindow game) {
         super(game);
+        soundManager = new SoundManager();
         initButtons();
-    }
-
-    public void playMusic() {
-        try {
-            bgMusic = AudioSystem.getClip();
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(Menu.class.getResourceAsStream("/sound/sweden.wav"));
-            bgMusic.open(inputStream);
-            bgMusic.start();
-        } catch (Exception e) {
-            System.err.println("fk");
-        }
     }
 
     private void initButtons() {
@@ -68,19 +58,19 @@ public class Menu extends GameScene implements SceneMethods {
     public void mouseClicked(int x, int y) {
         if (bPlaying.getBounds().contains(x, y)) {
             bPlaying.resetBooleans();
-            stopMusic();
+            soundManager.selectionSound();
             SetGameState(PLAYING);
         } else if (bEdit.getBounds().contains(x, y)) {
             bEdit.resetBooleans();
-            stopMusic();
+            soundManager.selectionSound();
             SetGameState(EDIT);
         } else if (bSettings.getBounds().contains(x, y)) {
             bSettings.resetBooleans();
-            stopMusic();
+            soundManager.selectionSound();
             SetGameState(SETTINGS);
         } else if (bQuit.getBounds().contains(x, y)) {
             bQuit.resetBooleans();
-            stopMusic();
+            soundManager.selectionSound();
             System.exit(0);
         }
     }
@@ -146,12 +136,5 @@ public class Menu extends GameScene implements SceneMethods {
         bEdit.draw(g);
         bSettings.draw(g);
         bQuit.draw(g);
-    }
-
-    private void stopMusic() {
-        if (bgMusic != null && bgMusic.isRunning()) {
-            bgMusic.stop();
-            bgMusic.close();
-        }
     }
 }
