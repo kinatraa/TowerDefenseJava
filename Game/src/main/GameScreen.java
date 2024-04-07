@@ -18,7 +18,6 @@ public class GameScreen extends JPanel {
         addMouseListener(myMouseListener);
         addMouseMotionListener(myMouseListener);
         addKeyListener(keyBoardListener);
-
         requestFocus();
     }
 

@@ -47,9 +47,9 @@ public class MyButton extends JButton {
         drawText(g);
     }
 
-    public void setImage(ImageIO image){
-        setImage(image);
-    }
+//    public void setImage(ImageIO image){
+//        setImage(image);
+//    }
     private void drawBorder(Graphics g) {
         g.setColor(Color.BLACK);
         g.drawRect(x, y, width, height);
