@@ -1,5 +1,8 @@
 package main;
 
+import input.KeyBoardListener;
+import input.MyMouseListener;
+
 import javax.swing.*;
 import java.awt.*;
 

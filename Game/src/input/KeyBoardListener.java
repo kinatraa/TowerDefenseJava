@@ -1,4 +1,6 @@
-package main;
+package input;
+
+import main.GameWindow;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
