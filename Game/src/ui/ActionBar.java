@@ -71,7 +71,7 @@ public class ActionBar extends Bar {
 
     private void drawLives(Graphics g) {
         g.setColor(Color.BLACK);
-        g.drawString("Lives: " + lives, 1032, 80);
+        g.drawString("Lives: " + lives, 50, 50);
     }
 
     private void drawTowerCost(Graphics g) {

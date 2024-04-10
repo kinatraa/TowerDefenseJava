@@ -52,7 +52,7 @@ public class MyButton extends JButton {
 //    }
     private void drawBorder(Graphics g) {
         g.setColor(Color.BLACK);
-        g.drawRect(x, y, width, height);
+        g.drawRoundRect(x, y, width, height, 20, 20);
         if (mousePressed) {
             g.drawRect(x + 1, y + 1, width - 2, height - 2);
             g.drawRect(x + 2, y + 2, width - 4, height - 4);
@@ -62,7 +62,7 @@ public class MyButton extends JButton {
     private void drawBody(Graphics g) {
         if(mouseOver) g.setColor(Color.GRAY);
         else g.setColor(Color.WHITE);
-        g.fillRect(x, y, width, height);
+        g.fillRoundRect(x, y, width, height, 20, 20);
     }
 
     private void drawText(Graphics g) {

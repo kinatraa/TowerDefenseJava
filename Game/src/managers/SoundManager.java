@@ -11,7 +11,7 @@ import static helpz.Constants.Towers.*;
 public class SoundManager {
     private Clip menuMusic, playingMusic, cannonFire, rocketFire, coin, selection, explode;
     private boolean menuActive = false, playingActive = false;
-    private float gain = -20f;
+    private float gainMusic = 0f, gainEffect = 0f;
     public void playMenuMusic(){
         if(menuActive) return;
         menuActive = true;
@@ -22,9 +22,8 @@ public class SoundManager {
                 menuMusic = AudioSystem.getClip();
                 menuMusic.open(inputStream);
                 FloatControl gainControl = (FloatControl) menuMusic.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(-15);
+                gainControl.setValue(gainMusic);
                 menuMusic.loop(Clip.LOOP_CONTINUOUSLY);
-//                Thread.sleep(10000);
                 menuMusic.start();
             }
         } catch (Exception e) {
@@ -42,7 +41,7 @@ public class SoundManager {
                 playingMusic = AudioSystem.getClip();
                 playingMusic.open(inputStream);
                 FloatControl gainControl = (FloatControl) playingMusic.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(-15);
+                gainControl.setValue(gainMusic);
                 playingMusic.loop(Clip.LOOP_CONTINUOUSLY);
 //                Thread.sleep(10000);
                 playingMusic.start();
@@ -59,6 +58,8 @@ public class SoundManager {
                 AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundPath);
                 coin = AudioSystem.getClip();
                 coin.open(inputStream);
+                FloatControl gainControl = (FloatControl) coin.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(gainEffect);
                 coin.start();
             }
         } catch (Exception e) {
@@ -75,6 +76,8 @@ public class SoundManager {
                         AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundPath);
                         cannonFire = AudioSystem.getClip();
                         cannonFire.open(inputStream);
+                        FloatControl gainControl = (FloatControl) cannonFire.getControl(FloatControl.Type.MASTER_GAIN);
+                        gainControl.setValue(gainEffect);
                         cannonFire.start();
                     }
                 } catch (Exception e) {
@@ -89,7 +92,7 @@ public class SoundManager {
                         rocketFire = AudioSystem.getClip();
                         rocketFire.open(inputStream);
                         FloatControl gainControl = (FloatControl) rocketFire.getControl(FloatControl.Type.MASTER_GAIN);
-                        gainControl.setValue(-5);
+                        gainControl.setValue(gainEffect);
                         rocketFire.start();
                     }
                 } catch (Exception e) {
@@ -107,7 +110,7 @@ public class SoundManager {
                 explode = AudioSystem.getClip();
                 explode.open(inputStream);
                 FloatControl gainControl = (FloatControl) explode.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(gain);
+                gainControl.setValue(gainEffect);
                 explode.start();
             }
         } catch (Exception e) {
@@ -123,7 +126,7 @@ public class SoundManager {
                 selection = AudioSystem.getClip();
                 selection.open(inputStream);
                 FloatControl gainControl = (FloatControl) selection.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(-20);
+                gainControl.setValue(gainEffect);
                 selection.start();
             }
         } catch (Exception e) {
