@@ -30,7 +30,7 @@ public class ActionBar extends Bar {
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x, y, width, height);
         this.playing = playing;
-        soundManager = new SoundManager();
+        soundManager = new SoundManager(playing.getGame());
         formatter = new DecimalFormat("0.0");
         initButtons();
     }

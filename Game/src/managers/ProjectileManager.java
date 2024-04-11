@@ -31,7 +31,7 @@ public class ProjectileManager {
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
-        soundManager = new SoundManager();
+        soundManager = new SoundManager(playing.getGame());
         importImgs();
     }
 

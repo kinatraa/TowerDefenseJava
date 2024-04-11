@@ -57,7 +57,7 @@ public class GameWindow extends JFrame implements Runnable {
         menu2 = new Menu2(this, playing);
         editing = new Editing(this);
         gameOver = new GameOver(this);
-        soundManager = new SoundManager();
+        soundManager = new SoundManager(this);
     }
 
     private void start() {
@@ -126,6 +126,8 @@ public class GameWindow extends JFrame implements Runnable {
                 lastUpdate = System.nanoTime();
                 updates++;
             }
+            soundManager.update();
+
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
 //                System.out.println("FPS: " + frames + " | UPS: " + updates);
                 frames = 0;
@@ -166,5 +168,9 @@ public class GameWindow extends JFrame implements Runnable {
 
     public TileManager getTileManager() {
         return tileManager;
+    }
+
+    public SoundManager getSoundManager() {
+        return soundManager;
     }
 }

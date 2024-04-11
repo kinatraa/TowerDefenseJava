@@ -15,7 +15,7 @@ public class GameOver extends GameScene implements SceneMethods{
     public GameOver(GameWindow game) {
         super(game);
         this.game = game;
-        soundManager = new SoundManager();
+        soundManager = new SoundManager(game);
         initButtons();
     }
 

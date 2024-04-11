@@ -1,5 +1,7 @@
 package managers;
 
+import main.GameWindow;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -11,18 +13,60 @@ import static helpz.Constants.Towers.*;
 public class SoundManager {
     private Clip menuMusic, playingMusic, cannonFire, rocketFire, coin, selection, explode;
     private boolean menuActive = false, playingActive = false;
-    private float gainMusic = 0f, gainEffect = 0f;
-    public void playMenuMusic(){
-        if(menuActive) return;
+    private float gainMusic = 6.0206f - 86.0206f / 2, gainEffect = 6.0206f - 86.0206f / 2, defaultVolume = 86.0206f, maxVolume = 6.0206f;
+    private GameWindow game;
+    private FloatControl gainControl;
+
+    public SoundManager(GameWindow game) {
+        this.game = game;
+    }
+
+    public void update() {
+        gainEffect = maxVolume - (100 - game.getSettings().getGainEffect()) * defaultVolume / 100;
+        gainMusic = maxVolume - (100 - game.getSettings().getGainMusic()) * defaultVolume / 100;
+        if (menuMusic != null) {
+            if (menuMusic.isOpen()) {
+                gainControl = (FloatControl) menuMusic.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(gainMusic);
+            }
+        }
+        if (playingMusic != null) {
+            if (playingMusic.isOpen()) {
+                gainControl = (FloatControl) playingMusic.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(gainMusic);
+            }
+        }
+//        if (cannonFire != null) {
+//            if (cannonFire.isOpen()) {
+//
+//            }
+//        }
+//        if (rocketFire != null) {
+//            if (rocketFire.isOpen()) {
+//
+//            }
+//        }
+//        if (explode != null) {
+//            if (explode.isOpen()) {
+//
+//            }
+//        }
+//        if (selection != null) {
+//            if (selection.isOpen()) {
+//
+//            }
+//        }
+    }
+
+    public void playMenuMusic() {
+        if (menuActive) return;
         menuActive = true;
         try {
             File soundPath = new File("src/sounds/menumusic.wav");
-            if(soundPath.exists()){
+            if (soundPath.exists()) {
                 AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundPath);
                 menuMusic = AudioSystem.getClip();
                 menuMusic.open(inputStream);
-                FloatControl gainControl = (FloatControl) menuMusic.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(gainMusic);
                 menuMusic.loop(Clip.LOOP_CONTINUOUSLY);
                 menuMusic.start();
             }
@@ -31,17 +75,15 @@ public class SoundManager {
         }
     }
 
-    public void playPlayingMusic(){
-        if(playingActive) return;
+    public void playPlayingMusic() {
+        if (playingActive) return;
         playingActive = true;
         try {
             File soundPath = new File("src/sounds/playingmusic.wav");
-            if(soundPath.exists()){
+            if (soundPath.exists()) {
                 AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundPath);
                 playingMusic = AudioSystem.getClip();
                 playingMusic.open(inputStream);
-                FloatControl gainControl = (FloatControl) playingMusic.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(gainMusic);
                 playingMusic.loop(Clip.LOOP_CONTINUOUSLY);
 //                Thread.sleep(10000);
                 playingMusic.start();
@@ -51,15 +93,13 @@ public class SoundManager {
         }
     }
 
-    public void gainCoins(){
+    public void gainCoins() {
         try {
             File soundPath = new File("src/sounds/coins.wav");
-            if(soundPath.exists()){
+            if (soundPath.exists()) {
                 AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundPath);
                 coin = AudioSystem.getClip();
                 coin.open(inputStream);
-                FloatControl gainControl = (FloatControl) coin.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(gainEffect);
                 coin.start();
             }
         } catch (Exception e) {
@@ -67,16 +107,16 @@ public class SoundManager {
         }
     }
 
-    public void shootingSound(int type){
-        switch (type){
+    public void shootingSound(int type) {
+        switch (type) {
             case GREEN_CANON, RED_CANON:
                 try {
                     File soundPath = new File("src/sounds/cannon.wav");
-                    if(soundPath.exists()){
+                    if (soundPath.exists()) {
                         AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundPath);
                         cannonFire = AudioSystem.getClip();
                         cannonFire.open(inputStream);
-                        FloatControl gainControl = (FloatControl) cannonFire.getControl(FloatControl.Type.MASTER_GAIN);
+                        gainControl = (FloatControl) cannonFire.getControl(FloatControl.Type.MASTER_GAIN);
                         gainControl.setValue(gainEffect);
                         cannonFire.start();
                     }
@@ -87,11 +127,11 @@ public class SoundManager {
             case BIG_ONE, DOUBLE_RR:
                 try {
                     File soundPath = new File("src/sounds/rocket.wav");
-                    if(soundPath.exists()){
+                    if (soundPath.exists()) {
                         AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundPath);
                         rocketFire = AudioSystem.getClip();
                         rocketFire.open(inputStream);
-                        FloatControl gainControl = (FloatControl) rocketFire.getControl(FloatControl.Type.MASTER_GAIN);
+                        gainControl = (FloatControl) rocketFire.getControl(FloatControl.Type.MASTER_GAIN);
                         gainControl.setValue(gainEffect);
                         rocketFire.start();
                     }
@@ -102,14 +142,14 @@ public class SoundManager {
         }
     }
 
-    public void explodeSounds(){
+    public void explodeSounds() {
         try {
             File soundPath = new File("src/sounds/explosion.wav");
-            if(soundPath.exists()){
+            if (soundPath.exists()) {
                 AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundPath);
                 explode = AudioSystem.getClip();
                 explode.open(inputStream);
-                FloatControl gainControl = (FloatControl) explode.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl = (FloatControl) explode.getControl(FloatControl.Type.MASTER_GAIN);
                 gainControl.setValue(gainEffect);
                 explode.start();
             }
@@ -118,14 +158,14 @@ public class SoundManager {
         }
     }
 
-    public void selectionSound(){
+    public void selectionSound() {
         try {
             File soundPath = new File("src/sounds/selection.wav");
-            if(soundPath.exists()){
+            if (soundPath.exists()) {
                 AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundPath);
                 selection = AudioSystem.getClip();
                 selection.open(inputStream);
-                FloatControl gainControl = (FloatControl) selection.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl = (FloatControl) selection.getControl(FloatControl.Type.MASTER_GAIN);
                 gainControl.setValue(gainEffect);
                 selection.start();
             }
@@ -134,16 +174,16 @@ public class SoundManager {
         }
     }
 
-    public void closeMenuMusic(){
-        if(menuMusic != null && menuMusic.isRunning()){
+    public void closeMenuMusic() {
+        if (menuMusic != null && menuMusic.isRunning()) {
             menuMusic.close();
             menuActive = false;
         }
 
     }
 
-    public void closePlayingMusic(){
-        if(playingMusic != null && playingMusic.isRunning()){
+    public void closePlayingMusic() {
+        if (playingMusic != null && playingMusic.isRunning()) {
             playingMusic.close();
             playingActive = false;
         }

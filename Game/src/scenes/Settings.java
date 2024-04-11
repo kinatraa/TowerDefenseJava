@@ -1,14 +1,19 @@
 package scenes;
 
+import main.GameStates;
 import main.GameWindow;
 import ui.MyButton;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static main.GameStates.SetGameState;
+
 public class Settings extends GameScene implements SceneMethods{
     private MyButton[] bGainMusic, bGainEffect;
-    private int gainMusic, gainEffect;
+    private MyButton bReturn;
+    private int gainMusic = 50, gainEffect = 50;
+    private GameStates lastGameState;
     public Settings(GameWindow game) {
         super(game);
         initButtons();
@@ -17,31 +22,38 @@ public class Settings extends GameScene implements SceneMethods{
     private void initButtons() {
         bGainMusic = new MyButton[2];
         bGainEffect = new MyButton[2];
-        int x = 600, w = 50, h = 50;
+        int x = 550, w = 50, h = 50;
         int y = 250;
         int xOffset = 300;
         bGainMusic[0] = new MyButton("-", x, y, w, h);
         bGainMusic[1] = new MyButton("+", x + xOffset, y, w, h);
         bGainEffect[0] = new MyButton("-", x, y + 100, w, h);
         bGainEffect[1] = new MyButton("+", x + xOffset, y + 100, w, h);
+        bReturn = new MyButton("Return", 600, 500, 100, h);
     }
 
     private void drawButtons(Graphics g) {
+        g.setFont(new Font("LucidaSans", Font.BOLD, 30));
+        g.drawString("Music: ", 400, 280);
+        g.drawString("Effect: ", 400, 380);
+        g.setFont(new Font("LucidaSans", Font.PLAIN, 20));
         for(int i = 0; i < 2; i++){
             bGainMusic[i].draw(g);
             bGainEffect[i].draw(g);
         }
+        bReturn.draw(g);
     }
 
     private void drawGainInfo(Graphics g) {
-        g.drawString("" + gainMusic, 780, 275);
-        g.drawString("" + gainEffect, 780, 375);
+        g.setFont(new Font("LucidaSans", Font.PLAIN, 20));
+        g.drawString("" + gainMusic, 720, 280);
+        g.drawString("" + gainEffect, 720, 380);
     }
 
     @Override
     public void render(Graphics g) {
-        drawButtons(g);
         drawGainInfo(g);
+        drawButtons(g);
     }
 
     @Override
@@ -63,6 +75,9 @@ public class Settings extends GameScene implements SceneMethods{
                 gainEffect += 10;
             }
         }
+        else if(bReturn.getBounds().contains(x, y)) {
+            SetGameState(lastGameState);
+        }
     }
     @Override
     public void mouseClicked3() {
@@ -74,6 +89,7 @@ public class Settings extends GameScene implements SceneMethods{
         bGainMusic[1].setMouseOver(false);
         bGainEffect[0].setMouseOver(false);
         bGainEffect[1].setMouseOver(false);
+        bReturn.setMouseOver(false);
         if (bGainMusic[0].getBounds().contains(x, y)) {
             bGainMusic[0].setMouseOver(true);
         } else if (bGainMusic[1].getBounds().contains(x, y)) {
@@ -83,6 +99,9 @@ public class Settings extends GameScene implements SceneMethods{
         } else if (bGainEffect[1].getBounds().contains(x, y)) {
             bGainEffect[1].setMouseOver(true);
         }
+        else if (bReturn.getBounds().contains(x, y)) {
+            bReturn.setMouseOver(true);
+        }
     }
 
     @Override
@@ -91,6 +110,7 @@ public class Settings extends GameScene implements SceneMethods{
         bGainMusic[1].setMousePressed(false);
         bGainEffect[0].setMousePressed(false);
         bGainEffect[1].setMousePressed(false);
+        bReturn.setMousePressed(false);
         if (bGainMusic[0].getBounds().contains(x, y)) {
             bGainMusic[0].setMousePressed(true);
         } else if (bGainMusic[1].getBounds().contains(x, y)) {
@@ -99,6 +119,9 @@ public class Settings extends GameScene implements SceneMethods{
             bGainEffect[0].setMousePressed(true);
         } else if (bGainEffect[1].getBounds().contains(x, y)) {
             bGainEffect[1].setMousePressed(true);
+        }
+        else if(bReturn.getBounds().contains(x, y)){
+            bReturn.setMousePressed(true);
         }
     }
 
@@ -117,5 +140,17 @@ public class Settings extends GameScene implements SceneMethods{
     @Override
     public void mouseDragged(int x, int y) {
 
+    }
+
+    public int getGainMusic() {
+        return gainMusic;
+    }
+
+    public int getGainEffect() {
+        return gainEffect;
+    }
+
+    public void setLastGameState(GameStates lastGameState) {
+        this.lastGameState = lastGameState;
     }
 }

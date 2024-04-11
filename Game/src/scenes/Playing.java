@@ -37,7 +37,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         towerManager = new TowerManager(this);
         projManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
-        soundManager = new SoundManager();
+        soundManager = new SoundManager(game);
     }
     public void update(){
         waveManager.update();

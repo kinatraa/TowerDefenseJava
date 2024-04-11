@@ -52,10 +52,10 @@ public class MyButton extends JButton {
 //    }
     private void drawBorder(Graphics g) {
         g.setColor(Color.BLACK);
-        g.drawRoundRect(x, y, width, height, 20, 20);
+        g.drawRoundRect(x, y, width, height, 10, 10);
         if (mousePressed) {
-            g.drawRect(x + 1, y + 1, width - 2, height - 2);
-            g.drawRect(x + 2, y + 2, width - 4, height - 4);
+            g.drawRoundRect(x + 1, y + 1, width - 2, height - 2, 10, 10);
+            g.drawRoundRect(x + 2, y + 2, width - 4, height - 4, 10, 10);
         }
     }
 

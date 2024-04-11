@@ -21,7 +21,7 @@ public class Menu extends GameScene implements SceneMethods {
 
     public Menu(GameWindow game) {
         super(game);
-        soundManager = new SoundManager();
+        soundManager = new SoundManager(game);
         initButtons();
     }
 
@@ -67,6 +67,7 @@ public class Menu extends GameScene implements SceneMethods {
         } else if (bSettings.getBounds().contains(x, y)) {
             bSettings.resetBooleans();
             soundManager.selectionSound();
+            getGame().getSettings().setLastGameState(MENU);
             SetGameState(SETTINGS);
         } else if (bQuit.getBounds().contains(x, y)) {
             bQuit.resetBooleans();
