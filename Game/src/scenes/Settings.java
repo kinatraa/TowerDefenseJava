@@ -12,7 +12,7 @@ import static main.GameStates.SetGameState;
 public class Settings extends GameScene implements SceneMethods{
     private MyButton[] bGainMusic, bGainEffect;
     private MyButton bReturn;
-    private int gainMusic = 50, gainEffect = 50;
+    private int gainMusic = 100, gainEffect = 100;
     private GameStates lastGameState;
     public Settings(GameWindow game) {
         super(game);

@@ -13,7 +13,7 @@ import static helpz.Constants.Towers.*;
 public class SoundManager {
     private Clip menuMusic, playingMusic, cannonFire, rocketFire, coin, selection, explode;
     private boolean menuActive = false, playingActive = false;
-    private float gainMusic = 6.0206f - 86.0206f / 2, gainEffect = 6.0206f - 86.0206f / 2, defaultVolume = 86.0206f, maxVolume = 6.0206f;
+    private float gainMusic = 6.0206f, gainEffect = 6.0206f, defaultVolume = 86.0206f, maxVolume = 6.0206f;
     private GameWindow game;
     private FloatControl gainControl;
 

@@ -93,8 +93,6 @@ public class GameWindow extends JFrame implements Runnable {
                 menuMusicActive = false;
                 break;
             case EDIT:
-                soundManager.closeMenuMusic();
-                menuMusicActive = false;
                 soundManager.closePlayingMusic();
                 playingMusicActive = false;
                 break;

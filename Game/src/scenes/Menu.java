@@ -58,6 +58,7 @@ public class Menu extends GameScene implements SceneMethods {
     public void mouseClicked(int x, int y) {
         if (bPlaying.getBounds().contains(x, y)) {
             bPlaying.resetBooleans();
+            getGame().getPlaying().resetEverything();
             soundManager.selectionSound();
             SetGameState(PLAYING);
         } else if (bEdit.getBounds().contains(x, y)) {

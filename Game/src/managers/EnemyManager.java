@@ -35,14 +35,14 @@ public class EnemyManager {
         loadRoadDirArr();
     }
 
-    private void loadRoadDirArr() {
+    public void loadRoadDirArr() {
         roadDirArr = Utilz.GetRoadDirArr(playing.getGame().getTileManager().getTypeArr(), start, end);
-//        for(int i = 0; i < roadDirArr.length; i++){
-//            for(int j = 0; j < roadDirArr[0].length; j++){
-//                System.out.print(roadDirArr[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
+        for(int i = 0; i < roadDirArr.length; i++){
+            for(int j = 0; j < roadDirArr[0].length; j++){
+                System.out.print(roadDirArr[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     private void loadEnemyImgs() {
