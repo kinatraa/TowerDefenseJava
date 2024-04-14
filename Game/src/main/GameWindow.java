@@ -25,6 +25,7 @@ public class GameWindow extends JFrame implements Runnable {
     private boolean menuMusicActive = false, playingMusicActive = false;
 
     public GameWindow() {
+//        System.out.println("hello");
         initClasses();
         createDefaultLevel();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -37,6 +38,7 @@ public class GameWindow extends JFrame implements Runnable {
         updateGame();
         pack();
         setVisible(true);
+        gameScreen.initInputs();
     }
 
     private void createDefaultLevel() {
@@ -58,6 +60,7 @@ public class GameWindow extends JFrame implements Runnable {
         editing = new Editing(this);
         gameOver = new GameOver(this);
         soundManager = new SoundManager(this);
+
     }
 
     private void start() {

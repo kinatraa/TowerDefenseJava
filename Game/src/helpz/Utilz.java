@@ -13,7 +13,6 @@ public class Utilz {
 
         PathPoint currTile = start;
         int lastDir = -1;
-
         while (!IsCurrSameAsEnd(currTile, end)) {
             PathPoint prevTile = currTile;
             currTile = GetNextRoadTile(prevTile, lastDir, lvlTypeArr);

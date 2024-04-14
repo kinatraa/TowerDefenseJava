@@ -154,7 +154,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         }
         else{
             if(selectedTower != null){
-                if(isTileGrass(mouseX, mouseY) && getTowerAt(mouseX, mouseY) == null){
+                if(canPlaceTower(mouseX, mouseY) && getTowerAt(mouseX, mouseY) == null){
                     towerManager.addTower(selectedTower, mouseX, mouseY);
                     removeGold(selectedTower.getTowerType());
                     selectedTower = null;
@@ -181,10 +181,10 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         return towerManager.getTowerAt(x, y);
     }
 
-    private boolean isTileGrass(int x, int y) {
+    private boolean canPlaceTower(int x, int y) {
         int id = lvl[y/32][x/32];
         int tileType = getGame().getTileManager().getTile(id).getTileType();
-        return tileType == GRASS_TILE;
+        return tileType == ROAD_TILE;
     }
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
