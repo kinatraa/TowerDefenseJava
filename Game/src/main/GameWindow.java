@@ -20,6 +20,7 @@ public class GameWindow extends JFrame implements Runnable {
     private Menu2 menu2;
     private Editing editing;
     private GameOver gameOver;
+    private Victory victory;
     private TileManager tileManager;
     private SoundManager soundManager;
     private boolean menuMusicActive = false, playingMusicActive = false;
@@ -59,8 +60,8 @@ public class GameWindow extends JFrame implements Runnable {
         menu2 = new Menu2(this, playing);
         editing = new Editing(this);
         gameOver = new GameOver(this);
+        victory = new Victory(this);
         soundManager = new SoundManager(this);
-
     }
 
     private void start() {
@@ -74,7 +75,7 @@ public class GameWindow extends JFrame implements Runnable {
             case MENU:
                 soundManager.closePlayingMusic();
                 playingMusicActive = false;
-                if(!menuMusicActive){
+                if (!menuMusicActive) {
                     menuMusicActive = true;
                     soundManager.playMenuMusic();
                 }
@@ -82,7 +83,7 @@ public class GameWindow extends JFrame implements Runnable {
             case PLAYING:
                 soundManager.closeMenuMusic();
                 menuMusicActive = false;
-                if(!playingMusicActive){
+                if (!playingMusicActive) {
                     playingMusicActive = true;
                     soundManager.playPlayingMusic();
                 }
@@ -102,6 +103,9 @@ public class GameWindow extends JFrame implements Runnable {
             case GAME_OVER:
                 soundManager.closePlayingMusic();
                 playingMusicActive = false;
+                break;
+            case VICTORY:
+
                 break;
         }
     }
@@ -165,6 +169,10 @@ public class GameWindow extends JFrame implements Runnable {
 
     public GameOver getGameOver() {
         return gameOver;
+    }
+
+    public Victory getVictory() {
+        return victory;
     }
 
     public TileManager getTileManager() {

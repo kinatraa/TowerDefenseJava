@@ -15,6 +15,8 @@ import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 
 import static helpz.Constants.Tiles.*;
+import static main.GameStates.SetGameState;
+import static main.GameStates.VICTORY;
 
 public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private int[][] lvl;
@@ -27,8 +29,9 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private SoundManager soundManager;
     private Tower selectedTower;
     private PathPoint start, end;
-    private boolean inBoard;
+    private boolean onBoard;
     private int goldTick = 0;
+    private long nowTime, lastTime = -1;
     public Playing(GameWindow game) {
         super(game);
         loadDefaultLevel();
@@ -40,6 +43,8 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         soundManager = new SoundManager(game);
     }
     public void update(){
+        nowTime = System.currentTimeMillis();
+
         waveManager.update();
 
         goldTick++;
@@ -53,7 +58,12 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
                     waveManager.resetEnemyIndex();
                 }
             }
+            else{
+                if(lastTime == -1) lastTime = nowTime;
+                winGame();
+            }
         }
+
         if(isTimeForNewEnemy()){
             spawnEnemy();
         }
@@ -61,6 +71,13 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         enemyManager.update();
         towerManager.update();
         projManager.update();
+    }
+
+    private void winGame(){
+        nowTime = System.currentTimeMillis();
+        if(nowTime - lastTime >= 2000){
+            SetGameState(VICTORY);
+        }
     }
 
     private boolean isWaveTimerOver() {
@@ -113,7 +130,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         towerManager.draw(g);
         projManager.draw(g);
         drawSelectedTower(g);
-        if(inBoard) drawHighlight(g);
+        if(onBoard) drawHighlight(g);
     }
 
     private void drawHighlight(Graphics g) {
@@ -198,11 +215,11 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     @Override
     public void mouseMoved(int x, int y) {
         if(x >= 1024){
-            inBoard = false;
+            onBoard = false;
             actionBar.mouseMoved(x, y);
         }
         else{
-            inBoard = true;
+            onBoard = true;
             actionBar.setShowTowerCost(false);
             mouseX = (x / 32) * 32;
             mouseY = (y / 32) * 32;
