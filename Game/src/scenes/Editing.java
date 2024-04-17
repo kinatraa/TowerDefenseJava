@@ -1,20 +1,19 @@
 package scenes;
 
 import helpz.LoadSave;
-import main.GameWindow;
+import main.Game;
 import objects.PathPoint;
 import objects.Tile;
 import ui.ToolBar;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 import static helpz.Constants.Tiles.*;
 
 public class Editing extends GameScene implements SceneMethods {
-    private GameWindow game;
+    private Game game;
     private int[][] lvl;
     private Tile selectedTile;
     private int mouseX, mouseY;
@@ -22,7 +21,7 @@ public class Editing extends GameScene implements SceneMethods {
     private boolean drawSelect;
     private ToolBar toolBar;
     private PathPoint start, end;
-    public Editing(GameWindow game){
+    public Editing(Game game){
         super(game);
         loadDefaultLevel();
         toolBar = new ToolBar(1024, 0, 256, 768, this, game);

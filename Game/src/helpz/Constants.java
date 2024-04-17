@@ -25,6 +25,8 @@ public class Constants {
         public static final int SOLDIER2 = 1;
         public static final int SOLDIER3 = 2;
         public static final int SOLDIER4 = 3;
+        public static final int TANK1 = 4;
+        public static final int TANK2 = 5;
 
         public static int GetReward(int enemyType){
             switch (enemyType) {
@@ -36,6 +38,10 @@ public class Constants {
                     return 15;
                 case SOLDIER4:
                     return 20;
+                case TANK1:
+                    return 30;
+                case TANK2:
+                    return 40;
             }
             return 0;
         }
@@ -50,6 +56,10 @@ public class Constants {
                     return 0.7f;
                 case SOLDIER4:
                     return 0.75f;
+                case TANK1:
+                    return 0.5f;
+                case TANK2:
+                    return 0.65f;
             }
             return 0;
         }
@@ -64,6 +74,10 @@ public class Constants {
                     return 100;
                 case SOLDIER4:
                     return 200;
+                case TANK1:
+                    return 300;
+                case TANK2:
+                    return 400;
             }
             return 0;
         }

@@ -1,6 +1,6 @@
 package scenes;
 
-import main.GameWindow;
+import main.Game;
 import managers.SoundManager;
 import ui.MyButton;
 
@@ -10,9 +10,9 @@ import static main.GameStates.*;
 
 public class Victory extends GameScene implements SceneMethods{
     private MyButton bMenu;
-    private GameWindow game;
+    private Game game;
     private SoundManager soundManager;
-    public Victory(GameWindow game) {
+    public Victory(Game game) {
         super(game);
         this.game = game;
         soundManager = new SoundManager(game);

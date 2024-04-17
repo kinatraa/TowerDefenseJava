@@ -1,6 +1,6 @@
 package managers;
 
-import main.GameWindow;
+import main.Game;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -14,10 +14,10 @@ public class SoundManager {
     private Clip menuMusic, playingMusic, cannonFire, rocketFire, coin, selection, explode;
     private boolean menuActive = false, playingActive = false;
     private float gainMusic = 6.0206f, gainEffect = 6.0206f, defaultVolume = 86.0206f, maxVolume = 6.0206f;
-    private GameWindow game;
+    private Game game;
     private FloatControl gainControl;
 
-    public SoundManager(GameWindow game) {
+    public SoundManager(Game game) {
         this.game = game;
     }
 

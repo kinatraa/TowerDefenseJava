@@ -1,16 +1,16 @@
 package input;
 
 import main.GameStates;
-import main.GameWindow;
+import main.Game;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class MyMouseListener implements MouseListener, MouseMotionListener {
-    private GameWindow game;
+    private Game game;
 
-    public MyMouseListener(GameWindow game) {
+    public MyMouseListener(Game game) {
         this.game = game;
     }
 

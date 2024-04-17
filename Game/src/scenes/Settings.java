@@ -1,10 +1,9 @@
 package scenes;
 
 import main.GameStates;
-import main.GameWindow;
+import main.Game;
 import ui.MyButton;
 
-import javax.swing.*;
 import java.awt.*;
 
 import static main.GameStates.SetGameState;
@@ -14,7 +13,7 @@ public class Settings extends GameScene implements SceneMethods{
     private MyButton bReturn;
     private int gainMusic = 100, gainEffect = 100;
     private GameStates lastGameState;
-    public Settings(GameWindow game) {
+    public Settings(Game game) {
         super(game);
         initButtons();
     }
@@ -33,10 +32,9 @@ public class Settings extends GameScene implements SceneMethods{
     }
 
     private void drawButtons(Graphics g) {
-        g.setFont(new Font("LucidaSans", Font.BOLD, 30));
+        g.setFont(new Font("Impact", Font.PLAIN, 30));
         g.drawString("Music: ", 400, 280);
         g.drawString("Effect: ", 400, 380);
-        g.setFont(new Font("LucidaSans", Font.PLAIN, 20));
         for(int i = 0; i < 2; i++){
             bGainMusic[i].draw(g);
             bGainEffect[i].draw(g);

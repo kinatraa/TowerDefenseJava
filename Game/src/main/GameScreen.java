@@ -7,11 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameScreen extends JPanel {
-    private GameWindow game;
+    private Game game;
     private Dimension sizeScreen;
     private MyMouseListener myMouseListener;
     private KeyBoardListener keyBoardListener;
-    public GameScreen(GameWindow game){
+    public GameScreen(Game game){
         this.game = game;
         setPanelSize();
     }

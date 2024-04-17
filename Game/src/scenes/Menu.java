@@ -2,12 +2,9 @@ package scenes;
 
 import managers.SoundManager;
 import ui.MyButton;
-import main.GameWindow;
+import main.Game;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -18,8 +15,9 @@ import static main.GameStates.*;
 public class Menu extends GameScene implements SceneMethods {
     private MyButton bPlaying, bSettings, bQuit, bEdit;
     private SoundManager soundManager;
+    private boolean drawBG = false;
 
-    public Menu(GameWindow game) {
+    public Menu(Game game) {
         super(game);
         soundManager = new SoundManager(game);
         initButtons();
@@ -29,7 +27,7 @@ public class Menu extends GameScene implements SceneMethods {
         int w = 200;
         int h = w / 3;
         int x = 1280 / 2 - w / 2;
-        int y = 100;
+        int y = 150;
         int yOffset = 125;
         bPlaying = new MyButton("Play", x, y, w, h);
         bEdit = new MyButton("Edit", x, y + yOffset, w, h);
@@ -39,13 +37,17 @@ public class Menu extends GameScene implements SceneMethods {
 
     @Override
     public void render(Graphics g) {
-        drawBackground(g);
+        if(!drawBG){
+            drawBackground(g);
+            drawBG = true;
+        }
+//        drawBackground(g);
         drawButtons(g);
     }
 
     private void drawBackground(Graphics g) {
         BufferedImage bg = null;
-        InputStream is = Menu.class.getClassLoader().getResourceAsStream("canhdongvotree.png");
+        InputStream is = Menu.class.getClassLoader().getResourceAsStream("imgs/background_maybe.png");
         try {
             if (is != null) bg = ImageIO.read(is);
         } catch (IOException e) {
@@ -60,15 +62,18 @@ public class Menu extends GameScene implements SceneMethods {
             bPlaying.resetBooleans();
             getGame().getPlaying().resetEverything();
             soundManager.selectionSound();
+            drawBG = false;
             SetGameState(PLAYING);
         } else if (bEdit.getBounds().contains(x, y)) {
             bEdit.resetBooleans();
             soundManager.selectionSound();
+            drawBG = false;
             SetGameState(EDIT);
         } else if (bSettings.getBounds().contains(x, y)) {
             bSettings.resetBooleans();
             soundManager.selectionSound();
             getGame().getSettings().setLastGameState(MENU);
+            drawBG = false;
             SetGameState(SETTINGS);
         } else if (bQuit.getBounds().contains(x, y)) {
             bQuit.resetBooleans();

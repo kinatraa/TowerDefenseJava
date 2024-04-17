@@ -1,14 +1,13 @@
 package scenes;
 
-import main.GameWindow;
+import main.Game;
 
 public abstract class GameScene {
-    private GameWindow game;
-    public GameScene(GameWindow game) {
+    private Game game;
+    public GameScene(Game game) {
         this.game = game;
     }
-    public GameWindow getGame() {
+    public Game getGame() {
         return game;
     }
-    public abstract void mouseClicked3();
 }

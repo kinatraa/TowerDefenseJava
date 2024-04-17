@@ -11,11 +11,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Vector;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static helpz.Constants.Projectiles.*;
@@ -50,7 +47,7 @@ public class ProjectileManager {
         explo_imgs = new BufferedImage[10];
         for (int i = 0; i < explo_imgs.length; i++) {
             try {
-                explo_imgs[i] = ImageIO.read(Objects.requireNonNull(ProjectileManager.class.getResourceAsStream("/explosion_imgs/Explosion_" + (i + 1) + ".png")));
+                explo_imgs[i] = ImageIO.read(Objects.requireNonNull(ProjectileManager.class.getResourceAsStream("/imgs/Explosion_" + (i + 1) + ".png")));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

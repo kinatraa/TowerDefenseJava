@@ -14,7 +14,7 @@ public class TileManager {
     public Tile GRASS, DIRT, ROAD, SAND, DIRT_GRASS,
             DIRT_SAND, ROAD_GRASS, ROAD_SAND,
             DIRT_CORNER1, DIRT_CORNER2, ROAD_CORNER1, ROAD_CORNER2,
-            BUSH1, BUSH2, ROCK1, ROCK2;
+            BUSH1, BUSH2, BUSH3, BUSH4, ROCK1, ROCK2, ROCK3;
     public BufferedImage atlas;
     public Vector<Tile> tiles = new Vector<>();
 
@@ -79,9 +79,12 @@ public class TileManager {
         tiles.add(new Tile(getRotImg(ROAD_CORNER2.getSprite(), 270), id++, ROAD_e_TILE));
 
         tiles.add(BUSH1 = new Tile(getSprite(15, 5), id++, BUSH_TILE));
-        tiles.add(BUSH2 = new Tile(getSprite(17, 5), id++, BUSH_TILE));
-        tiles.add(ROCK1 = new Tile(getSprite(21, 5), id++, ROCK_TILE));
-        tiles.add(ROCK2 = new Tile(getSprite(20, 5), id++, ROCK_TILE));
+        tiles.add(BUSH2 = new Tile(getSprite(16, 5), id++, BUSH_TILE));
+        tiles.add(BUSH3 = new Tile(getSprite(17, 5), id++, BUSH_TILE));
+        tiles.add(BUSH4 = new Tile(getSprite(19, 5), id++, BUSH_TILE));
+        tiles.add(ROCK1 = new Tile(getSprite(20, 5), id++, ROCK_TILE));
+        tiles.add(ROCK2 = new Tile(getSprite(21, 5), id++, ROCK_TILE));
+        tiles.add(ROCK3 = new Tile(getSprite(22, 5), id++, ROCK_TILE));
     }
 
     private void loadAtlas() {

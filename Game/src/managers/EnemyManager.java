@@ -7,6 +7,7 @@ import scenes.Playing;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -46,15 +47,53 @@ public class EnemyManager {
     }
 
     private void loadEnemyImgs() {
+//        BufferedImage img = null;
+//        try {
+//            img = ImageIO.read(new File("src/imgs/slime/D_Walk.png"));
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        enemyImgs[0] = img.getSubimage(0, 0, 48, 48);
+//        try {
+//            img = ImageIO.read(new File("src/imgs/orc/D_Walk.png"));
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        enemyImgs[1] = img.getSubimage(0, 0, 48, 48);
+//        try {
+//            img = ImageIO.read(new File("src/imgs/wolf/D_Walk.png"));
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        enemyImgs[2] = img.getSubimage(0, 0, 48, 48);
+//        try {
+//            img = ImageIO.read(new File("src/imgs/bee/D_Walk.png"));
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        enemyImgs[3] = img.getSubimage(0, 0, 48, 48);
         BufferedImage atlas = getSpriteAtlas();
-        for (int i = 0; i < 4; i++) {
+        for(int i = 0; i < 4; i++){
             enemyImgs[i] = atlas.getSubimage(i * 32, 0, 32, 32);
         }
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("src/imgs/tank01.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        enemyImgs[4] = img;
+        try {
+            img = ImageIO.read(new File("src/imgs/tank02.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        enemyImgs[5] = img;
     }
 
     private BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
-        InputStream is = EnemyManager.class.getClassLoader().getResourceAsStream("elemi.png");
+        InputStream is = EnemyManager.class.getClassLoader().getResourceAsStream("imgs/elemi.png");
         try {
             if (is != null) img = ImageIO.read(is);
         } catch (IOException e) {
@@ -165,6 +204,12 @@ public class EnemyManager {
             case SOLDIER4:
                 enemies.add(new Soldier4(x, y, 0, this));
                 break;
+            case TANK1:
+                enemies.add(new Tank1(x, y, 0, this));
+                break;
+            case TANK2:
+                enemies.add(new Tank2(x, y, 0, this));
+                break;
         }
     }
 
@@ -187,7 +232,12 @@ public class EnemyManager {
     }
 
     private void drawEnemy(Enemy e, Graphics g, int rotate) {
-        g.drawImage(getRotImg(enemyImgs[e.getEnemyType()], rotate), (int) e.getX() + 4, (int) e.getY() + 4, 24, 24, null);
+        if(e.getEnemyType() == TANK1 || e.getEnemyType() == TANK2){
+            g.drawImage(getRotImg(enemyImgs[e.getEnemyType()], rotate), (int) e.getX() - 8, (int) e.getY() - 8, 48, 48, null);
+        }
+        else{
+            g.drawImage(getRotImg(enemyImgs[e.getEnemyType()], rotate), (int) e.getX() + 4, (int) e.getY() + 4, 24, 24, null);
+        }
     }
 
     public CopyOnWriteArrayList<Enemy> getEnemies() {

@@ -2,7 +2,7 @@ package scenes;
 
 import managers.SoundManager;
 import ui.MyButton;
-import main.GameWindow;
+import main.Game;
 
 import java.awt.*;
 
@@ -12,7 +12,7 @@ public class Menu2 extends GameScene implements SceneMethods{
     private MyButton bResume, bSettings, bMainMenu, bRetry;
     private Playing playing;
     private SoundManager soundManager;
-    public Menu2(GameWindow game, Playing playing) {
+    public Menu2(Game game, Playing playing) {
         super(game);
         this.playing = playing;
         soundManager = new SoundManager(playing.getGame());

@@ -7,7 +7,7 @@ import scenes.*;
 
 import javax.swing.*;
 
-public class GameWindow extends JFrame implements Runnable {
+public class Game extends JFrame implements Runnable {
     GameScreen gameScreen;
     private final double FPS_SET = 60.0;
     private final double UPS_SET = 60.0;
@@ -25,7 +25,7 @@ public class GameWindow extends JFrame implements Runnable {
     private SoundManager soundManager;
     private boolean menuMusicActive = false, playingMusicActive = false;
 
-    public GameWindow() {
+    public Game() {
 //        System.out.println("hello");
         initClasses();
         createDefaultLevel();

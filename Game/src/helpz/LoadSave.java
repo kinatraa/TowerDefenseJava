@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class LoadSave {
     public static BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
-        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("towerDefense_tilesheet.png");
+        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("imgs/towerDefense_tilesheet.png");
         try {
             if(is != null) img = ImageIO.read(is);
         }

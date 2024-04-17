@@ -66,6 +66,7 @@ public class MyButton extends JButton {
     }
 
     private void drawText(Graphics g) {
+        g.setFont(new Font("Impact", Font.PLAIN, 18));
         int w = g.getFontMetrics().stringWidth(text);
         int h = g.getFontMetrics().getHeight();
         g.drawString(text, x - w/2 + width/2, y + h/2 + height/2);

@@ -6,7 +6,7 @@ import helpz.LoadSave;
 import managers.*;
 import objects.PathPoint;
 import objects.Tower;
-import main.GameWindow;
+import main.Game;
 import ui.ActionBar;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -32,7 +32,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private boolean onBoard;
     private int goldTick = 0;
     private long nowTime, lastTime = -1;
-    public Playing(GameWindow game) {
+    public Playing(Game game) {
         super(game);
         loadDefaultLevel();
         actionBar = new ActionBar(1024, 0, 256, 768, this);

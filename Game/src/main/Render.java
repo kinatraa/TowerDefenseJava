@@ -3,9 +3,9 @@ package main;
 import java.awt.*;
 
 public class Render {
-    private GameWindow game;
+    private Game game;
 
-    public Render(GameWindow game){
+    public Render(Game game){
         this.game = game;
 
     }

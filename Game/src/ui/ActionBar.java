@@ -71,6 +71,7 @@ public class ActionBar extends Bar {
 
     private void drawLives(Graphics g) {
         g.setColor(Color.BLACK);
+        g.setFont(new Font("Impact", Font.PLAIN, 20));
         g.drawString("Lives: " + lives, 50, 50);
     }
 
@@ -79,6 +80,7 @@ public class ActionBar extends Bar {
         g.fillRect(1032, 420, 200, 80);
         g.setColor(Color.BLACK);
         g.drawRect(1032, 420, 200, 80);
+        g.setFont(new Font("Impact", Font.PLAIN, 20));
         g.drawString(Constants.Towers.GetName(towerCostType), 1050, 450);
         g.drawString("Cost: " + Constants.Towers.GetCost(towerCostType) + "$", 1050, 480);
 
@@ -93,12 +95,13 @@ public class ActionBar extends Bar {
     }
 
     private void drawGoldAmount(Graphics g) {
+        g.setFont(new Font("Impact", Font.PLAIN, 20));
         g.drawString("Gold: " + gold + "$", 1032, 50);
     }
 
     private void drawWaveInfo(Graphics g) {
         g.setColor(Color.BLACK);
-        g.setFont(new Font("LucidaSans", Font.BOLD, 20));
+        g.setFont(new Font("Impact", Font.PLAIN, 20));
         drawWaveTimerInfo(g);
         drawEnemiesLeftInfo(g);
         drawWavesLeftInfo(g);
@@ -131,7 +134,7 @@ public class ActionBar extends Bar {
             g.drawRect(1032, 520, 220, 130);
             g.drawRect(1042, 530, 50, 50);
             g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 1042, 530, 50, 50, null);
-            g.setFont(new Font("LucidaSans", Font.BOLD, 15));
+            g.setFont(new Font("Impact", Font.PLAIN, 15));
             g.drawString("" + Constants.Towers.GetName(displayedTower.getTowerType()), 1118, 545);
             g.drawString("ID: " + displayedTower.getId(), 1118, 570);
             g.drawString("Tier: " + displayedTower.getTier(), 1168, 570);
@@ -177,9 +180,9 @@ public class ActionBar extends Bar {
     }
 
     private void drawButtons(Graphics g) {
-        ImageIcon imageIcon = new ImageIcon("src/gear.png");
+        ImageIcon imageIcon = new ImageIcon("src/imgs/gear.png");
         Image image = imageIcon.getImage();
-        g.drawImage(image, 1211, 5, null);
+        g.drawImage(image, 1211, 5, 64, 64,null);
         for (MyButton b : towerButtons) {
             g.setColor(Color.LIGHT_GRAY);
             g.fillRect(b.getX(), b.getY(), b.getW(), b.getH());

@@ -44,7 +44,7 @@ public class TowerManager {
 
     private BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
-        InputStream is = EnemyManager.class.getClassLoader().getResourceAsStream("tower.png");
+        InputStream is = EnemyManager.class.getClassLoader().getResourceAsStream("imgs/tower.png");
         try {
             if (is != null) img = ImageIO.read(is);
         } catch (IOException e) {

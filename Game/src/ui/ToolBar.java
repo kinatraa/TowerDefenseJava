@@ -1,10 +1,9 @@
 package ui;
 
 import helpz.LoadSave;
-import main.GameWindow;
+import main.Game;
 import objects.Tile;
 import scenes.Editing;
-import scenes.Playing;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,13 +13,13 @@ import static main.GameStates.*;
 
 public class ToolBar extends Bar{
     private Editing editing;
-    private GameWindow game;
+    private Game game;
     private MyButton bMenu, bSave;
     private MyButton bPathStart, bPathEnd;
     private BufferedImage pathStart, pathEnd, selectedPath;
     private Tile selectedTile;
     private ArrayList<MyButton> tileButtons = new ArrayList<>();
-    public ToolBar(int x, int y, int width, int height, Editing editing, GameWindow game) {
+    public ToolBar(int x, int y, int width, int height, Editing editing, Game game) {
         super(x, y, width, height);
         this.editing = editing;
         this.game = game;
