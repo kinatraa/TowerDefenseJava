@@ -28,7 +28,7 @@ public class ProjectileManager {
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
-        soundManager = new SoundManager(playing.getGame());
+        soundManager = playing.getGame().getSoundManager();
         importImgs();
     }
 
@@ -97,7 +97,7 @@ public class ProjectileManager {
                 if (isProjHittingEnemy(p)) {
                     p.setActive(false);
                     if (p.getProjectileType() == ROCKET_SMALL || p.getProjectileType() == ROCKET_BIG) {
-                        soundManager.explodeSounds();
+                        soundManager.explodeSounds(soundManager.getGainEffect());
                         explosions.add(new Explosion(p.getPos()));
                         explodeOnEnemies(p);
                     }

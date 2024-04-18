@@ -15,7 +15,7 @@ public class Victory extends GameScene implements SceneMethods{
     public Victory(Game game) {
         super(game);
         this.game = game;
-        soundManager = new SoundManager(game);
+        soundManager = game.getSoundManager();
         initButtons();
     }
 
@@ -39,7 +39,7 @@ public class Victory extends GameScene implements SceneMethods{
     public void mouseClicked(int x, int y) {
         if(bMenu.getBounds().contains(x, y)){
             resetEverything();
-            soundManager.selectionSound();
+            soundManager.selectionSound(soundManager.getGainEffect());
             SetGameState(MENU);
         }
     }

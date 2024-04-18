@@ -7,6 +7,7 @@ import main.Game;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -15,45 +16,62 @@ import static main.GameStates.*;
 public class Menu extends GameScene implements SceneMethods {
     private MyButton bPlaying, bSettings, bQuit, bEdit;
     private SoundManager soundManager;
-    private boolean drawBG = false;
+    private BufferedImage background = null, logo = null;
 
     public Menu(Game game) {
         super(game);
-        soundManager = new SoundManager(game);
+        soundManager = game.getSoundManager();
         initButtons();
+        importImgs();
+    }
+
+    private void importImgs() {
+        InputStream is = Menu.class.getClassLoader().getResourceAsStream("imgs/background_maybe.png");
+        try {
+            if (is != null) background = ImageIO.read(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            logo = ImageIO.read(new File("src/imgs/logo.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void initButtons() {
         int w = 200;
         int h = w / 3;
-        int x = 1280 / 2 - w / 2;
-        int y = 150;
+        int x1 = 1280 / 2 - 150 - w / 2;
+        int x2 = 1280 / 2 + 150 - w / 2;
+        int y = 350;
         int yOffset = 125;
-        bPlaying = new MyButton("Play", x, y, w, h);
-        bEdit = new MyButton("Edit", x, y + yOffset, w, h);
-        bSettings = new MyButton("Setting", x, y + 2 * yOffset, w, h);
-        bQuit = new MyButton("Quit", x, y + 3 * yOffset, w, h);
+        bPlaying = new MyButton("Play", x1, y, w, h);
+        bEdit = new MyButton("Edit", x2, y, w, h);
+        bSettings = new MyButton("Setting", x1, y + yOffset, w, h);
+        bQuit = new MyButton("Quit", x2, y + yOffset, w, h);
     }
 
     @Override
     public void render(Graphics g) {
-        if(!drawBG){
-            drawBackground(g);
-            drawBG = true;
-        }
-//        drawBackground(g);
-        drawButtons(g);
+        draw(background.getGraphics());
+        g.drawImage(background, 0, 0, null);
     }
 
-    private void drawBackground(Graphics g) {
-        BufferedImage bg = null;
-        InputStream is = Menu.class.getClassLoader().getResourceAsStream("imgs/background_maybe.png");
-        try {
-            if (is != null) bg = ImageIO.read(is);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        g.drawImage(bg, 0, 0, 1280, 768, null);
+    private void draw(Graphics g) {
+        drawButtons(g);
+        drawLogo(g);
+    }
+
+    private void drawButtons(Graphics g) {
+        bPlaying.draw(g);
+        bEdit.draw(g);
+        bSettings.draw(g);
+        bQuit.draw(g);
+    }
+
+    private void drawLogo(Graphics g) {
+        g.drawImage(logo, 1280/2 - logo.getWidth()/2, 0, null);
     }
 
     @Override
@@ -61,23 +79,20 @@ public class Menu extends GameScene implements SceneMethods {
         if (bPlaying.getBounds().contains(x, y)) {
             bPlaying.resetBooleans();
             getGame().getPlaying().resetEverything();
-            soundManager.selectionSound();
-            drawBG = false;
+            soundManager.selectionSound(soundManager.getGainEffect());
             SetGameState(PLAYING);
         } else if (bEdit.getBounds().contains(x, y)) {
             bEdit.resetBooleans();
-            soundManager.selectionSound();
-            drawBG = false;
+            soundManager.selectionSound(soundManager.getGainEffect());
             SetGameState(EDIT);
         } else if (bSettings.getBounds().contains(x, y)) {
             bSettings.resetBooleans();
-            soundManager.selectionSound();
+            soundManager.selectionSound(soundManager.getGainEffect());
             getGame().getSettings().setLastGameState(MENU);
-            drawBG = false;
             SetGameState(SETTINGS);
         } else if (bQuit.getBounds().contains(x, y)) {
             bQuit.resetBooleans();
-            soundManager.selectionSound();
+            soundManager.selectionSound(soundManager.getGainEffect());
             System.exit(0);
         }
     }
@@ -136,12 +151,5 @@ public class Menu extends GameScene implements SceneMethods {
         bEdit.resetBooleans();
         bSettings.resetBooleans();
         bQuit.resetBooleans();
-    }
-
-    private void drawButtons(Graphics g) {
-        bPlaying.draw(g);
-        bEdit.draw(g);
-        bSettings.draw(g);
-        bQuit.draw(g);
     }
 }

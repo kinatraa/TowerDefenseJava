@@ -40,7 +40,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         towerManager = new TowerManager(this);
         projManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
-        soundManager = new SoundManager(game);
+        soundManager = game.getSoundManager();
     }
     public void update(){
         nowTime = System.currentTimeMillis();
@@ -260,13 +260,13 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
 
     public void shootEnemy(Tower t, Enemy e){
-        soundManager.shootingSound(t.getTowerType());
+        soundManager.shootingSound(t.getTowerType(), soundManager.getGainEffect());
         projManager.newProjectile(t, e);
         towerManager.trackingEnemy(t, e);
     }
 
     public void reward(int enemyType) {
-        soundManager.gainCoins();
+        soundManager.gainCoins(soundManager.getGainEffect());
         actionBar.addGold(Constants.Enemies.GetReward(enemyType));
     }
 

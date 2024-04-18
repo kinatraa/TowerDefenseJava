@@ -24,8 +24,8 @@ public class Utilz {
     }
 
     private static int GetDirFromPrevToCurr(PathPoint prevTile, PathPoint currTile) {
-        // Up or down
         if (prevTile.getxCord() == currTile.getxCord()) {
+            // Up or down
             if (prevTile.getyCord() > currTile.getyCord())
                 return UP;
             else
@@ -37,7 +37,6 @@ public class Utilz {
             else
                 return RIGHT;
         }
-
     }
 
     private static PathPoint GetNextRoadTile(PathPoint prevTile, int lastDir, int[][] lvlTypeArr) {

@@ -53,27 +53,27 @@ public class TileManager {
         tiles.add(new Tile(getRotImg(DIRT_CORNER2.getSprite(), 180), id++, DIRT_e_TILE));
         tiles.add(new Tile(getRotImg(DIRT_CORNER2.getSprite(), 270), id++, DIRT_e_TILE));
 
-        tiles.add(DIRT_SAND = new Tile(getSprite(5, 7), id++, DIRT_e_TILE));
+        tiles.add(DIRT_SAND = new Tile(getSprite(5, 4), id++, DIRT_e_TILE));
         tiles.add(new Tile(getRotImg(DIRT_SAND.getSprite(), 90), id++, DIRT_e_TILE));
         tiles.add(new Tile(getRotImg(DIRT_SAND.getSprite(), 180), id++, DIRT_e_TILE));
         tiles.add(new Tile(getRotImg(DIRT_SAND.getSprite(), 270), id++, DIRT_e_TILE));
 
-        tiles.add(ROAD_GRASS = new Tile(getSprite(10, 4), id++, ROAD_e_TILE));
+        tiles.add(ROAD_GRASS = new Tile(getSprite(5, 3), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_GRASS.getSprite(), 90), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_GRASS.getSprite(), 180), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_GRASS.getSprite(), 270), id++, ROAD_e_TILE));
 
-        tiles.add(ROAD_SAND = new Tile(getSprite(10, 7), id++, ROAD_e_TILE));
+        tiles.add(ROAD_SAND = new Tile(getSprite(0, 7), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_SAND.getSprite(), 90), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_SAND.getSprite(), 180), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_SAND.getSprite(), 270), id++, ROAD_e_TILE));
 
-        tiles.add(ROAD_CORNER1 = new Tile(getSprite(13, 6), id++, ROAD_e_TILE));
+        tiles.add(ROAD_CORNER1 = new Tile(getSprite(0, 6), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_CORNER1.getSprite(), 90), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_CORNER1.getSprite(), 180), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_CORNER1.getSprite(), 270), id++, ROAD_e_TILE));
 
-        tiles.add(ROAD_CORNER2 = new Tile(getSprite(10, 6), id++, ROAD_e_TILE));
+        tiles.add(ROAD_CORNER2 = new Tile(getSprite(8, 3), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_CORNER2.getSprite(), 90), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_CORNER2.getSprite(), 180), id++, ROAD_e_TILE));
         tiles.add(new Tile(getRotImg(ROAD_CORNER2.getSprite(), 270), id++, ROAD_e_TILE));

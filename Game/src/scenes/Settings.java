@@ -2,20 +2,40 @@ package scenes;
 
 import main.GameStates;
 import main.Game;
+import managers.SoundManager;
 import ui.MyButton;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import static main.GameStates.SetGameState;
 
 public class Settings extends GameScene implements SceneMethods{
     private MyButton[] bGainMusic, bGainEffect;
     private MyButton bReturn;
-    private int gainMusic = 100, gainEffect = 100;
+    private int gainMusic = 0, gainEffect = 0;
     private GameStates lastGameState;
+    private Game game;
+    private BufferedImage background;
+
     public Settings(Game game) {
         super(game);
+        this.game = game;
         initButtons();
+        importImgs();
+    }
+
+    private void importImgs() {
+        InputStream is = Menu.class.getClassLoader().getResourceAsStream("imgs/background_maybe.png");
+        try {
+            if (is != null) background = ImageIO.read(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void initButtons() {
@@ -43,37 +63,48 @@ public class Settings extends GameScene implements SceneMethods{
     }
 
     private void drawGainInfo(Graphics g) {
-        g.setFont(new Font("LucidaSans", Font.PLAIN, 20));
-        g.drawString("" + gainMusic, 720, 280);
-        g.drawString("" + gainEffect, 720, 380);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Impact", Font.PLAIN, 30));
+        g.drawString("" + gainMusic, 710, 290);
+        g.drawString("" + gainEffect, 710, 390);
+    }
+
+    private void draw(Graphics g) {
+        drawButtons(g);
     }
 
     @Override
     public void render(Graphics g) {
+        draw(background.getGraphics());
+        g.drawImage(background, 0, 0, null);
         drawGainInfo(g);
-        drawButtons(g);
     }
 
     @Override
     public void mouseClicked(int x, int y) {
         if (bGainMusic[0].getBounds().contains(x, y)) {
+            game.getSoundManager().selectionSound(game.getSoundManager().getGainEffect());
             if(gainMusic - 10 >= 0){
                 gainMusic -= 10;
             }
         } else if (bGainMusic[1].getBounds().contains(x, y)) {
+            game.getSoundManager().selectionSound(game.getSoundManager().getGainEffect());
             if(gainMusic + 10 <= 100){
                 gainMusic += 10;
             }
         } else if (bGainEffect[0].getBounds().contains(x, y)) {
+            game.getSoundManager().selectionSound(game.getSoundManager().getGainEffect());
             if(gainEffect - 10 >= 0){
                 gainEffect -= 10;
             }
         } else if (bGainEffect[1].getBounds().contains(x, y)) {
+            game.getSoundManager().selectionSound(game.getSoundManager().getGainEffect());
             if(gainEffect + 10 <= 100){
                 gainEffect += 10;
             }
         }
         else if(bReturn.getBounds().contains(x, y)) {
+            game.getSoundManager().selectionSound(game.getSoundManager().getGainEffect());
             SetGameState(lastGameState);
         }
     }

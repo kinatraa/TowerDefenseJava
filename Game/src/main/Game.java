@@ -51,6 +51,7 @@ public class Game extends JFrame implements Runnable {
     }
 
     private void initClasses() {
+        soundManager = new SoundManager(this);
         tileManager = new TileManager();
         render = new Render(this);
         gameScreen = new GameScreen(this);
@@ -61,7 +62,6 @@ public class Game extends JFrame implements Runnable {
         editing = new Editing(this);
         gameOver = new GameOver(this);
         victory = new Victory(this);
-        soundManager = new SoundManager(this);
     }
 
     private void start() {

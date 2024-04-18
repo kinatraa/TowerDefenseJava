@@ -30,7 +30,7 @@ public class ActionBar extends Bar {
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x, y, width, height);
         this.playing = playing;
-        soundManager = new SoundManager(playing.getGame());
+        soundManager = playing.getGame().getSoundManager();
         formatter = new DecimalFormat("0.0");
         initButtons();
     }
@@ -194,18 +194,18 @@ public class ActionBar extends Bar {
     public void mouseClicked(int x, int y) {
         if (bMenu2.getBounds().contains(x, y)) {
             bMenu2.resetBooleans();
-            soundManager.selectionSound();
+            soundManager.selectionSound(soundManager.getGainEffect());
             SetGameState(MENU2);
         } else {
             if (displayedTower != null) {
                 if (sellTower.getBounds().contains(x, y)) {
-                    soundManager.selectionSound();
+                    soundManager.selectionSound(soundManager.getGainEffect());
                     sellTowerClicked();
                     return;
                 }
                 if (displayedTower.getTier() < 3) {
                     if (upgradeTower.getBounds().contains(x, y) && gold >= 10) {
-                        soundManager.selectionSound();
+                        soundManager.selectionSound(soundManager.getGainEffect());
                         upgradeTowerClicked();
                         return;
                     }
@@ -215,7 +215,7 @@ public class ActionBar extends Bar {
                 b.resetBooleans();
                 if (b.getBounds().contains(x, y)) {
                     if (!isGoldEnough(b.getId())) return;
-                    soundManager.selectionSound();
+                    soundManager.selectionSound(soundManager.getGainEffect());
                     selectedTower = new Tower(0, 0, -1, b.getId());
                     playing.setSelectedTower(selectedTower);
                     return;

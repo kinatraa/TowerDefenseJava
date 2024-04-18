@@ -13,7 +13,7 @@ import static helpz.Constants.Towers.*;
 public class SoundManager {
     private Clip menuMusic, playingMusic, cannonFire, rocketFire, coin, selection, explode;
     private boolean menuActive = false, playingActive = false;
-    private float gainMusic = 6.0206f, gainEffect = 6.0206f, defaultVolume = 86.0206f, maxVolume = 6.0206f;
+    private float gainMusic, gainEffect, defaultVolume = 46.0206f, maxVolume = 6.0206f;
     private Game game;
     private FloatControl gainControl;
 
@@ -24,6 +24,7 @@ public class SoundManager {
     public void update() {
         gainEffect = maxVolume - (100 - game.getSettings().getGainEffect()) * defaultVolume / 100;
         gainMusic = maxVolume - (100 - game.getSettings().getGainMusic()) * defaultVolume / 100;
+//        System.out.println("Gain effect: " + gainEffect + " Gain music: " + gainMusic);
         if (menuMusic != null) {
             if (menuMusic.isOpen()) {
                 gainControl = (FloatControl) menuMusic.getControl(FloatControl.Type.MASTER_GAIN);
@@ -93,13 +94,15 @@ public class SoundManager {
         }
     }
 
-    public void gainCoins() {
+    public void gainCoins(float gainEffect) {
         try {
             File soundPath = new File("src/sounds/coins.wav");
             if (soundPath.exists()) {
                 AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundPath);
                 coin = AudioSystem.getClip();
                 coin.open(inputStream);
+                gainControl = (FloatControl) coin.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(gainEffect);
                 coin.start();
             }
         } catch (Exception e) {
@@ -107,7 +110,7 @@ public class SoundManager {
         }
     }
 
-    public void shootingSound(int type) {
+    public void shootingSound(int type, float gainEffect) {
         switch (type) {
             case GREEN_CANON, RED_CANON:
                 try {
@@ -142,7 +145,7 @@ public class SoundManager {
         }
     }
 
-    public void explodeSounds() {
+    public void explodeSounds(float gainEffect) {
         try {
             File soundPath = new File("src/sounds/explosion.wav");
             if (soundPath.exists()) {
@@ -158,7 +161,7 @@ public class SoundManager {
         }
     }
 
-    public void selectionSound() {
+    public void selectionSound(float gainEffect) {
         try {
             File soundPath = new File("src/sounds/selection.wav");
             if (soundPath.exists()) {
@@ -167,6 +170,7 @@ public class SoundManager {
                 selection.open(inputStream);
                 gainControl = (FloatControl) selection.getControl(FloatControl.Type.MASTER_GAIN);
                 gainControl.setValue(gainEffect);
+                System.out.println(gainEffect);
                 selection.start();
             }
         } catch (Exception e) {
@@ -187,5 +191,13 @@ public class SoundManager {
             playingMusic.close();
             playingActive = false;
         }
+    }
+
+    public float getGainEffect() {
+        return gainEffect;
+    }
+
+    public float getGainMusic() {
+        return gainMusic;
     }
 }

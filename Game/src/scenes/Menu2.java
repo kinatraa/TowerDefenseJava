@@ -4,7 +4,11 @@ import managers.SoundManager;
 import ui.MyButton;
 import main.Game;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 import static main.GameStates.*;
 
@@ -12,12 +16,25 @@ public class Menu2 extends GameScene implements SceneMethods{
     private MyButton bResume, bSettings, bMainMenu, bRetry;
     private Playing playing;
     private SoundManager soundManager;
+    private BufferedImage background;
+
     public Menu2(Game game, Playing playing) {
         super(game);
         this.playing = playing;
-        soundManager = new SoundManager(playing.getGame());
+        soundManager = playing.getGame().getSoundManager();
         initButtons();
+        importImgs();
     }
+
+    private void importImgs() {
+        InputStream is = Menu.class.getClassLoader().getResourceAsStream("imgs/background_maybe.png");
+        try {
+            if (is != null) background = ImageIO.read(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void initButtons() {
         int w = 200;
         int h = w / 3;
@@ -32,7 +49,8 @@ public class Menu2 extends GameScene implements SceneMethods{
 
     @Override
     public void render(Graphics g) {
-        drawButtons(g);
+        drawButtons(background.getGraphics());
+        g.drawImage(background, 0, 0, null);
     }
 
     private void drawButtons(Graphics g) {
@@ -47,24 +65,24 @@ public class Menu2 extends GameScene implements SceneMethods{
 //        System.out.println("CLICKED");
         if(bResume.getBounds().contains(x, y)){
             bResume.resetBooleans();
-            soundManager.selectionSound();
+            soundManager.selectionSound(soundManager.getGainEffect());
             SetGameState(PLAYING);
         }
         else if(bRetry.getBounds().contains(x, y)){
             bRetry.resetBooleans();
-            soundManager.selectionSound();
+            soundManager.selectionSound(soundManager.getGainEffect());
             playing.resetEverything();
             SetGameState(PLAYING);
         }
         else if(bSettings.getBounds().contains(x, y)){
             bSettings.resetBooleans();
-            soundManager.selectionSound();
+            soundManager.selectionSound(soundManager.getGainEffect());
             getGame().getSettings().setLastGameState(MENU2);
             SetGameState(SETTINGS);
         }
         else if(bMainMenu.getBounds().contains(x, y)){
             bMainMenu.resetBooleans();
-            soundManager.selectionSound();
+            soundManager.selectionSound(soundManager.getGainEffect());
             SetGameState(MENU);
         }
     }

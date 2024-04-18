@@ -47,31 +47,6 @@ public class EnemyManager {
     }
 
     private void loadEnemyImgs() {
-//        BufferedImage img = null;
-//        try {
-//            img = ImageIO.read(new File("src/imgs/slime/D_Walk.png"));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        enemyImgs[0] = img.getSubimage(0, 0, 48, 48);
-//        try {
-//            img = ImageIO.read(new File("src/imgs/orc/D_Walk.png"));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        enemyImgs[1] = img.getSubimage(0, 0, 48, 48);
-//        try {
-//            img = ImageIO.read(new File("src/imgs/wolf/D_Walk.png"));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        enemyImgs[2] = img.getSubimage(0, 0, 48, 48);
-//        try {
-//            img = ImageIO.read(new File("src/imgs/bee/D_Walk.png"));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        enemyImgs[3] = img.getSubimage(0, 0, 48, 48);
         BufferedImage atlas = getSpriteAtlas();
         for(int i = 0; i < 4; i++){
             enemyImgs[i] = atlas.getSubimage(i * 32, 0, 32, 32);
