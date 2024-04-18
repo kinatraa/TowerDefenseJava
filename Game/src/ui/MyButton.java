@@ -9,6 +9,7 @@ public class MyButton extends JButton {
     private String text;
     private Rectangle bounds;
     private boolean mouseOver, mousePressed;
+
     public MyButton(String text, int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
@@ -38,16 +39,18 @@ public class MyButton extends JButton {
         this.id = id;
         initBounds();
     }
-    private void initBounds(){
+
+    private void initBounds() {
         this.bounds = new Rectangle(x, y, width, height);
     }
-    public void draw(Graphics g){
+
+    public void draw(Graphics g) {
         drawBody(g);
         drawBorder(g);
         drawText(g);
     }
 
-//    public void setImage(ImageIO image){
+    //    public void setImage(ImageIO image){
 //        setImage(image);
 //    }
     private void drawBorder(Graphics g) {
@@ -60,7 +63,7 @@ public class MyButton extends JButton {
     }
 
     private void drawBody(Graphics g) {
-        if(mouseOver) g.setColor(Color.GRAY);
+        if (mouseOver) g.setColor(Color.GRAY);
         else g.setColor(Color.WHITE);
         g.fillRoundRect(x, y, width, height, 20, 20);
     }
@@ -69,7 +72,7 @@ public class MyButton extends JButton {
         g.setFont(new Font("Impact", Font.PLAIN, 18));
         int w = g.getFontMetrics().stringWidth(text);
         int h = g.getFontMetrics().getHeight();
-        g.drawString(text, x - w/2 + width/2, y + h/2 + height/2);
+        g.drawString(text, x - w / 2 + width / 2, y + h / 2 + height / 2);
     }
 
     public void resetBooleans() {
@@ -77,35 +80,43 @@ public class MyButton extends JButton {
         this.mousePressed = false;
     }
 
-    public void setMousePressed(boolean mousePressed){
+    public void setMousePressed(boolean mousePressed) {
         this.mousePressed = mousePressed;
     }
-    public boolean isMousePressed(){
+
+    public boolean isMousePressed() {
         return mousePressed;
     }
-    public void setMouseOver(boolean mouseOver){
+
+    public void setMouseOver(boolean mouseOver) {
         this.mouseOver = mouseOver;
     }
-    public boolean isMouseOver(){
+
+    public boolean isMouseOver() {
         return mouseOver;
     }
 
     public Rectangle getBounds() {
         return bounds;
     }
-    public int getId(){
+
+    public int getId() {
         return id;
     }
-    public int getX(){
+
+    public int getX() {
         return x;
     }
-    public int getY(){
+
+    public int getY() {
         return y;
     }
-    public int getW(){
+
+    public int getW() {
         return width;
     }
-    public int getH(){
+
+    public int getH() {
         return height;
     }
 }

@@ -2,19 +2,24 @@ package objects;
 
 public class PathPoint {
     private int xCord, yCord;
-    public PathPoint(int xCord, int yCord){
+
+    public PathPoint(int xCord, int yCord) {
         this.xCord = xCord;
         this.yCord = yCord;
     }
-    public int getxCord(){
+
+    public int getxCord() {
         return xCord;
     }
-    public int getyCord(){
+
+    public int getyCord() {
         return yCord;
     }
-    public void setxCord(int xCord){
+
+    public void setxCord(int xCord) {
         this.xCord = xCord;
     }
+
     public void setyCord(int yCord) {
         this.yCord = yCord;
     }

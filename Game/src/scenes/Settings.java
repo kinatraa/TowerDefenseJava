@@ -14,10 +14,10 @@ import java.io.InputStream;
 
 import static main.GameStates.SetGameState;
 
-public class Settings extends GameScene implements SceneMethods{
+public class Settings extends GameScene implements SceneMethods {
     private MyButton[] bGainMusic, bGainEffect;
     private MyButton bReturn;
-    private int gainMusic = 0, gainEffect = 0;
+    private int gainMusic = 50, gainEffect = 50;
     private GameStates lastGameState;
     private Game game;
     private BufferedImage background;
@@ -55,7 +55,7 @@ public class Settings extends GameScene implements SceneMethods{
         g.setFont(new Font("Impact", Font.PLAIN, 30));
         g.drawString("Music: ", 400, 280);
         g.drawString("Effect: ", 400, 380);
-        for(int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             bGainMusic[i].draw(g);
             bGainEffect[i].draw(g);
         }
@@ -84,34 +84,35 @@ public class Settings extends GameScene implements SceneMethods{
     public void mouseClicked(int x, int y) {
         if (bGainMusic[0].getBounds().contains(x, y)) {
             game.getSoundManager().selectionSound(game.getSoundManager().getGainEffect());
-            if(gainMusic - 10 >= 0){
+            if (gainMusic - 10 >= 0) {
                 gainMusic -= 10;
             }
         } else if (bGainMusic[1].getBounds().contains(x, y)) {
             game.getSoundManager().selectionSound(game.getSoundManager().getGainEffect());
-            if(gainMusic + 10 <= 100){
+            if (gainMusic + 10 <= 100) {
                 gainMusic += 10;
             }
         } else if (bGainEffect[0].getBounds().contains(x, y)) {
             game.getSoundManager().selectionSound(game.getSoundManager().getGainEffect());
-            if(gainEffect - 10 >= 0){
+            if (gainEffect - 10 >= 0) {
                 gainEffect -= 10;
             }
         } else if (bGainEffect[1].getBounds().contains(x, y)) {
             game.getSoundManager().selectionSound(game.getSoundManager().getGainEffect());
-            if(gainEffect + 10 <= 100){
+            if (gainEffect + 10 <= 100) {
                 gainEffect += 10;
             }
-        }
-        else if(bReturn.getBounds().contains(x, y)) {
+        } else if (bReturn.getBounds().contains(x, y)) {
             game.getSoundManager().selectionSound(game.getSoundManager().getGainEffect());
             SetGameState(lastGameState);
         }
     }
+
     @Override
     public void mouseClicked3() {
 
     }
+
     @Override
     public void mouseMoved(int x, int y) {
         bGainMusic[0].setMouseOver(false);
@@ -127,8 +128,7 @@ public class Settings extends GameScene implements SceneMethods{
             bGainEffect[0].setMouseOver(true);
         } else if (bGainEffect[1].getBounds().contains(x, y)) {
             bGainEffect[1].setMouseOver(true);
-        }
-        else if (bReturn.getBounds().contains(x, y)) {
+        } else if (bReturn.getBounds().contains(x, y)) {
             bReturn.setMouseOver(true);
         }
     }
@@ -148,8 +148,7 @@ public class Settings extends GameScene implements SceneMethods{
             bGainEffect[0].setMousePressed(true);
         } else if (bGainEffect[1].getBounds().contains(x, y)) {
             bGainEffect[1].setMousePressed(true);
-        }
-        else if(bReturn.getBounds().contains(x, y)){
+        } else if (bReturn.getBounds().contains(x, y)) {
             bReturn.setMousePressed(true);
         }
     }
@@ -160,7 +159,7 @@ public class Settings extends GameScene implements SceneMethods{
     }
 
     private void resetButton() {
-        for(int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             bGainMusic[i].resetBooleans();
             bGainEffect[i].resetBooleans();
         }

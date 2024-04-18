@@ -21,7 +21,8 @@ public class Editing extends GameScene implements SceneMethods {
     private boolean drawSelect;
     private ToolBar toolBar;
     private PathPoint start, end;
-    public Editing(Game game){
+
+    public Editing(Game game) {
         super(game);
         loadDefaultLevel();
         toolBar = new ToolBar(1024, 0, 256, 768, this, game);
@@ -45,84 +46,88 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     private void drawPathPoint(Graphics g) {
-        if(start != null){
+        if (start != null) {
             g.drawImage(toolBar.getStartPathImg(), start.getxCord() * 32, start.getyCord() * 32, 32, 32, null);
         }
-        if(end != null){
+        if (end != null) {
             g.drawImage(toolBar.getEndPathImg(), end.getxCord() * 32, end.getyCord() * 32, 32, 32, null);
         }
     }
 
-    private void drawLevel(Graphics g){
-        for(int y = 0; y < lvl.length; y++){
-            for(int x = 0; x < lvl[y].length; x++){
+    private void drawLevel(Graphics g) {
+        for (int y = 0; y < lvl.length; y++) {
+            for (int x = 0; x < lvl[y].length; x++) {
                 int id = lvl[y][x];
 //                if(id == -1) g.drawImage(selectedTile.getSprite(), x*32, y*32, null);
-                g.drawImage(getSprite(id), x*32, y*32, null);
+                g.drawImage(getSprite(id), x * 32, y * 32, null);
             }
         }
     }
-    private BufferedImage getSprite(int spiteID){
+
+    private BufferedImage getSprite(int spiteID) {
         return getGame().getTileManager().getSprite(spiteID);
     }
+
     private void drawSelectedTile(Graphics g) {
-        if(selectedTile != null && drawSelect){
+        if (selectedTile != null && drawSelect) {
             g.drawImage(selectedTile.getSprite(), mouseX, mouseY, 32, 32, null);
         }
     }
-    public void setSelectedTile(Tile tile){
+
+    public void setSelectedTile(Tile tile) {
         this.selectedTile = tile;
         drawSelect = true;
     }
+
     private void changeTile(int x, int y) {
-        if(selectedTile != null){
+        if (selectedTile != null) {
             int tileX = x / 32;
             int tileY = y / 32;
-            if(selectedTile.getId() >= 0){
-                if(lastTileX == tileX && lastTileY == tileY && lastTileId == selectedTile.getId())
+            if (selectedTile.getId() >= 0) {
+                if (lastTileX == tileX && lastTileY == tileY && lastTileId == selectedTile.getId())
                     return;
                 lastTileX = tileX;
                 lastTileY = tileY;
                 lastTileId = selectedTile.getId();
                 lvl[tileY][tileX] = selectedTile.getId();
-            }
-            else{
+            } else {
                 int id = lvl[tileY][tileX];
-                if(game.getTileManager().getTile(id).getTileType() == DIRT_TILE){
-                    if(selectedTile.getId() == -1){
+                if (game.getTileManager().getTile(id).getTileType() == DIRT_TILE) {
+                    if (selectedTile.getId() == -1) {
                         start = new PathPoint(tileX, tileY);
-                    }
-                    else{
+                    } else {
                         end = new PathPoint(tileX, tileY);
                     }
                 }
             }
         }
     }
-    public void saveLevel(){
+
+    public void saveLevel() {
         LoadSave.SaveLevel("new_level", lvl, start, end);
         game.getPlaying().setLevel(lvl);
     }
+
     @Override
     public void mouseClicked(int x, int y) {
-        if(x > 1024){
+        if (x > 1024) {
             toolBar.mouseClicked(x, y);
-        }
-        else{
+        } else {
             changeTile(mouseX, mouseY);
         }
     }
+
     @Override
     public void mouseClicked3() {
         toolBar.mouseClicked3();
     }
+
     @Override
     public void mouseMoved(int x, int y) {
-        if(x > 1024){
+        if (x > 1024) {
             toolBar.mouseMoved(x, y);
             drawSelect = false;
-        }
-        else{
+        } else {
             drawSelect = true;
             mouseX = (x / 32) * 32;
             mouseY = (y / 32) * 32;
@@ -131,7 +136,7 @@ public class Editing extends GameScene implements SceneMethods {
 
     @Override
     public void mousePressed(int x, int y) {
-        if(x > 1024){
+        if (x > 1024) {
             toolBar.mousePressed(x, y);
         }
     }
@@ -143,10 +148,9 @@ public class Editing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseDragged(int x, int y) {
-        if(x > 1024){
+        if (x > 1024) {
 
-        }
-        else{
+        } else {
             changeTile(x, y);
         }
     }

@@ -12,7 +12,7 @@ import java.io.InputStream;
 
 import static main.GameStates.*;
 
-public class Menu2 extends GameScene implements SceneMethods{
+public class Menu2 extends GameScene implements SceneMethods {
     private MyButton bResume, bSettings, bMainMenu, bRetry;
     private Playing playing;
     private SoundManager soundManager;
@@ -42,9 +42,9 @@ public class Menu2 extends GameScene implements SceneMethods{
         int y = 130;
         int yOffset = 125;
         bResume = new MyButton("Resume", x, y, w, h);
-        bRetry = new MyButton("Retry", x, y+yOffset, w, h);
-        bSettings = new MyButton("Setting", x, y+2*yOffset, w, h);
-        bMainMenu = new MyButton("Main Menu", x, y+3*yOffset, w, h);
+        bRetry = new MyButton("Retry", x, y + yOffset, w, h);
+        bSettings = new MyButton("Setting", x, y + 2 * yOffset, w, h);
+        bMainMenu = new MyButton("Main Menu", x, y + 3 * yOffset, w, h);
     }
 
     @Override
@@ -63,24 +63,21 @@ public class Menu2 extends GameScene implements SceneMethods{
     @Override
     public void mouseClicked(int x, int y) {
 //        System.out.println("CLICKED");
-        if(bResume.getBounds().contains(x, y)){
+        if (bResume.getBounds().contains(x, y)) {
             bResume.resetBooleans();
             soundManager.selectionSound(soundManager.getGainEffect());
             SetGameState(PLAYING);
-        }
-        else if(bRetry.getBounds().contains(x, y)){
+        } else if (bRetry.getBounds().contains(x, y)) {
             bRetry.resetBooleans();
             soundManager.selectionSound(soundManager.getGainEffect());
             playing.resetEverything();
             SetGameState(PLAYING);
-        }
-        else if(bSettings.getBounds().contains(x, y)){
+        } else if (bSettings.getBounds().contains(x, y)) {
             bSettings.resetBooleans();
             soundManager.selectionSound(soundManager.getGainEffect());
             getGame().getSettings().setLastGameState(MENU2);
             SetGameState(SETTINGS);
-        }
-        else if(bMainMenu.getBounds().contains(x, y)){
+        } else if (bMainMenu.getBounds().contains(x, y)) {
             bMainMenu.resetBooleans();
             soundManager.selectionSound(soundManager.getGainEffect());
             SetGameState(MENU);
@@ -96,16 +93,14 @@ public class Menu2 extends GameScene implements SceneMethods{
         bRetry.setMouseOver(false);
         bSettings.setMouseOver(false);
         bMainMenu.setMouseOver(false);
-        if(bResume.getBounds().contains(x, y)){
+        if (bResume.getBounds().contains(x, y)) {
             bResume.setMouseOver(true);
-        }
-        else if(bRetry.getBounds().contains(x, y)){
+        } else if (bRetry.getBounds().contains(x, y)) {
             bRetry.setMouseOver(true);
-        }
-        else if(bSettings.getBounds().contains(x, y)){
+        } else if (bSettings.getBounds().contains(x, y)) {
             bSettings.setMouseOver(true);
         }
-        if(bMainMenu.getBounds().contains(x, y)){
+        if (bMainMenu.getBounds().contains(x, y)) {
             bMainMenu.setMouseOver(true);
         }
     }
@@ -116,16 +111,13 @@ public class Menu2 extends GameScene implements SceneMethods{
         bRetry.setMousePressed(false);
         bSettings.setMousePressed(false);
         bMainMenu.setMousePressed(false);
-        if(bResume.getBounds().contains(x, y)){
+        if (bResume.getBounds().contains(x, y)) {
             bResume.setMousePressed(true);
-        }
-        else if(bRetry.getBounds().contains(x, y)){
+        } else if (bRetry.getBounds().contains(x, y)) {
             bRetry.setMousePressed(true);
-        }
-        else if(bSettings.getBounds().contains(x, y)){
+        } else if (bSettings.getBounds().contains(x, y)) {
             bSettings.setMousePressed(true);
-        }
-        else if(bMainMenu.getBounds().contains(x, y)){
+        } else if (bMainMenu.getBounds().contains(x, y)) {
             bMainMenu.setMousePressed(true);
         }
     }

@@ -79,9 +79,9 @@ public class ProjectileManager {
             if (xDist < 0) rotate += 180;
         }
 
-        for(Projectile p : projectiles){
-            if(!p.isActive()){
-                if(p.getProjectileType() == type){
+        for (Projectile p : projectiles) {
+            if (!p.isActive()) {
+                if (p.getProjectileType() == type) {
                     p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, t.getDmg(), rotate);
                     return;
                 }
@@ -210,7 +210,7 @@ public class ProjectileManager {
         }
     }
 
-    public void reset(){
+    public void reset() {
         projectiles.clear();
         explosions.clear();
         proj_id = 0;

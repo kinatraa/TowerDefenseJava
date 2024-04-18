@@ -28,7 +28,7 @@ public class Constants {
         public static final int TANK1 = 4;
         public static final int TANK2 = 5;
 
-        public static int GetReward(int enemyType){
+        public static int GetReward(int enemyType) {
             switch (enemyType) {
                 case SOLDIER1:
                     return 5;
@@ -89,7 +89,7 @@ public class Constants {
         public static final int DOUBLE_RR = 2;
         public static final int BIG_ONE = 3;
 
-        public static int GetCost(int towerType){
+        public static int GetCost(int towerType) {
             switch (towerType) {
                 case GREEN_CANON:
                     return 50;
@@ -102,6 +102,7 @@ public class Constants {
             }
             return 0;
         }
+
         public static String GetName(int towerType) {
             switch (towerType) {
                 case GREEN_CANON:
@@ -119,11 +120,11 @@ public class Constants {
         public static int GetDefaultDmg(int towerType) {
             switch (towerType) {
                 case GREEN_CANON:
-                    return 5;
-                case RED_CANON:
                     return 10;
+                case RED_CANON:
+                    return 15;
                 case DOUBLE_RR:
-                    return 20;
+                    return 25;
                 case BIG_ONE:
                     return 40;
             }
@@ -133,9 +134,9 @@ public class Constants {
         public static float GetDefaultRange(int towerType) {
             switch (towerType) {
                 case GREEN_CANON:
-                    return 100;
+                    return 150;
                 case RED_CANON:
-                    return 100;
+                    return 150;
                 case DOUBLE_RR:
                     return 200;
                 case BIG_ONE:
@@ -170,7 +171,7 @@ public class Constants {
                 case ROCKET_SMALL:
                     return 6;
                 case ROCKET_BIG:
-                    return 4;
+                    return 6;
             }
             return 0;
         }

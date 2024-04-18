@@ -1,6 +1,7 @@
 package objects;
 
 import helpz.Constants;
+
 import static helpz.Constants.Towers.*;
 
 public class Tower {
@@ -18,9 +19,9 @@ public class Tower {
         setDefaultCooldown();
     }
 
-    public void upgradeTower(){
+    public void upgradeTower() {
         ++this.tier;
-        switch (towerType){
+        switch (towerType) {
             case GREEN_CANON:
                 dmg += 5;
                 range += 20;
@@ -39,6 +40,7 @@ public class Tower {
                 break;
         }
     }
+
     public void update() {
         cdTick++;
     }

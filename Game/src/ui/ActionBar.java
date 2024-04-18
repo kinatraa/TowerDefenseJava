@@ -51,9 +51,9 @@ public class ActionBar extends Bar {
         upgradeTower = new MyButton("Upgrade", 1132, 590, 90, 30);
     }
 
-    public void removeOneLife(){
+    public void removeOneLife() {
         lives--;
-        if(lives <= 0){
+        if (lives <= 0) {
             SetGameState(GAME_OVER);
         }
     }
@@ -182,7 +182,7 @@ public class ActionBar extends Bar {
     private void drawButtons(Graphics g) {
         ImageIcon imageIcon = new ImageIcon("src/imgs/gear.png");
         Image image = imageIcon.getImage();
-        g.drawImage(image, 1211, 5, 64, 64,null);
+        g.drawImage(image, 1211, 5, 64, 64, null);
         for (MyButton b : towerButtons) {
             g.setColor(Color.LIGHT_GRAY);
             g.fillRect(b.getX(), b.getY(), b.getW(), b.getH());

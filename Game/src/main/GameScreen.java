@@ -11,10 +11,12 @@ public class GameScreen extends JPanel {
     private Dimension sizeScreen;
     private MyMouseListener myMouseListener;
     private KeyBoardListener keyBoardListener;
-    public GameScreen(Game game){
+
+    public GameScreen(Game game) {
         this.game = game;
         setPanelSize();
     }
+
     public void initInputs() {
         myMouseListener = new MyMouseListener(game);
         keyBoardListener = new KeyBoardListener(game);
@@ -31,7 +33,7 @@ public class GameScreen extends JPanel {
         setPreferredSize(sizeScreen);
     }
 
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         game.getRender().render(g);
     }

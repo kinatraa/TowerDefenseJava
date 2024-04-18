@@ -16,8 +16,8 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getButton() == MouseEvent.BUTTON1){
-            switch (GameStates.gameState){
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            switch (GameStates.gameState) {
                 case MENU:
                     game.getMenu().mouseClicked(e.getX(), e.getY());
                     break;
@@ -39,9 +39,8 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                 default:
                     break;
             }
-        }
-        else if(e.getButton() == MouseEvent.BUTTON3){
-            switch (GameStates.gameState){
+        } else if (e.getButton() == MouseEvent.BUTTON3) {
+            switch (GameStates.gameState) {
                 case EDIT:
                     game.getEditor().mouseClicked3();
                     break;
@@ -51,8 +50,8 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(e.getButton() == MouseEvent.BUTTON1){
-            switch (GameStates.gameState){
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            switch (GameStates.gameState) {
                 case MENU:
                     game.getMenu().mousePressed(e.getX(), e.getY());
                     break;
@@ -79,8 +78,8 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(e.getButton() == MouseEvent.BUTTON1){
-            switch (GameStates.gameState){
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            switch (GameStates.gameState) {
                 case MENU:
                     game.getMenu().mouseReleased(e.getX(), e.getY());
                     break;

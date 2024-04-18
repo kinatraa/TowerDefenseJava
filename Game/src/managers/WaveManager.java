@@ -16,37 +16,36 @@ public class WaveManager {
     private int waveTickLimit = 60 * 5;
     private int waveTick = 0;
     private boolean waveTimerStart, waveTickTimerOver;
-    public WaveManager(Playing playing){
+
+    public WaveManager(Playing playing) {
         this.playing = playing;
         createWaves();
     }
 
-    public void update(){
-        if(enemySpawnTick < enemySpawnTickLimit){
+    public void update() {
+        if (enemySpawnTick < enemySpawnTickLimit) {
             enemySpawnTick++;
         }
-        if(waveTimerStart){
+        if (waveTimerStart) {
             waveTick++;
-            if(waveTick >= waveTickLimit){
+            if (waveTick >= waveTickLimit) {
                 waveTickTimerOver = true;
             }
         }
     }
 
-    public int getNextEnemy(){
+    public int getNextEnemy() {
         enemySpawnTick = 0;
-        if(enemyIndex < waves.get(waveIndex).getEnemyList().size()) return waves.get(waveIndex).getEnemyList().get(enemyIndex++);
+        if (enemyIndex < waves.get(waveIndex).getEnemyList().size())
+            return waves.get(waveIndex).getEnemyList().get(enemyIndex++);
         else return -1;
     }
 
     private void createWaves() {
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(4, 5, 4, 5, 4))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 1, 1, 1, 1, 0, 0, 0, 0, 0))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 2, 2, 2, 2, 0, 0, 0, 0, 0))));
+        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 1, 1, 1, 1, 1))));
+        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 1, 1, 1, 1, 2, 2, 2, 2, 2))));
         waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 2, 2, 2, 2, 3, 3, 3, 3, 3))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 2, 2, 2, 2, 2, 2, 2, 2, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(3, 3, 3, 3, 3, 3, 3, 3, 3, 3))));
+        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(4, 4, 4, 4, 4, 5, 5, 5, 5, 5))));
     }
 
     public Vector<Wave> getWaves() {
@@ -57,7 +56,7 @@ public class WaveManager {
         return enemySpawnTick >= enemySpawnTickLimit;
     }
 
-    public boolean isThereMoreEnemiesInWave(){
+    public boolean isThereMoreEnemiesInWave() {
         return enemyIndex < waves.get(waveIndex).getEnemyList().size();
     }
 
@@ -73,7 +72,7 @@ public class WaveManager {
         return waveTickTimerOver;
     }
 
-    public void increaseWaveIndex(){
+    public void increaseWaveIndex() {
         waveIndex++;
         waveTick = 0;
         waveTickTimerOver = false;
@@ -88,16 +87,16 @@ public class WaveManager {
         return waveIndex;
     }
 
-    public float getTimeLeft(){
+    public float getTimeLeft() {
         float ticksLeft = waveTickLimit - waveTick;
         return ticksLeft / 60.0f;
     }
 
-    public boolean isWaveTimerStarted(){
+    public boolean isWaveTimerStarted() {
         return waveTimerStart;
     }
 
-    public void reset(){
+    public void reset() {
         waves.clear();
         createWaves();
         enemyIndex = 0;

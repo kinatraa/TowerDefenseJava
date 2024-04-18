@@ -8,10 +8,11 @@ import java.awt.*;
 
 import static main.GameStates.*;
 
-public class GameOver extends GameScene implements SceneMethods{
+public class GameOver extends GameScene implements SceneMethods {
     private MyButton bRetry, bMenu;
     private Game game;
     private SoundManager soundManager;
+
     public GameOver(Game game) {
         super(game);
         this.game = game;
@@ -23,8 +24,8 @@ public class GameOver extends GameScene implements SceneMethods{
         int w = 200;
         int h = w / 3;
         int y = 400;
-        bMenu = new MyButton("Menu", 640-250, y, w, h);
-        bRetry = new MyButton("Retry", 640+50, y, w, h);
+        bMenu = new MyButton("Menu", 640 - 250, y, w, h);
+        bRetry = new MyButton("Retry", 640 + 50, y, w, h);
     }
 
     @Override
@@ -39,12 +40,11 @@ public class GameOver extends GameScene implements SceneMethods{
 
     @Override
     public void mouseClicked(int x, int y) {
-        if(bMenu.getBounds().contains(x, y)){
+        if (bMenu.getBounds().contains(x, y)) {
             resetEverything();
             soundManager.selectionSound(soundManager.getGainEffect());
             SetGameState(MENU);
-        }
-        else if(bRetry.getBounds().contains(x, y)){
+        } else if (bRetry.getBounds().contains(x, y)) {
             soundManager.selectionSound(soundManager.getGainEffect());
             restartGame();
         }
@@ -59,20 +59,18 @@ public class GameOver extends GameScene implements SceneMethods{
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
         bRetry.setMouseOver(false);
-        if(bMenu.getBounds().contains(x, y)){
+        if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMouseOver(true);
-        }
-        else if(bRetry.getBounds().contains(x, y)){
+        } else if (bRetry.getBounds().contains(x, y)) {
             bRetry.setMouseOver(true);
         }
     }
 
     @Override
     public void mousePressed(int x, int y) {
-        if(bMenu.getBounds().contains(x, y)){
+        if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMousePressed(true);
-        }
-        else if(bRetry.getBounds().contains(x, y)){
+        } else if (bRetry.getBounds().contains(x, y)) {
             bRetry.setMousePressed(true);
         }
     }
@@ -93,7 +91,7 @@ public class GameOver extends GameScene implements SceneMethods{
         SetGameState(PLAYING);
     }
 
-    private void resetEverything(){
+    private void resetEverything() {
         game.getPlaying().resetEverything();
     }
 }

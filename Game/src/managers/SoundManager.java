@@ -13,8 +13,11 @@ import static helpz.Constants.Towers.*;
 public class SoundManager {
     private Clip menuMusic, playingMusic, cannonFire, rocketFire, coin, selection, explode;
     private boolean menuActive = false, playingActive = false;
-    private float gainMusic, gainEffect, defaultVolume = 46.0206f, maxVolume = 6.0206f;
-    private Game game;
+    private float gainMusic;
+    private float gainEffect;
+    private final float defaultVolume = 46.0206f;
+    private final float maxVolume = 6.0206f;
+    private final Game game;
     private FloatControl gainControl;
 
     public SoundManager(Game game) {
@@ -24,7 +27,6 @@ public class SoundManager {
     public void update() {
         gainEffect = maxVolume - (100 - game.getSettings().getGainEffect()) * defaultVolume / 100;
         gainMusic = maxVolume - (100 - game.getSettings().getGainMusic()) * defaultVolume / 100;
-//        System.out.println("Gain effect: " + gainEffect + " Gain music: " + gainMusic);
         if (menuMusic != null) {
             if (menuMusic.isOpen()) {
                 gainControl = (FloatControl) menuMusic.getControl(FloatControl.Type.MASTER_GAIN);
@@ -37,26 +39,6 @@ public class SoundManager {
                 gainControl.setValue(gainMusic);
             }
         }
-//        if (cannonFire != null) {
-//            if (cannonFire.isOpen()) {
-//
-//            }
-//        }
-//        if (rocketFire != null) {
-//            if (rocketFire.isOpen()) {
-//
-//            }
-//        }
-//        if (explode != null) {
-//            if (explode.isOpen()) {
-//
-//            }
-//        }
-//        if (selection != null) {
-//            if (selection.isOpen()) {
-//
-//            }
-//        }
     }
 
     public void playMenuMusic() {
@@ -86,7 +68,6 @@ public class SoundManager {
                 playingMusic = AudioSystem.getClip();
                 playingMusic.open(inputStream);
                 playingMusic.loop(Clip.LOOP_CONTINUOUSLY);
-//                Thread.sleep(10000);
                 playingMusic.start();
             }
         } catch (Exception e) {
@@ -170,7 +151,6 @@ public class SoundManager {
                 selection.open(inputStream);
                 gainControl = (FloatControl) selection.getControl(FloatControl.Type.MASTER_GAIN);
                 gainControl.setValue(gainEffect);
-                System.out.println(gainEffect);
                 selection.start();
             }
         } catch (Exception e) {

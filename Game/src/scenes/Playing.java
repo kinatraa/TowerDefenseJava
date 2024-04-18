@@ -8,6 +8,7 @@ import objects.PathPoint;
 import objects.Tower;
 import main.Game;
 import ui.ActionBar;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -32,6 +33,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private boolean onBoard;
     private int goldTick = 0;
     private long nowTime, lastTime = -1;
+
     public Playing(Game game) {
         super(game);
         loadDefaultLevel();
@@ -42,29 +44,29 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         waveManager = new WaveManager(this);
         soundManager = game.getSoundManager();
     }
-    public void update(){
+
+    public void update() {
         nowTime = System.currentTimeMillis();
 
         waveManager.update();
 
         goldTick++;
-        if(goldTick % (60 * 3) == 0) actionBar.addGold(1);
-        if(isAllEnemiesDead()){
-            if(isThereMoreWaves()){
+        if (goldTick % (60 * 3) == 0) actionBar.addGold(1);
+        if (isAllEnemiesDead()) {
+            if (isThereMoreWaves()) {
                 waveManager.startWaveTimer();
-                if(isWaveTimerOver()){
+                if (isWaveTimerOver()) {
                     waveManager.increaseWaveIndex();
                     enemyManager.getEnemies().clear();
                     waveManager.resetEnemyIndex();
                 }
-            }
-            else{
-                if(lastTime == -1) lastTime = nowTime;
+            } else {
+                if (lastTime == -1) lastTime = nowTime;
                 winGame();
             }
         }
 
-        if(isTimeForNewEnemy()){
+        if (isTimeForNewEnemy()) {
             spawnEnemy();
         }
 
@@ -73,9 +75,9 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         projManager.update();
     }
 
-    private void winGame(){
+    private void winGame() {
         nowTime = System.currentTimeMillis();
-        if(nowTime - lastTime >= 2000){
+        if (nowTime - lastTime >= 2000) {
             SetGameState(VICTORY);
         }
     }
@@ -89,11 +91,11 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
 
     private boolean isAllEnemiesDead() {
-        if(waveManager.isThereMoreEnemiesInWave()){
+        if (waveManager.isThereMoreEnemiesInWave()) {
             return false;
         }
-        for(Enemy e : enemyManager.getEnemies()){
-            if(e.isAlive()) return false;
+        for (Enemy e : enemyManager.getEnemies()) {
+            if (e.isAlive()) return false;
         }
         return true;
     }
@@ -103,25 +105,29 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
 
     private boolean isTimeForNewEnemy() {
-        if(waveManager.isTimeForNewEnemy()){
-            if(waveManager.isThereMoreEnemiesInWave()){
+        if (waveManager.isTimeForNewEnemy()) {
+            if (waveManager.isThereMoreEnemiesInWave()) {
                 return true;
             }
         }
         return false;
     }
-    public void setSelectedTower(Tower selectedTower){
+
+    public void setSelectedTower(Tower selectedTower) {
         this.selectedTower = selectedTower;
     }
-    public void setLevel(int[][] lvl){
+
+    public void setLevel(int[][] lvl) {
         this.lvl = lvl;
     }
+
     private void loadDefaultLevel() {
         lvl = LoadSave.GetLevelData("new_level");
         ArrayList<PathPoint> points = LoadSave.GetLevelPathPoints("new_level");
         start = points.get(0);
         end = points.get(1);
     }
+
     @Override
     public void render(Graphics g) {
         drawLevel(g);
@@ -130,7 +136,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         towerManager.draw(g);
         projManager.draw(g);
         drawSelectedTower(g);
-        if(onBoard) drawHighlight(g);
+        if (onBoard) drawHighlight(g);
     }
 
     private void drawHighlight(Graphics g) {
@@ -139,45 +145,46 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
 
     private void drawSelectedTower(Graphics g) {
-        if(selectedTower != null){
+        if (selectedTower != null) {
             g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, 32, 32, null);
         }
     }
 
-    private void drawLevel(Graphics g){
-        for(int y = 0; y < lvl.length; y++){
-            for(int x = 0; x < lvl[y].length; x++){
+    private void drawLevel(Graphics g) {
+        for (int y = 0; y < lvl.length; y++) {
+            for (int x = 0; x < lvl[y].length; x++) {
                 int id = lvl[y][x];
-                g.drawImage(getSprite(id), x*32, y*32, null);
+                g.drawImage(getSprite(id), x * 32, y * 32, null);
             }
         }
     }
-    private BufferedImage getSprite(int spiteID){
+
+    private BufferedImage getSprite(int spiteID) {
         return getGame().getTileManager().getSprite(spiteID);
     }
-    public int getTileType(int x, int y){
+
+    public int getTileType(int x, int y) {
         int xCord = x / 32;
         int yCord = y / 32;
-        if(xCord < 0 || xCord > 31) return 5;
-        if(yCord < 0 || yCord > 23) return 5;
+        if (xCord < 0 || xCord > 31) return 5;
+        if (yCord < 0 || yCord > 23) return 5;
 
         int id = lvl[y / 32][x / 32];
         return getGame().getTileManager().getTile(id).getTileType();
     }
+
     @Override
     public void mouseClicked(int x, int y) {
-        if(x >= 1024){
+        if (x >= 1024) {
             actionBar.mouseClicked(x, y);
-        }
-        else{
-            if(selectedTower != null){
-                if(canPlaceTower(mouseX, mouseY) && getTowerAt(mouseX, mouseY) == null){
+        } else {
+            if (selectedTower != null) {
+                if (canPlaceTower(mouseX, mouseY) && getTowerAt(mouseX, mouseY) == null) {
                     towerManager.addTower(selectedTower, mouseX, mouseY);
                     removeGold(selectedTower.getTowerType());
                     selectedTower = null;
                 }
-            }
-            else{
+            } else {
                 Tower t = getTowerAt(mouseX, mouseY);
                 actionBar.displayTower(t);
             }
@@ -187,9 +194,11 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     private void removeGold(int towerType) {
         actionBar.payForTower(towerType);
     }
+
     public void removeTower(Tower displayedTower) {
         towerManager.removeTower(displayedTower);
     }
+
     public void upgradeTower(Tower displayedTower) {
         towerManager.upgradeTower(displayedTower);
     }
@@ -199,26 +208,28 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
     }
 
     private boolean canPlaceTower(int x, int y) {
-        int id = lvl[y/32][x/32];
+        int id = lvl[y / 32][x / 32];
         int tileType = getGame().getTileManager().getTile(id).getTileType();
         return tileType == ROAD_TILE;
     }
-    public void keyPressed(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             selectedTower = null;
         }
     }
+
     @Override
     public void mouseClicked3() {
 
     }
+
     @Override
     public void mouseMoved(int x, int y) {
-        if(x >= 1024){
+        if (x >= 1024) {
             onBoard = false;
             actionBar.mouseMoved(x, y);
-        }
-        else{
+        } else {
             onBoard = true;
             actionBar.setShowTowerCost(false);
             mouseX = (x / 32) * 32;
@@ -228,7 +239,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
 
     @Override
     public void mousePressed(int x, int y) {
-        if(x >= 1024){
+        if (x >= 1024) {
             actionBar.mousePressed(x, y);
         }
     }
@@ -259,7 +270,7 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
         return waveManager;
     }
 
-    public void shootEnemy(Tower t, Enemy e){
+    public void shootEnemy(Tower t, Enemy e) {
         soundManager.shootingSound(t.getTowerType(), soundManager.getGainEffect());
         projManager.newProjectile(t, e);
         towerManager.trackingEnemy(t, e);

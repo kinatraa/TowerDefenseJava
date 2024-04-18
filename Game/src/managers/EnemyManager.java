@@ -48,7 +48,7 @@ public class EnemyManager {
 
     private void loadEnemyImgs() {
         BufferedImage atlas = getSpriteAtlas();
-        for(int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             enemyImgs[i] = atlas.getSubimage(i * 32, 0, 32, 32);
         }
         BufferedImage img = null;
@@ -110,22 +110,22 @@ public class EnemyManager {
 
     }
 
-    private void rotateEnemy(int dir, int newDir, Enemy e){
-        switch (dir){
+    private void rotateEnemy(int dir, int newDir, Enemy e) {
+        switch (dir) {
             case LEFT:
-                if(newDir == UP) e.changeRotate(90);
+                if (newDir == UP) e.changeRotate(90);
                 else e.changeRotate(-90);
                 break;
             case RIGHT:
-                if(newDir == UP) e.changeRotate(-90);
+                if (newDir == UP) e.changeRotate(-90);
                 else e.changeRotate(90);
                 break;
             case UP:
-                if(newDir == LEFT) e.changeRotate(-90);
+                if (newDir == LEFT) e.changeRotate(-90);
                 else e.changeRotate(90);
                 break;
             case DOWN:
-                if(newDir == LEFT) e.changeRotate(90);
+                if (newDir == LEFT) e.changeRotate(90);
                 else e.changeRotate(-90);
                 break;
         }
@@ -207,10 +207,9 @@ public class EnemyManager {
     }
 
     private void drawEnemy(Enemy e, Graphics g, int rotate) {
-        if(e.getEnemyType() == TANK1 || e.getEnemyType() == TANK2){
+        if (e.getEnemyType() == TANK1 || e.getEnemyType() == TANK2) {
             g.drawImage(getRotImg(enemyImgs[e.getEnemyType()], rotate), (int) e.getX() - 8, (int) e.getY() - 8, 48, 48, null);
-        }
-        else{
+        } else {
             g.drawImage(getRotImg(enemyImgs[e.getEnemyType()], rotate), (int) e.getX() + 4, (int) e.getY() + 4, 24, 24, null);
         }
     }
@@ -231,7 +230,7 @@ public class EnemyManager {
         playing.reward(enemyType);
     }
 
-    public void reset(){
+    public void reset() {
         enemies.clear();
     }
 }
