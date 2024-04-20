@@ -108,6 +108,8 @@ public class ToolBar extends Bar {
         } else if (bSave.getBounds().contains(x, y)) {
             bSave.resetBooleans();
             editing.saveLevel();
+            editing.getStartEndPoint();
+            game.getPlaying().getStartEndPoint();
             game.getPlaying().getEnemyManager().loadRoadDirArr();
         } else if (bPathStart.getBounds().contains(x, y)) {
             if (selectedPath == pathStart) {

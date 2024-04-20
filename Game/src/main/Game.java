@@ -27,8 +27,8 @@ public class Game extends JFrame implements Runnable {
 
     public Game() {
 //        System.out.println("hello");
-        initClasses();
         createDefaultLevel();
+        initClasses();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1280, 768);
         setLocationRelativeTo(null);
@@ -52,10 +52,10 @@ public class Game extends JFrame implements Runnable {
 
     private void initClasses() {
         soundManager = new SoundManager(this);
-        tileManager = new TileManager();
-        render = new Render(this);
         gameScreen = new GameScreen(this);
+        render = new Render(this);
         menu = new Menu(this);
+        tileManager = new TileManager();
         playing = new Playing(this);
         settings = new Settings(this);
         menu2 = new Menu2(this, playing);

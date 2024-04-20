@@ -26,6 +26,7 @@ public class EnemyManager {
     private PathPoint start, end;
     private int HPBarWidth = 20;
     private int[][] roadDirArr;
+    private static boolean checkRoad = false;
 
     public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
         this.playing = playing;
@@ -78,11 +79,16 @@ public class EnemyManager {
     }
 
     public void update() {
-        updateWaveManager();
-        for (Enemy e : enemies) {
-            if (e.isAlive()) {
-                updateEnemyMove(e);
+        if(checkRoad) {
+            updateWaveManager();
+            for (Enemy e : enemies) {
+                if (e.isAlive()) {
+                    updateEnemyMove(e);
+                }
             }
+        }
+        else {
+            System.out.println("Khong tim thay duong di!");
         }
     }
 
@@ -232,5 +238,9 @@ public class EnemyManager {
 
     public void reset() {
         enemies.clear();
+    }
+
+    public static void setCheckRoad(boolean check) {
+        checkRoad = check;
     }
 }

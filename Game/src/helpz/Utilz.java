@@ -1,5 +1,6 @@
 package helpz;
 
+import managers.EnemyManager;
 import objects.PathPoint;
 
 import java.util.ArrayList;
@@ -8,18 +9,28 @@ import static helpz.Constants.Direction.*;
 import static helpz.Constants.Tiles.DIRT_TILE;
 
 public class Utilz {
+    private static boolean[][] visited;
+
     public static int[][] GetRoadDirArr(int[][] lvlTypeArr, PathPoint start, PathPoint end) {
         int[][] roadDirArr = new int[lvlTypeArr.length][lvlTypeArr[0].length];
+        visited = new boolean[100][100];
 
         PathPoint currTile = start;
         int lastDir = -1;
         while (!IsCurrSameAsEnd(currTile, end)) {
             PathPoint prevTile = currTile;
             currTile = GetNextRoadTile(prevTile, lastDir, lvlTypeArr);
+            if(currTile == null) {
+                System.out.println("Khong tim thay duong di!");
+                EnemyManager.setCheckRoad(false);
+                return roadDirArr = new int[lvlTypeArr.length][lvlTypeArr[0].length];
+            }
             lastDir = GetDirFromPrevToCurr(prevTile, currTile);
+            visited[prevTile.getyCord()][prevTile.getxCord()] = true;
             roadDirArr[prevTile.getyCord()][prevTile.getxCord()] = lastDir;
         }
         roadDirArr[end.getyCord()][end.getxCord()] = lastDir;
+        EnemyManager.setCheckRoad(true);
         return roadDirArr;
     }
 
@@ -41,15 +52,22 @@ public class Utilz {
 
     private static PathPoint GetNextRoadTile(PathPoint prevTile, int lastDir, int[][] lvlTypeArr) {
 
-        int testDir = lastDir;
-        PathPoint testTile = GetTileInDir(prevTile, testDir, lastDir);
+        int testDir = lastDir, cnt = 0;
+        PathPoint testTile = GetTileInDir(prevTile, testDir, lastDir), tmpTile = null;
 
-        while (!IsTileRoad(testTile, lvlTypeArr)) {
+        while (!IsTileRoad(testTile, lvlTypeArr) && cnt <= 3) {
+            ++cnt;
             testDir++;
             testDir %= 4;
-            testTile = GetTileInDir(prevTile, testDir, lastDir);
+            tmpTile = GetTileInDir(prevTile, testDir, lastDir);
+            if(tmpTile.getxCord() != -1 && tmpTile.getyCord() != -1) {
+                if(visited[tmpTile.getyCord()][tmpTile.getxCord()]) continue;
+            }
+            testTile = tmpTile;
         }
-
+        if(!IsTileRoad(testTile, lvlTypeArr)) {
+            return null;
+        }
         return testTile;
     }
 

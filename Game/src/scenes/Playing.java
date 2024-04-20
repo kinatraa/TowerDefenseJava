@@ -123,9 +123,14 @@ public class Playing extends GameScene implements SceneMethods, ImageObserver {
 
     private void loadDefaultLevel() {
         lvl = LoadSave.GetLevelData("new_level");
+        getStartEndPoint();
+    }
+
+    public void getStartEndPoint(){
         ArrayList<PathPoint> points = LoadSave.GetLevelPathPoints("new_level");
         start = points.get(0);
         end = points.get(1);
+        enemyManager = new EnemyManager(this, start, end);
     }
 
     @Override
